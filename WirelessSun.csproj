@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Tools</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{ABDBC56F-474E-4805-96FD-775CBF46842B}</ProjectGuid>
+    <ProjectGuid>{71874E70-5701-4274-B583-D6DBAD2EFFE5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <OutputPath>.mono/temp/bin/$(Configuration)</OutputPath>
     <RootNamespace>WirelessSun</RootNamespace>
@@ -53,7 +53,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Sprites\CharacterSprite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripts\*.cs" />
   </ItemGroup>
