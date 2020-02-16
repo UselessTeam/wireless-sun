@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="WirelessSun "
+config/name="WirelessSun"
 config/icon="res://icon.png"
 
 [display]
