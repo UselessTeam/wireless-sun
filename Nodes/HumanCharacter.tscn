@@ -7,19 +7,15 @@
 
 [node name="Body" parent="Body" index="0" instance=ExtResource( 2 )]
 frame = 3
-firstIndex = 3
 
 [node name="Eye" parent="Body" index="1" instance=ExtResource( 2 )]
 frame = 9
-firstIndex = 9
 
 [node name="Hair" parent="Body" index="2" instance=ExtResource( 2 )]
 frame = 2
 
 [node name="Pants" parent="Body" index="3" instance=ExtResource( 2 )]
 frame = 12
-firstIndex = 12
 
 [node name="Cloth" parent="Body" index="4" instance=ExtResource( 2 )]
-frame = 6
-firstIndex = 6
+frame = 8

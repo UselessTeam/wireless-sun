@@ -10,30 +10,15 @@ public class PC : KinematicBody2D {
 	private Vector2 speed;
 
 	// Called when the node enters the scene tree for the first time.
-<<<<<<< Updated upstream
 	public override void _Ready () { }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process (float delta) { }
-=======
-	public override void _Ready () {
-		GD.Print ("Hi!");
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process (float delta) {
-		GD.Print ("Hi!");
-	}
->>>>>>> Stashed changes
 
 	public override void _PhysicsProcess (float delta) {
 		if (isImpact) { } else {
 			speed = new Vector2 (0, 0);
-<<<<<<< Updated upstream
 			if (Input.IsActionPressed ("ui_up"))
-=======
-			if (Input.IsActionPressed ("up"))
->>>>>>> Stashed changes
 				speed.y = -1;
 			if (Input.IsActionPressed ("ui_down")) {
 				speed.y = 1;
@@ -44,7 +29,7 @@ public class PC : KinematicBody2D {
 				speed.x = 1;
 			speed *= WALK_SPEED;
 		}
-		//MoveAndCollide (speed * delta);
+		MoveAndCollide (speed * delta);
 	}
 
 }
