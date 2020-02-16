@@ -16,6 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="WirelessSun"
+run/main_scene="res://Scenes/Beach.tscn"
 config/icon="res://icon.png"
 
 [display]
