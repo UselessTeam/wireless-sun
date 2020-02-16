@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/sand_on_stone.png-4948ceaf76477c4cb41ce24343139148.stex"
+path="res://.import/tileset_v1.png-94c7b70bab777009f4bd14b56fb06142.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Map/sand_on_stone.png"
-dest_files=[ "res://.import/sand_on_stone.png-4948ceaf76477c4cb41ce24343139148.stex" ]
+source_file="res://Assets/Sprites/Map/tileset_v1.png"
+dest_files=[ "res://.import/tileset_v1.png-94c7b70bab777009f4bd14b56fb06142.stex" ]
 
 [params]
 
