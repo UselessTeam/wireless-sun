@@ -12,7 +12,14 @@ position = Vector2( 90.93, 38.1429 )
 script = ExtResource( 1 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PC"]
-position = Vector2( -14.3036, -12.6008 )
-polygon = PoolVector2Array( 4.75401, 3.14931, 13.6086, -3.32136, 22.1227, 3.14931, 14.2897, 29.3726 )
+position = Vector2( -14.7793, -12.8386 )
+polygon = PoolVector2Array( 11.1692, 18.3211, 17.5905, 18.0832, 17.8283, 24.5046, 10.9313, 24.5046 )
 
 [node name="HumanCharacter" parent="PC" instance=ExtResource( 2 )]
+
+[node name="Camera2D" type="Camera2D" parent="PC"]
+position = Vector2( -90.93, -38.1429 )
+current = true
+smoothing_enabled = true
+
+[node name="Position2D" type="Position2D" parent="."]

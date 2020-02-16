@@ -55,8 +55,7 @@
   <ItemGroup>
     <Compile Include="Assets\Sprites\CharacterSprite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scripts\Beach.cs" />
-    <Compile Include="Scripts\PC.cs" />
+    <Compile Include="Scripts\*.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
