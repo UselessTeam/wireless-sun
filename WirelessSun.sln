@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WirelessSun", "WirelessSun.csproj", "{ABDBC56F-474E-4805-96FD-775CBF46842B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WirelessSun", "WirelessSun.csproj", "{71874E70-5701-4274-B583-D6DBAD2EFFE5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,11 +9,11 @@ Global
 	Tools|Any CPU = Tools|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{ABDBC56F-474E-4805-96FD-775CBF46842B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ABDBC56F-474E-4805-96FD-775CBF46842B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ABDBC56F-474E-4805-96FD-775CBF46842B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ABDBC56F-474E-4805-96FD-775CBF46842B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ABDBC56F-474E-4805-96FD-775CBF46842B}.Tools|Any CPU.ActiveCfg = Tools|Any CPU
-		{ABDBC56F-474E-4805-96FD-775CBF46842B}.Tools|Any CPU.Build.0 = Tools|Any CPU
+		{71874E70-5701-4274-B583-D6DBAD2EFFE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71874E70-5701-4274-B583-D6DBAD2EFFE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71874E70-5701-4274-B583-D6DBAD2EFFE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71874E70-5701-4274-B583-D6DBAD2EFFE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71874E70-5701-4274-B583-D6DBAD2EFFE5}.Tools|Any CPU.ActiveCfg = Tools|Any CPU
+		{71874E70-5701-4274-B583-D6DBAD2EFFE5}.Tools|Any CPU.Build.0 = Tools|Any CPU
 	EndGlobalSection
 EndGlobal
