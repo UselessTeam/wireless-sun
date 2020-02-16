@@ -2,11 +2,9 @@ using System;
 using Godot;
 
 public class Attack : AnimatedSprite {
-    // Declare member variables here. Examples:
-    // private int a = 2;
-    // private string b = "text";
 
-    // Called when the node enters the scene tree for the first time.
+    private float DISTANCE_TO_PLAYER = 15;
+
     public override void _Ready () {
 
     }
@@ -18,9 +16,21 @@ public class Attack : AnimatedSprite {
         // GetNode<SFX> ("SFX").Stop ();
     }
 
-    public void _StartAttack () {
+    public float OrientedAngle (Vector2 U, Vector2 V) {
+        float alpha = U.Cross (V);
+        return U.AngleTo (V) * alpha / Math.Abs (alpha);
+    }
+
+    public void _StartAttack (Vector2 direction) {
+        Position = DISTANCE_TO_PLAYER * direction;
         Show ();
-        Play ("straight");
+        if (direction.x == 0 || direction.y == 0) {
+            Rotation = direction.Angle ();
+            Play ("straight");
+        } else {
+            // Rotation = OrientedAngle (direction, new Vector2 (1, -1));
+            Play ("diagonal");
+        }
         GetNode<SFX> ("SFX").Play (0);
     }
 
