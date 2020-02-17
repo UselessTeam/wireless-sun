@@ -5,6 +5,8 @@ public class Body : KinematicBody2D {
     public const float WALK_SPEED = 100;
 
     public bool isImpact = false;
+    private float impactTime = 0;
+    private float impactDirection = 0;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready () {

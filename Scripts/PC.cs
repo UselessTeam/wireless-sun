@@ -1,14 +1,13 @@
 using System;
 using Godot;
 
-public class PC : KinematicBody2D {
+public class PC : Node2D {
 
-	private bool isAttacking = false;
-	private float impactTime = 0;
+	public bool isAttacking = false;
 	private Vector2 facingDirection;
 
 	public bool IsCanMove () {
-		return !isAttacking && !GetNode<Body> ("Body").isImpact;
+		return !isAttacking && !(GetParent<Body> ().isImpact);
 	}
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready () { }
@@ -24,7 +23,8 @@ public class PC : KinematicBody2D {
 
 	public override void _PhysicsProcess (float delta) {
 		Vector2 direction = new Vector2 (0, 0);
-		if (IsCanMove ()) { } else {
+		// GD.Print (GetNode<KinematicBody2D> ("Body"));
+		if (IsCanMove ()) {
 			if (Input.IsActionPressed ("ui_up"))
 				direction.y = -1;
 			if (Input.IsActionPressed ("ui_down")) {
@@ -37,8 +37,8 @@ public class PC : KinematicBody2D {
 			direction = direction.Normalized ();
 			if (direction.Dot (direction) != 0)
 				facingDirection = direction;
-		}
-		GetNode<Body> ("Body").Walk (direction, delta);
+		} else { }
+		GetParent<Body> ().Walk (direction, delta);
 	}
 
 }

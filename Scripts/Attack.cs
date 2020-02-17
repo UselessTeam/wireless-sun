@@ -12,7 +12,7 @@ public class Attack : AnimatedSprite {
     public void _OnAttackFinished () {
         Hide ();
         Stop ();
-        GetFather<PC> ("PC").isAttacking = false;
+        GetParent<PC> ().isAttacking = false;
         // GetNode<SFX> ("SFX").Stop ();
     }
 
