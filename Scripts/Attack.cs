@@ -21,7 +21,8 @@ public class Attack : AnimatedSprite {
         return U.AngleTo (V) * alpha / Math.Abs (alpha);
     }
 
-    public void _StartAttack (Vector2 direction) {
+    public void _StartAttack () {
+        Vector2 direction = GetNode<Body> ("../../../PlayerBody").facingDirection;
         Position = DISTANCE_TO_PLAYER * direction;
         Show ();
         if (direction.x == 0 || direction.y == 0) {

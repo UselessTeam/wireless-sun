@@ -3,19 +3,22 @@ using Godot;
 
 public class PC : Node2D {
 
+	Body myBody;
+
 	public bool isAttacking = false;
-	private Vector2 facingDirection;
 
 	public bool IsCanMove () {
-		return !isAttacking && !(GetParent<Body> ().isImpact);
+		return !isAttacking && myBody.IsCanMove ();
 	}
 	// Called when the node enters the scene tree for the first time.
-	public override void _Ready () { }
+	public override void _Ready () {
+		myBody = GetParent<Body> ();
+	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process (float delta) {
 		if (Input.IsActionJustPressed ("ui_select") && IsCanMove ()) {
-			GetNode<Attack> ("Attack")._StartAttack (facingDirection);
+			GetNode<Attack> ("Attack")._StartAttack ();
 			isAttacking = true;
 		}
 
@@ -36,9 +39,9 @@ public class PC : Node2D {
 				direction.x = 1;
 			direction = direction.Normalized ();
 			if (direction.Dot (direction) != 0)
-				facingDirection = direction;
+				myBody.facingDirection = direction;
 		} else { }
-		GetParent<Body> ().Walk (direction, delta);
+		myBody.Walk (direction, delta);
 	}
 
 }

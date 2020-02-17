@@ -8,10 +8,14 @@ public class Body : KinematicBody2D {
     private float impactTime = 0;
     private float impactDirection = 0;
 
-    // Called when the node enters the scene tree for the first time.
-    public override void _Ready () {
+    public Vector2 facingDirection = new Vector2 (1, 0);
 
+    public bool IsCanMove () {
+        return !isImpact;
     }
+
+    // Called when the node enters the scene tree for the first time.
+    public override void _Ready () { }
 
     public void Walk (Vector2 direction, float delta) {
         MoveAndCollide (direction * delta * WALK_SPEED);
