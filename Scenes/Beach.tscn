@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Scripts/PC.cs" type="Script" id=1]
 [ext_resource path="res://Nodes/HumanCharacter.tscn" type="PackedScene" id=2]
@@ -11,7 +11,8 @@
 [ext_resource path="res://Tiles/StonelessIsland.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scripts/Body.cs" type="Script" id=10]
 [ext_resource path="res://Assets/Sprites/mob_shadowball.png" type="Texture" id=11]
-[ext_resource path="res://Scripts/ShadowBallControl.cs" type="Script" id=12]
+[ext_resource path="res://Scripts/EnemiControl/ShadowBallControl.cs" type="Script" id=12]
+[ext_resource path="res://Scripts/EnemiControl/_EnemiControl.cs" type="Script" id=13]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 4 )
@@ -85,6 +86,13 @@ animations = [ {
 [node name="Beach" type="Node2D"]
 script = ExtResource( 3 )
 
+[node name="EnemiProperties" type="Node2D" parent="."]
+script = ExtResource( 13 )
+
+[node name="Audio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+autoplay = true
+
 [node name="Island" parent="." instance=ExtResource( 9 )]
 
 [node name="PlayerBody" type="KinematicBody2D" parent="."]
@@ -117,24 +125,15 @@ drag_margin_v_enabled = true
 position = Vector2( -15.0909, -13.7735 )
 polygon = PoolVector2Array( 11.1692, 18.3211, 17.5905, 18.0832, 17.8283, 24.5046, 10.9313, 24.5046 )
 
-[node name="Position2D" type="Position2D" parent="."]
-
-[node name="Audio" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 6 )
-autoplay = true
-
 [node name="ShadowBallBody" type="KinematicBody2D" parent="."]
 script = ExtResource( 10 )
 
 [node name="Shadowball" type="AnimatedSprite" parent="ShadowBallBody"]
 frames = SubResource( 14 )
-frame = 2
 playing = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ShadowBallBody"]
 polygon = PoolVector2Array( -4.43527, 12.784, 3.22487, 12.784, 7.34956, 4.1418, -8.95279, 4.53463 )
-
-[node name="EnemiProperties" type="Node2D" parent="ShadowBallBody"]
 
 [node name="ShadowBallControl" type="Node2D" parent="ShadowBallBody"]
 script = ExtResource( 12 )

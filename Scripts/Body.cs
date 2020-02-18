@@ -2,11 +2,9 @@ using System;
 using Godot;
 
 public class Body : KinematicBody2D {
-    public const float WALK_SPEED = 100;
-
     public bool isImpact = false;
     private float impactTime = 0;
-    private float impactDirection = 0;
+    private Vector2 impactDirection;
 
     public Vector2 facingDirection = new Vector2 (1, 0);
 
@@ -14,16 +12,29 @@ public class Body : KinematicBody2D {
         return !isImpact;
     }
 
-    // Called when the node enters the scene tree for the first time.
     public override void _Ready () { }
 
     public void Walk (Vector2 direction, float delta) {
-        MoveAndCollide (direction * delta * WALK_SPEED);
+        MoveAndCollide (direction * delta);
     }
 
-    //  // Called every frame. 'delta' is the elapsed time since the previous frame.
-    //  public override void _Process(float delta)
-    //  {
-    //
-    //  }
+    // Call to start an impact
+    public void Impact (Vector2 direction, float time) {
+        isImpact = true;
+        impactTime = time;
+        direction = impactDirection;
+    }
+
+    public override void _PhysicsProcess (float delta) {
+        // Impact movement
+        if (isImpact) {
+            impactTime -= delta;
+            MoveAndCollide (impactDirection * delta);
+
+            if (impactTime <= 0) {
+                impactTime = 0;
+                isImpact = false;
+            }
+        }
+    }
 }

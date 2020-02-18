@@ -2,6 +2,7 @@ using System;
 using Godot;
 
 public class PC : Node2D {
+	public const float WALK_SPEED = 100;
 
 	Body myBody;
 
@@ -41,7 +42,7 @@ public class PC : Node2D {
 			if (direction.Dot (direction) != 0)
 				myBody.facingDirection = direction;
 		} else { }
-		myBody.Walk (direction, delta);
+		myBody.Walk (direction * WALK_SPEED, delta);
 	}
 
 }
