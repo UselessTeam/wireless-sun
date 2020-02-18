@@ -19,7 +19,7 @@ public class PC : Node2D {
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process (float delta) {
 		if (Input.IsActionJustPressed ("ui_select") && CanMove ()) {
-			GetNode<Attack> ("Attack")._StartAttack ();
+			GetNode<PlayerAttack> ("../Attack")._StartAttack ();
 			isAttacking = true;
 		}
 

@@ -2,6 +2,8 @@ using System;
 using Godot;
 
 public class Body : KinematicBody2D {
+    public int HP = 50;
+
     public bool isImpact = false;
     private float impactTime = 0;
     private Vector2 impactDirection;
@@ -19,7 +21,7 @@ public class Body : KinematicBody2D {
     }
 
     // Call to start an impact
-    public void Impact (Vector2 direction, float time) {
+    public void StartImpact (Vector2 direction, float time, float damage = 0) {
         isImpact = true;
         impactTime = time;
         impactDirection = direction;
@@ -30,7 +32,6 @@ public class Body : KinematicBody2D {
         if (isImpact) {
             impactTime -= delta;
             MoveAndCollide (impactDirection * delta);
-
             if (impactTime <= 0) {
                 impactTime = 0;
                 isImpact = false;
