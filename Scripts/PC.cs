@@ -8,8 +8,8 @@ public class PC : Node2D {
 
 	public bool isAttacking = false;
 
-	public bool IsCanMove () {
-		return !isAttacking && myBody.IsCanMove ();
+	public bool CanMove () {
+		return !isAttacking && myBody.CanMove ();
 	}
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready () {
@@ -18,7 +18,7 @@ public class PC : Node2D {
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process (float delta) {
-		if (Input.IsActionJustPressed ("ui_select") && IsCanMove ()) {
+		if (Input.IsActionJustPressed ("ui_select") && CanMove ()) {
 			GetNode<Attack> ("Attack")._StartAttack ();
 			isAttacking = true;
 		}
@@ -26,9 +26,9 @@ public class PC : Node2D {
 	}
 
 	public override void _PhysicsProcess (float delta) {
-		Vector2 direction = new Vector2 (0, 0);
+		var direction = new Vector2 (0, 0);
 		// GD.Print (GetNode<KinematicBody2D> ("Body"));
-		if (IsCanMove ()) {
+		if (CanMove ()) {
 			if (Input.IsActionPressed ("ui_up"))
 				direction.y = -1;
 			if (Input.IsActionPressed ("ui_down")) {
@@ -42,7 +42,8 @@ public class PC : Node2D {
 			if (direction.Dot (direction) != 0)
 				myBody.facingDirection = direction;
 		} else { }
-		myBody.Walk (direction * WALK_SPEED, delta);
+		var collInfo = myBody.MoveAndCollide (direction * WALK_SPEED * delta);
+
 	}
 
 }

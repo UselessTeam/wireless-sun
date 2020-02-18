@@ -11,8 +11,8 @@
 [ext_resource path="res://Tiles/StonelessIsland.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scripts/Body.cs" type="Script" id=10]
 [ext_resource path="res://Assets/Sprites/mob_shadowball.png" type="Texture" id=11]
-[ext_resource path="res://Scripts/EnemiControl/ShadowBallControl.cs" type="Script" id=12]
-[ext_resource path="res://Scripts/EnemiControl/_EnemiControl.cs" type="Script" id=13]
+[ext_resource path="res://Scripts/EnemyControl/ShadowBallControl.cs" type="Script" id=12]
+[ext_resource path="res://Scripts/EnemyControl/_EnemyControl.cs" type="Script" id=13]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 4 )
@@ -86,7 +86,7 @@ animations = [ {
 [node name="Beach" type="Node2D"]
 script = ExtResource( 3 )
 
-[node name="EnemiProperties" type="Node2D" parent="."]
+[node name="EnemyProperties" type="Node2D" parent="."]
 script = ExtResource( 13 )
 
 [node name="Audio" type="AudioStreamPlayer2D" parent="."]
@@ -97,6 +97,8 @@ autoplay = true
 
 [node name="PlayerBody" type="KinematicBody2D" parent="."]
 position = Vector2( 147.81, 141.715 )
+collision_layer = 2
+collision_mask = 7
 script = ExtResource( 10 )
 
 [node name="PlayerControl" type="Node2D" parent="PlayerBody"]
@@ -126,10 +128,13 @@ position = Vector2( -15.0909, -13.7735 )
 polygon = PoolVector2Array( 11.1692, 18.3211, 17.5905, 18.0832, 17.8283, 24.5046, 10.9313, 24.5046 )
 
 [node name="ShadowBallBody" type="KinematicBody2D" parent="."]
+collision_layer = 4
+collision_mask = 7
 script = ExtResource( 10 )
 
 [node name="Shadowball" type="AnimatedSprite" parent="ShadowBallBody"]
 frames = SubResource( 14 )
+frame = 1
 playing = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ShadowBallBody"]

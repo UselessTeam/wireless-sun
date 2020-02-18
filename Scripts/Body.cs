@@ -8,7 +8,7 @@ public class Body : KinematicBody2D {
 
     public Vector2 facingDirection = new Vector2 (1, 0);
 
-    public bool IsCanMove () {
+    public bool CanMove () {
         return !isImpact;
     }
 
@@ -22,7 +22,7 @@ public class Body : KinematicBody2D {
     public void Impact (Vector2 direction, float time) {
         isImpact = true;
         impactTime = time;
-        direction = impactDirection;
+        impactDirection = direction;
     }
 
     public override void _PhysicsProcess (float delta) {

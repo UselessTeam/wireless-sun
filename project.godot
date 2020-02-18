@@ -77,6 +77,12 @@ ui_down={
  ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="static"
+2d_physics/layer_2="player"
+2d_physics/layer_3="enemy"
+
 [rendering]
 
 quality/intended_usage/framebuffer_allocation=0
