@@ -19,6 +19,10 @@ config/name="WirelessSun"
 run/main_scene="res://Scenes/Beach.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Network="*res://Nodes/Network.tscn"
+
 [display]
 
 window/per_pixel_transparency/allowed=true

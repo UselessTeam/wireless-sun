@@ -14,7 +14,7 @@ public class Network : Node2D {
     public int[] connectedPlayers = new int[MAX_PLAYERS];
     int nConnectedPlayers = 1;
 
-    GameHandler gameHandler;
+    GameHandler gameHandler { get { return GameHandler.Instance; } }
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready () {
@@ -26,17 +26,15 @@ public class Network : Node2D {
         GetTree ().Connect ("server_disconnected", this, "_OnServerDisconnected");
 
         GetTree ().Connect ("connection_failed", this, "_OnConnectionFailed");
-
-        gameHandler = GetParent<GameHandler> ();
     }
 
     public void _OnPlayerDisconnected (int id) {
         GD.Print ("Player leaving : " + id);
-        nConnectedPlayers--;
         gameHandler.RemovePlayer (id);
 
         for (int i = 0; i < nConnectedPlayers; i++) {
             if (connectedPlayers[i] == id) {
+                nConnectedPlayers--;
                 connectedPlayers[i] = connectedPlayers[nConnectedPlayers];
                 connectedPlayers[nConnectedPlayers] = 0;
                 return;
@@ -55,11 +53,13 @@ public class Network : Node2D {
 
     public void _OnJoinedAServer () {
         GD.Print ("Server joined!");
+        gameHandler.SetNetworkMaster (1);
         connectedPlayers[0] = serverID;
-        gameHandler.ControlMyPlayer ();
+        gameHandler.ControlMyPlayer (serverID);
     }
 
     public void _OnServerDisconnected () {
+        GD.Print ("Disconnecting from server");
         GetTree ().NetworkPeer = null;
         for (int i = 0; i < nConnectedPlayers; i++) {
             int id = connectedPlayers[i];

@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using Godot;
 
 public class GameHandler : Node2D {
+    static public GameHandler Instance { get { return myInstance; } }
+
+    static private GameHandler myInstance;
     static public Body myPlayer;
     static public Dictionary<string, uint> Layer = new Dictionary<string, uint> ();
 
-    private int serverID {
-        get { return GetNode<Network> ("Network").serverID; }
-    }
     // Called when the node enters the scene tree for the first time.
     public override void _Ready () {
         myPlayer = GetNode<Body> ("PlayerBody");
+        myInstance = this;
 
         // Building Layer List
         for (int i = 1; i <= 20; i += 1) {
@@ -35,11 +36,9 @@ public class GameHandler : Node2D {
 
     }
 
-    public void ControlMyPlayer () {
-        int id = serverID;
+    public void ControlMyPlayer (int id) {
         myPlayer.Name = id.ToString ();
         myPlayer.SetNetworkMaster (id);
-
     }
 
     public void RemovePlayer (int id) {
