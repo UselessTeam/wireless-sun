@@ -17,7 +17,7 @@ public abstract class Attack : Node2D {
 
 	public override void _Process (float delta) {
 		foreach (Body attackedBody in myArea.GetOverlappingBodies ()) {
-			attackedBody.StartImpact ((attackedBody.Position - myUserBody.Position).Normalized () * 800, 0.2f);
+			attackedBody.StartImpact ((attackedBody.Position - myUserBody.Position).Normalized () * 800, 0.1f);
 		}
 	}
 }

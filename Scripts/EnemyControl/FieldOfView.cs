@@ -9,10 +9,13 @@ public class FieldOfView : Area2D {
 
     public Body GetClosestPlayer () {
         Body closestPlayer = null;
-        float distance = float.PositiveInfinity;
+        float maxDist = float.PositiveInfinity;
         foreach (PhysicsBody2D body in GetOverlappingBodies ()) {
-            if ((body.Position - GetParent<Body> ().Position).LengthSquared () < distance)
+            float distance = (body.Position - GetParent<Body> ().Position).LengthSquared ();
+            if (distance < maxDist) {
                 closestPlayer = (Body) body;
+                maxDist = distance;
+            }
         }
         return closestPlayer;
     }
