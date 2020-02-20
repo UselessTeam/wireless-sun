@@ -3,20 +3,19 @@ using Godot;
 
 public class PlayerAttack : Attack {
 
-    public float DISTANCE_TO_PLAYER = 15;
+    [Export] public float DISTANCE_TO_PLAYER = 15;
 
-    public AnimatedSprite mySprite;
+    public AnimatedSprite MySprite {
+        get { return GetNode<AnimatedSprite> ("Sprite"); }
+    }
 
     public override void _Ready () {
-        DAMAGE = 10;
-
-        mySprite = GetNode<AnimatedSprite> ("Sprite");
         base._Ready ();
     }
 
     public void _OnAttackFinished () {
-        mySprite.Hide ();
-        mySprite.Stop ();
+        MySprite.Hide ();
+        MySprite.Stop ();
         GetNode<PC> ("../PlayerControl").isAttacking = false;
 
         GetNode<CollisionShape2D> ("Hitbox/CollisionShape2D").Disabled = true;
@@ -32,16 +31,16 @@ public class PlayerAttack : Attack {
         GetNode<CollisionShape2D> ("Hitbox/CollisionShape2D").Disabled = false;
 
         // Put the attack sprite at the right position and show it
-        Vector2 direction = myUserBody.facingDirection;
+        Vector2 direction = MyUserBody.FacingDirection;
         Position = DISTANCE_TO_PLAYER * direction;
         if (direction.x == 0 || direction.y == 0) {
             Rotation = direction.Angle ();
-            mySprite.Play ("straight");
+            MySprite.Play ("straight");
         } else {
             // Rotation = OrientedAngle (direction, new Vector2 (1, -1));
-            mySprite.Play ("diagonal");
+            MySprite.Play ("diagonal");
         }
-        mySprite.Show ();
+        MySprite.Show ();
 
         // Play Attack's SFX
         GetNode<AudioStreamPlayer2D> ("SFX").Play (0);

@@ -2,19 +2,27 @@ using System;
 using Godot;
 
 public class Body : KinematicBody2D {
-    public int HP = 50;
+    [Export] public int HP = 50;
+    [Export] public float WALK_SPEED = 100;
 
     public bool isImpact = false;
     private float impactTime = 0;
     private Vector2 impactDirection;
 
-    public Vector2 facingDirection = new Vector2 (1, 0);
+    private Vector2 facingDirection = new Vector2 (1, 0);
+    public Vector2 FacingDirection { get { return facingDirection; } }
+    private Vector2 nextMovement = new Vector2 (0, 0);
+    public Vector2 NextMovement {
+        get { return nextMovement; }
+        set {
+            nextMovement = value;
+            if (value.LengthSquared () > 0) facingDirection = value.Normalized ();
+        }
+    }
 
     [Puppet] Vector2 PuppetPosition = new Vector2 (0, 0);
 
-    public bool CanMove () {
-        return !isImpact;
-    }
+    public bool CanMove { get { return !isImpact; } }
 
     public override void _Ready () { }
 
@@ -31,7 +39,6 @@ public class Body : KinematicBody2D {
 
     public override void _PhysicsProcess (float delta) {
         if (!Network.isConnectionStarted || IsNetworkMaster ()) { //Master Code
-
             // Impact movement
             if (isImpact) {
                 impactTime -= delta;
@@ -40,6 +47,11 @@ public class Body : KinematicBody2D {
                     impactTime = 0;
                     isImpact = false;
                 }
+            }
+            // NormalMovement
+            else {
+                MoveAndCollide (nextMovement * WALK_SPEED * delta);
+                nextMovement = new Vector2 (0, 0);
             }
 
             if (Network.isConnectionStarted)

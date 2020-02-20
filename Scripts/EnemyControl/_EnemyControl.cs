@@ -2,12 +2,8 @@ using System;
 using Godot;
 
 public abstract class _EnemyControl : Node2D {
-    public float WALK_SPEED;
-    public float DAMAGE;
-    public float DETECTION_AREA;
+    [Export] public float DAMAGE = 10;
 
-    public bool CanMove () {
-        return GetParent<Body> ().CanMove ();
-    }
+    public bool CanMove { get { return GetParent<Body> ().CanMove; } }
 
 }
