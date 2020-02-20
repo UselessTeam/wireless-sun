@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Scripts/EnemyControl/ShadowBallControl.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Body.cs" type="Script" id=2]
-[ext_resource path="res://Scripts/Attacks/ShadowBallAttack.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/Attacks/Attack.cs" type="Script" id=3]
 [ext_resource path="res://Assets/Sprites/mob_shadowball.png" type="Texture" id=4]
 [ext_resource path="res://Scripts/EnemyControl/FieldOfView.cs" type="Script" id=5]
 

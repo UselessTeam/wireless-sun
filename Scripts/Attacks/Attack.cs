@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-public abstract class Attack : Node2D {
+public class Attack : Node2D {
 
 	[Export] public float DAMAGE = 10;
 

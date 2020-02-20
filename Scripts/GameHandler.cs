@@ -27,11 +27,10 @@ public class GameHandler : Node2D {
     [Remote]
     public void SpawnPlayer (int id, Vector2 position) {
         GD.Print ("New player entering : " + id);
-        var newPlayer = ((PackedScene) GD.Load ("res://Nodes/Bodies/PlayerBody.tscn")).Instance ();
-        var newPlayerBody = newPlayer.GetNode<Body> ("./");
+        var newPlayer = ((PackedScene) GD.Load ("res://Nodes/Bodies/PlayerBody.tscn")).Instance ().GetNode<Body> ("./");
         newPlayer.Name = id.ToString ();
         newPlayer.SetNetworkMaster (id);
-        newPlayerBody.Position = position;
+        newPlayer.Position = position;
         AddChild (newPlayer);
 
     }

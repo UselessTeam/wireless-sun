@@ -9,14 +9,25 @@ public class Body : KinematicBody2D {
     private float impactTime = 0;
     private Vector2 impactDirection;
 
-    private Vector2 facingDirection = new Vector2 (1, 0);
-    public Vector2 FacingDirection { get { return facingDirection; } }
-    private Vector2 nextMovement = new Vector2 (0, 0);
+    [RemoteSync] private Vector2 facingDirection = new Vector2 (1, 0);
+    public Vector2 FacingDirection {
+        get { return facingDirection; } set {
+            if (facingDirection == Vector2.Zero)
+                return;
+            facingDirection = value.Normalized ();
+            if (Network.isConnectionStarted)
+                RsetUnreliable ("facingDirection", facingDirection);
+        }
+    }
+
+    [RemoteSync] private Vector2 nextMovement = new Vector2 (0, 0);
     public Vector2 NextMovement {
         get { return nextMovement; }
         set {
             nextMovement = value;
-            if (value.LengthSquared () > 0) facingDirection = value.Normalized ();
+            if (Network.isConnectionStarted)
+                RsetUnreliable ("nextMovement", nextMovement);
+            // if (value != Vector2.Zero) facingDirection = value.Normalized ();
         }
     }
 
@@ -57,7 +68,7 @@ public class Body : KinematicBody2D {
             if (Network.isConnectionStarted)
                 RsetUnreliable ("PuppetPosition", Position);
         } else { //Puppet Code
-            if (PuppetPosition.LengthSquared () != 0)
+            if (PuppetPosition != Vector2.Zero)
                 Position = PuppetPosition;
         }
 
