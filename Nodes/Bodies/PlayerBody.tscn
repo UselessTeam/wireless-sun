@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Scripts/PC.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Musics/hit_sfx.wav" type="AudioStream" id=3]
@@ -55,6 +55,9 @@ animations = [ {
 [sub_resource type="CircleShape2D" id=10]
 radius = 14.699
 
+[sub_resource type="CircleShape2D" id=11]
+radius = 23.2934
+
 [node name="PlayerBody" type="KinematicBody2D"]
 collision_layer = 2
 collision_mask = 5
@@ -89,4 +92,12 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Attack/Hitbox"]
 shape = SubResource( 10 )
 disabled = true
+
+[node name="Picker" type="Node2D" parent="."]
+
+[node name="Hitbox" type="Area2D" parent="Picker"]
+gravity_point = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Picker/Hitbox"]
+shape = SubResource( 11 )
 [connection signal="animation_finished" from="Attack/Sprite" to="Attack" method="_OnAttackFinished"]

@@ -16,12 +16,14 @@ public class ShadowBallControl : _EnemyControl {
     }
 
     public override void _PhysicsProcess (float delta) {
-        var direction = new Vector2 (0, 0);
+        if (isMaster) {
+            var direction = new Vector2 (0, 0);
 
-        if (CanSeePlayer && CanMove) {
-            var playerBody = myFOV.GetClosestPlayer ();
-            direction = (playerBody.Position - myBody.Position).Normalized ();
-            myBody.NextMovement = direction;
+            if (CanSeePlayer && CanMove) {
+                var playerBody = myFOV.GetClosestPlayer ();
+                direction = (playerBody.Position - myBody.Position).Normalized ();
+                myBody.NextMovement = direction;
+            }
         }
     }
 }

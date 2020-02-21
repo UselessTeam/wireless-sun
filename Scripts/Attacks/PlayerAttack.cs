@@ -5,6 +5,8 @@ public class PlayerAttack : Attack {
 
     [Export] public float DISTANCE_TO_PLAYER = 15;
 
+    double LimitAngle = Math.PI / 8; //Limite a partir de laquelle l'attaque est horizontale
+
     public AnimatedSprite MySprite {
         get { return GetNode<AnimatedSprite> ("Sprite"); }
     }
@@ -33,11 +35,12 @@ public class PlayerAttack : Attack {
         // Put the attack sprite at the right position and show it
         Vector2 direction = MyUserBody.FacingDirection;
         Position = DISTANCE_TO_PLAYER * direction;
-        if (direction.x == 0 || direction.y == 0) {
-            Rotation = direction.Angle ();
+        Rotation = direction.Angle ();
+        if (Rotation % Math.PI / 2 < LimitAngle && (-Rotation) % Math.PI / 2 < LimitAngle) {
             MySprite.Play ("straight");
         } else {
             // Rotation = OrientedAngle (direction, new Vector2 (1, -1));
+            Rotation += (float) Math.PI / 4;
             MySprite.Play ("diagonal");
         }
         MySprite.Show ();

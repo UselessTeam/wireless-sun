@@ -21,7 +21,8 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Network="*res://Nodes/Network.tscn"
+Network="*res://Nodes/Background/Network.tscn"
+Inventory="*res://Nodes/Background/Inventory.tscn"
 
 [display]
 
