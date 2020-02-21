@@ -23,6 +23,7 @@ config/icon="res://icon.png"
 
 Network="*res://Nodes/Background/Network.tscn"
 Inventory="*res://Nodes/Background/Inventory.tscn"
+ItemManager="*res://Nodes/Background/ItemManager.tscn"
 
 [display]
 

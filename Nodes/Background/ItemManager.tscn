@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/InventoryManagement/ItemManager.cs" type="Script" id=1]
+[ext_resource path="res://Assets/Sprites/items.png" type="Texture" id=2]
+
+[node name="ItemManager" type="Node"]
+script = ExtResource( 1 )
+
+[node name="Food" type="Node" parent="."]
+
+[node name="Berry" type="Sprite" parent="Food"]
+texture = ExtResource( 2 )
+vframes = 6
+hframes = 4
+frame = 9
+
+[node name="CrabLeg" type="Sprite" parent="Food"]
+texture = ExtResource( 2 )
+vframes = 6
+hframes = 4
+frame = 10
+
+[node name="Resources" type="Node" parent="."]
+
+[node name="Wood" type="Sprite" parent="Resources"]
+texture = ExtResource( 2 )
+vframes = 6
+hframes = 4
+frame = 1
+
+[node name="Stone" type="Sprite" parent="Resources"]
+texture = ExtResource( 2 )
+vframes = 6
+hframes = 4
+frame = 4

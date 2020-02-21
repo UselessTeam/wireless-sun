@@ -1,11 +1,11 @@
 using System;
 using Godot;
 
-public class PC : _EnemyControl {
+public class PC : _Control {
 	public bool isAttacking = false;
 
 	Body myBody { get { return GetParent<Body> (); } }
-	public bool CanMove { get { return !isAttacking && myBody.CanMove; } }
+	public new bool CanMove { get { return !isAttacking && myBody.CanMove; } }
 
 	public override void _Ready () { }
 

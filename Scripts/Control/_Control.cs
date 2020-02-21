@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-public abstract class _EnemyControl : Node2D {
+public abstract class _Control : Node2D {
     [Export] public float DAMAGE = 10;
 
     public bool CanMove { get { return GetParent<Body> ().CanMove; } }

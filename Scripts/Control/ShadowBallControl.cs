@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-public class ShadowBallControl : _EnemyControl {
+public class ShadowBallControl : _Control {
     Body myBody {
         get { return GetParent<Body> (); }
     }
@@ -16,14 +16,12 @@ public class ShadowBallControl : _EnemyControl {
     }
 
     public override void _PhysicsProcess (float delta) {
-        if (isMaster) {
-            var direction = new Vector2 (0, 0);
+        var direction = new Vector2 (0, 0);
 
-            if (CanSeePlayer && CanMove) {
-                var playerBody = myFOV.GetClosestPlayer ();
-                direction = (playerBody.Position - myBody.Position).Normalized ();
-                myBody.NextMovement = direction;
-            }
+        if (CanSeePlayer && CanMove) {
+            var playerBody = myFOV.GetClosestPlayer ();
+            direction = (playerBody.Position - myBody.Position).Normalized ();
+            myBody.NextMovement = direction;
         }
     }
 }
