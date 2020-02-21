@@ -1,11 +1,14 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scripts/Control/ShadowBallControl.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Body.cs" type="Script" id=2]
-[ext_resource path="res://Scripts/Attacks/Attack.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/Attacks/_Attack.cs" type="Script" id=3]
 [ext_resource path="res://Assets/Sprites/mob_shadowball.png" type="Texture" id=4]
-[ext_resource path="res://Scripts/Control/FieldOfView.cs" type="Script" id=5]
+[ext_resource path="res://Scripts/Attributes/FieldOfView.cs" type="Script" id=5]
+[ext_resource path="res://Scripts/Attributes/Health.cs" type="Script" id=6]
 
+[sub_resource type="CircleShape2D" id=7]
+radius = 9.02684
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 4 )
@@ -34,25 +37,36 @@ animations = [ {
 [sub_resource type="CircleShape2D" id=6]
 radius = 168.731
 
-[sub_resource type="CircleShape2D" id=7]
-radius = 9.02684
-
 [node name="ShadowBallBody" type="KinematicBody2D"]
 collision_layer = 4
 collision_mask = 7
 script = ExtResource( 2 )
 WALK_SPEED = 200.0
 
+[node name="ShadowBallControl" type="Node2D" parent="."]
+script = ExtResource( 1 )
+
+[node name="Attack" type="Node2D" parent="ShadowBallControl"]
+script = ExtResource( 3 )
+DAMAGE = 60.0
+
+[node name="Hitbox" type="Area2D" parent="ShadowBallControl/Attack"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShadowBallControl/Attack/Hitbox"]
+position = Vector2( -0.311638, 8.10276 )
+shape = SubResource( 7 )
+
+[node name="Health" type="Node2D" parent="."]
+script = ExtResource( 6 )
+
 [node name="Shadowball" type="AnimatedSprite" parent="."]
 frames = SubResource( 5 )
-frame = 2
 playing = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PoolVector2Array( -4.43527, 12.784, 3.22487, 12.784, 4.03802, 4.26392, -5.62297, 4.26392 )
-
-[node name="ShadowBallControl" type="Node2D" parent="."]
-script = ExtResource( 1 )
 
 [node name="FieldOfView" type="Area2D" parent="."]
 position = Vector2( -1, 0 )
@@ -62,14 +76,3 @@ script = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FieldOfView"]
 shape = SubResource( 6 )
-
-[node name="Attack" type="Node2D" parent="."]
-script = ExtResource( 3 )
-
-[node name="Hitbox" type="Area2D" parent="Attack"]
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Attack/Hitbox"]
-position = Vector2( -0.311638, 8.10276 )
-shape = SubResource( 7 )

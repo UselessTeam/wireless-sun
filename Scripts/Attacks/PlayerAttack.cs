@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-public class PlayerAttack : Attack {
+public class PlayerAttack : _Attack {
 
     [Export] public float DISTANCE_TO_PLAYER = 15;
 
@@ -18,7 +18,7 @@ public class PlayerAttack : Attack {
     public void _OnAttackFinished () {
         MySprite.Hide ();
         MySprite.Stop ();
-        GetNode<PC> ("../PlayerControl").isAttacking = false;
+        GetParent<PC> ().isAttacking = false;
 
         GetNode<CollisionShape2D> ("Hitbox/CollisionShape2D").Disabled = true;
     }

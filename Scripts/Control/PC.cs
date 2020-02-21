@@ -4,8 +4,7 @@ using Godot;
 public class PC : _Control {
 	public bool isAttacking = false;
 
-	Body myBody { get { return GetParent<Body> (); } }
-	public new bool CanMove { get { return !isAttacking && myBody.CanMove; } }
+	public new bool CanMove { get { return !isAttacking && MyBody.CanMove; } }
 
 	public override void _Ready () { }
 
@@ -14,10 +13,10 @@ public class PC : _Control {
 	};
 
 	public override void _Input (InputEvent _event) {
-		if (isMaster) {
+		if (IsMaster) {
 			foreach (var act in ActionList) {
 				if (_event.IsActionPressed (act)) {
-					if (Network.isConnectionStarted) {
+					if (Network.IsConnectionStarted) {
 						// If connected to a server, the event will be sent to all puppets
 						this.Rpc ("_Action", act);
 						_Action (act);
@@ -28,20 +27,20 @@ public class PC : _Control {
 				}
 			}
 			if (_event is InputEventMouseMotion eventMouseMotion) {
-				myBody.FacingDirection = GetGlobalMousePosition () - myBody.Position;
+				MyBody.FacingDirection = GetGlobalMousePosition () - MyBody.Position;
 			}
 		}
 	}
 
 	[Puppet] public void _Action (string _event) {
 		if (_event == ActionList[0]) { // Action : Attack
-			GetNode<PlayerAttack> ("../Attack")._StartAttack ();
+			GetNode<PlayerAttack> ("Attack")._StartAttack ();
 			isAttacking = true;
 		}
 	}
 
 	public override void _Process (float delta) {
-		if (isMaster && CanMove) { // Master Code
+		if (IsMaster && CanMove) { // Master Code
 			Vector2 inputMovement = new Vector2 (0, 0);
 			if (Input.IsActionPressed ("ui_up"))
 				inputMovement.y = -1;
@@ -53,7 +52,7 @@ public class PC : _Control {
 				inputMovement.x = 1;
 			if (inputMovement != Vector2.Zero) {
 				inputMovement = inputMovement.Normalized ();
-				myBody.NextMovement = inputMovement;
+				MyBody.NextMovement = inputMovement;
 				inputMovement = new Vector2 (0, 0);
 			}
 		}

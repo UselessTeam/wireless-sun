@@ -1,11 +1,14 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Scripts/Control/PC.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Attributes/FieldOfView.cs" type="Script" id=2]
 [ext_resource path="res://Assets/Musics/hit_sfx.wav" type="AudioStream" id=3]
 [ext_resource path="res://Nodes/HumanCharacter.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scripts/Attacks/PlayerAttack.cs" type="Script" id=5]
 [ext_resource path="res://Assets/Sprites/attack.png" type="Texture" id=6]
 [ext_resource path="res://Scripts/Body.cs" type="Script" id=7]
+[ext_resource path="res://Scripts/InventoryManagement/Picker.cs" type="Script" id=8]
+[ext_resource path="res://Scripts/Attributes/Health.cs" type="Script" id=9]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 6 )
@@ -56,7 +59,7 @@ animations = [ {
 radius = 14.699
 
 [sub_resource type="CircleShape2D" id=11]
-radius = 23.2934
+radius = 58.5806
 
 [node name="PlayerBody" type="KinematicBody2D"]
 collision_layer = 2
@@ -66,38 +69,45 @@ script = ExtResource( 7 )
 [node name="PlayerControl" type="Node2D" parent="."]
 script = ExtResource( 1 )
 
+[node name="Attack" type="Node2D" parent="PlayerControl"]
+script = ExtResource( 5 )
+
+[node name="Sprite" type="AnimatedSprite" parent="PlayerControl/Attack"]
+visible = false
+frames = SubResource( 9 )
+animation = "straight"
+
+[node name="SFX" type="AudioStreamPlayer2D" parent="PlayerControl/Attack"]
+position = Vector2( -26.907, -1.34535 )
+stream = ExtResource( 3 )
+pitch_scale = 1.25
+
+[node name="Hitbox" type="Area2D" parent="PlayerControl/Attack"]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerControl/Attack/Hitbox"]
+shape = SubResource( 10 )
+disabled = true
+
+[node name="Health" type="Node2D" parent="PlayerControl"]
+script = ExtResource( 9 )
+
 [node name="HumanCharacter" parent="." instance=ExtResource( 4 )]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 position = Vector2( -15.0909, -13.7735 )
 polygon = PoolVector2Array( 11.1692, 18.3211, 17.5905, 18.0832, 17.8283, 24.5046, 10.9313, 24.5046 )
 
-[node name="Attack" type="Node2D" parent="."]
-script = ExtResource( 5 )
-
-[node name="Sprite" type="AnimatedSprite" parent="Attack"]
-visible = false
-frames = SubResource( 9 )
-animation = "straight"
-
-[node name="SFX" type="AudioStreamPlayer2D" parent="Attack"]
-position = Vector2( -26.907, -1.34535 )
-stream = ExtResource( 3 )
-pitch_scale = 1.25
-
-[node name="Hitbox" type="Area2D" parent="Attack"]
-collision_layer = 0
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Attack/Hitbox"]
-shape = SubResource( 10 )
-disabled = true
-
 [node name="Picker" type="Node2D" parent="."]
+script = ExtResource( 8 )
 
-[node name="Hitbox" type="Area2D" parent="Picker"]
-gravity_point = true
+[node name="FieldOfView" type="Area2D" parent="Picker"]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource( 2 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Picker/Hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Picker/FieldOfView"]
 shape = SubResource( 11 )
-[connection signal="animation_finished" from="Attack/Sprite" to="Attack" method="_OnAttackFinished"]
+[connection signal="damage_taken" from="." to="PlayerControl/Health" method="TakeDamage"]
+[connection signal="animation_finished" from="PlayerControl/Attack/Sprite" to="PlayerControl/Attack" method="_OnAttackFinished"]

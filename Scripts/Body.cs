@@ -2,8 +2,11 @@ using System;
 using Godot;
 
 public class Body : KinematicBody2D {
-    [Export] public float HP = 50;
     [Export] public float WALK_SPEED = 100;
+
+    [Signal] delegate void body_collision (KinematicCollision2D collInfo);
+    [Signal] delegate void damage_taken (float damage);
+    KinematicCollision2D collInfo = null;
 
     public bool isImpact = false;
     private float impactTime = 0;
@@ -16,7 +19,7 @@ public class Body : KinematicBody2D {
             if (facingDirection == Vector2.Zero)
                 return;
             facingDirection = value.Normalized ();
-            if (Network.isConnectionStarted)
+            if (Network.IsConnectionStarted)
                 RsetUnreliable ("facingDirection", facingDirection);
         }
     }
@@ -26,7 +29,7 @@ public class Body : KinematicBody2D {
         get { return nextMovement; }
         set {
             nextMovement = value;
-            if (Network.isConnectionStarted)
+            if (Network.IsConnectionStarted)
                 RsetUnreliable ("nextMovement", nextMovement);
         }
     }
@@ -37,27 +40,29 @@ public class Body : KinematicBody2D {
 
     // Call whenever the body is hit for some time
     public void StartImpact (Vector2 direction, float time, float damage = 0) {
-        HP -= damage;
+        EmitSignal ("damage_taken", damage);
         isImpact = true;
         impactTime = time;
         impactDirection = direction;
     }
 
     public override void _PhysicsProcess (float delta) {
-        if (!Network.isConnectionStarted || IsNetworkMaster ()) { //Master Code
+        if (!Network.IsConnectionStarted || IsNetworkMaster ()) { //Master Code
             // Movement in case of impact
             if (isImpact) {
                 impactTime -= delta;
-                MoveAndCollide (impactDirection * delta);
+                collInfo = MoveAndCollide (impactDirection * delta);
                 if (impactTime <= 0) {
                     impactTime = 0;
                     isImpact = false;
                 }
             } else if (NextMovement != Vector2.Zero) { // Normal Movement
-                MoveAndCollide (NextMovement * WALK_SPEED * delta);
+                collInfo = MoveAndCollide (NextMovement * WALK_SPEED * delta);
                 NextMovement = new Vector2 (0, 0);
             }
-            if (Network.isConnectionStarted)
+            if (collInfo != null)
+                EmitSignal ("body_collision", collInfo);
+            if (Network.IsConnectionStarted)
                 RsetUnreliable ("PuppetPosition", Position);
         } else { //Puppet Code
             if (PuppetPosition != Vector2.Zero)

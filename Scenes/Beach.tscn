@@ -1,11 +1,17 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Nodes/Bodies/PlayerBody.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Nodes/Bodies/ShadowBallBody.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/GameHandler.cs" type="Script" id=3]
 [ext_resource path="res://Scripts/Camera.cs" type="Script" id=4]
+[ext_resource path="res://Assets/Sprites/items.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Musics/bornForAdventure.wav" type="AudioStream" id=6]
+[ext_resource path="res://Scripts/Body.cs" type="Script" id=7]
+[ext_resource path="res://Scripts/Control/PickableControl.cs" type="Script" id=8]
 [ext_resource path="res://Tiles/StonelessIsland.tscn" type="PackedScene" id=9]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 6.19216
 
 [node name="Beach" type="Node2D"]
 script = ExtResource( 3 )
@@ -17,7 +23,7 @@ autoplay = true
 [node name="Island" parent="." instance=ExtResource( 9 )]
 
 [node name="PlayerBody" parent="." instance=ExtResource( 1 )]
-position = Vector2( 197.465, 159.715 )
+position = Vector2( 233.562, 198.284 )
 
 [node name="Camera2D" type="Camera2D" parent="PlayerBody"]
 rotating = true
@@ -27,4 +33,27 @@ drag_margin_v_enabled = true
 script = ExtResource( 4 )
 
 [node name="ShadowBallBody" parent="." instance=ExtResource( 2 )]
+position = Vector2( 84.6734, 59.3937 )
 WALK_SPEED = 65.0
+
+[node name="Spawner" type="Node2D" parent="."]
+position = Vector2( 92.1893, 265.808 )
+
+[node name="Berry" type="KinematicBody2D" parent="Spawner"]
+position = Vector2( 30.6576, -2.96686 )
+collision_layer = 8
+collision_mask = 2
+script = ExtResource( 7 )
+
+[node name="PickableControl" type="Node2D" parent="Spawner/Berry"]
+script = ExtResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spawner/Berry"]
+shape = SubResource( 1 )
+
+[node name="Berry" type="Sprite" parent="Spawner/Berry"]
+texture = ExtResource( 5 )
+vframes = 6
+hframes = 4
+frame = 9
+[connection signal="body_collision" from="Spawner/Berry" to="Spawner/Berry/PickableControl" method="_OnCollisionWithPlayer"]

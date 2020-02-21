@@ -4,7 +4,6 @@ using Godot;
 
 public class ItemManager : Node {
     public static Dictionary<string, int> ItemNumber = new Dictionary<string, int> ();
-    // public static Dictionary<string, int> ItemType = new Dictionary<string, int> ();
     public static List<Item> ItemList = new List<Item> ();
 
     public override void _Ready () {
@@ -14,11 +13,20 @@ public class ItemManager : Node {
             for (int j = 0; j < Type.GetChildCount (); j++) {
                 var ItemNode = Type.GetChild (j);
                 ItemList.Add (new Item (ItemNode.Name, Type.Name, id));
-                ItemNumber.Add (ItemNode.Name, i);
+                ItemNumber.Add (ItemNode.Name, id);
                 id += 1;
             }
         }
     }
+
+    public static Item GetItemByName (string name) {
+        int id;
+        if (ItemNumber.TryGetValue (name, out id))
+            return ItemList[id];
+        GD.PrintErr ("Error: Trying to get a non existing item : " + name);
+        return new Item (name);
+    }
+
 }
 
 public struct Item {
@@ -34,7 +42,7 @@ public struct Item {
     }
 
     public override string ToString () {
-        return name + " of type " + type + ". Id : " + id.ToString ();
+        return name + " of type " + type + " (id=" + id.ToString () + ")";
     }
 }
 

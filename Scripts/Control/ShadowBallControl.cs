@@ -2,9 +2,6 @@ using System;
 using Godot;
 
 public class ShadowBallControl : _Control {
-    Body myBody {
-        get { return GetParent<Body> (); }
-    }
     FieldOfView myFOV {
         get { return GetNode<FieldOfView> ("../FieldOfView"); }
     }
@@ -16,12 +13,13 @@ public class ShadowBallControl : _Control {
     }
 
     public override void _PhysicsProcess (float delta) {
-        var direction = new Vector2 (0, 0);
-
-        if (CanSeePlayer && CanMove) {
-            var playerBody = myFOV.GetClosestPlayer ();
-            direction = (playerBody.Position - myBody.Position).Normalized ();
-            myBody.NextMovement = direction;
+        if (IsMaster) {
+            var direction = new Vector2 (0, 0);
+            if (CanSeePlayer && CanMove) {
+                var playerBody = myFOV.GetClosestPlayer ();
+                direction = (playerBody.Position - MyBody.Position).Normalized ();
+                MyBody.NextMovement = direction;
+            }
         }
     }
 }

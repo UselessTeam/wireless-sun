@@ -9,15 +9,21 @@ public class Network : Node2D {
     const int DEFAULT_PORT = 31400;
     const int MAX_PLAYERS = 3;
 
-    public static bool isConnectionStarted = false;
-    public int serverID { get { return GetTree ().GetNetworkUniqueId (); } }
-    public int[] connectedPlayers = new int[MAX_PLAYERS];
+    public static bool IsConnectionStarted = false;
+    public static bool IsServer { get { return !IsConnectionStarted || Instance.GetTree ().IsNetworkServer (); } }
+    public static Network Instance { get { return instance; } }
+
+    static Network instance;
+    int serverID { get { return GetTree ().GetNetworkUniqueId (); } }
     int nConnectedPlayers = 1;
+    int[] connectedPlayers = new int[MAX_PLAYERS];
 
     GameHandler gameHandler { get { return GameHandler.Instance; } }
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready () {
+        instance = this;
+
         // Set network signals for the Network handler
         GetTree ().Connect ("network_peer_connected", this, "_OnPlayerConnected");
         GetTree ().Connect ("network_peer_disconnected", this, "_OnPlayerDisconnected");
@@ -71,12 +77,12 @@ public class Network : Node2D {
 
     public void _OnConnectionFailed () {
         GD.Print ("Connection failed !");
-        isConnectionStarted = false;
+        IsConnectionStarted = false;
     }
 
     //  // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process (float delta) {
-        if (!isConnectionStarted) {
+        if (!IsConnectionStarted) {
             if (Input.IsActionJustPressed ("host_game")) {
                 Host ();
             }
@@ -91,7 +97,7 @@ public class Network : Node2D {
         var peer = new NetworkedMultiplayerENet ();
         peer.CreateServer (DEFAULT_PORT, MAX_PLAYERS);
         GetTree ().NetworkPeer = peer;
-        isConnectionStarted = true;
+        IsConnectionStarted = true;
         _OnJoinedAServer ();
     }
     public void Join () {
@@ -99,7 +105,7 @@ public class Network : Node2D {
         var peer = new NetworkedMultiplayerENet ();
         peer.CreateClient (DEFAULT_IP, DEFAULT_PORT);
         GetTree ().NetworkPeer = peer;
-        isConnectionStarted = true;
+        IsConnectionStarted = true;
     }
 
 }
