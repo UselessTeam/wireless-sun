@@ -1,7 +1,8 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Nodes/Character.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Assets/Sprites/CharacterSprite.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Nodes/CustomizablePart.tscn" type="PackedScene" id=2]
+
 
 [node name="HumanCharacter" instance=ExtResource( 1 )]
 
