@@ -7,41 +7,41 @@
 [ext_resource path="res://Scripts/Attributes/FieldOfView.cs" type="Script" id=5]
 [ext_resource path="res://Scripts/Attributes/Health.cs" type="Script" id=6]
 
-[sub_resource type="CircleShape2D" id=7]
+[sub_resource type="CircleShape2D" id=1]
 radius = 9.02684
-
-[sub_resource type="AtlasTexture" id=1]
-atlas = ExtResource( 4 )
-region = Rect2( 0, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 4 )
-region = Rect2( 32, 0, 32, 32 )
+region = Rect2( 0, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 4 )
-region = Rect2( 64, 0, 32, 32 )
+region = Rect2( 32, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 4 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 4 )
 region = Rect2( 96, 0, 32, 32 )
 
-[sub_resource type="SpriteFrames" id=5]
+[sub_resource type="SpriteFrames" id=6]
 animations = [ {
-"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
+"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
 } ]
 
-[sub_resource type="CircleShape2D" id=6]
+[sub_resource type="CircleShape2D" id=7]
 radius = 168.731
 
 [node name="ShadowBallBody" type="KinematicBody2D"]
 collision_layer = 4
 collision_mask = 7
 script = ExtResource( 2 )
-WALK_SPEED = 200.0
+WALK_SPEED = 65.0
 
 [node name="ShadowBallControl" type="Node2D" parent="."]
 script = ExtResource( 1 )
@@ -56,13 +56,14 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ShadowBallControl/Attack/Hitbox"]
 position = Vector2( -0.311638, 8.10276 )
-shape = SubResource( 7 )
+shape = SubResource( 1 )
 
 [node name="Health" type="Node2D" parent="."]
 script = ExtResource( 6 )
 
 [node name="Shadowball" type="AnimatedSprite" parent="."]
-frames = SubResource( 5 )
+frames = SubResource( 6 )
+frame = 1
 playing = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
@@ -75,4 +76,4 @@ collision_mask = 2
 script = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FieldOfView"]
-shape = SubResource( 6 )
+shape = SubResource( 7 )

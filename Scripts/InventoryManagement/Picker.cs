@@ -2,7 +2,7 @@ using System;
 using Godot;
 
 public class Picker : Node2D {
-    [Export] public static float ITEM_SPEED;
+    [Export] public float ITEM_SPEED;
 
     FieldOfView MyFOV { get { return GetNode<FieldOfView> ("FieldOfView"); } }
 
@@ -10,7 +10,7 @@ public class Picker : Node2D {
         if (Network.IsServer)
             foreach (var item in MyFOV.GetOverlappingBodies ()) {
                 Body itemBody = (Body) item;
-                itemBody.NextMovement = (GetParent<Body> ().Position - itemBody.Position).Normalized ();
+                itemBody.NextMovement = (GetParent<Body> ().GlobalPosition - itemBody.GlobalPosition).Normalized ();
             }
     }
 

@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Nodes/Bodies/Berry.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scripts/Spawner/_Spawner.cs" type="Script" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 79.1502
+
+[node name="BerrySpawner" type="Node2D"]
+script = ExtResource( 3 )
+SpawnPrefab = ExtResource( 2 )
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 1 )
+
+[node name="Berry" parent="." instance=ExtResource( 2 )]
+position = Vector2( -48.305, 15.1358 )
