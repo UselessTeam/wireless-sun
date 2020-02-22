@@ -30,7 +30,6 @@ script = ExtResource( 4 )
 
 [node name="ShadowBallBody" parent="." instance=ExtResource( 2 )]
 position = Vector2( 84.6734, 59.3937 )
-WALK_SPEED = 65.0
 
 [node name="BerrySpawner" parent="." instance=ExtResource( 5 )]
 position = Vector2( 171, 322 )

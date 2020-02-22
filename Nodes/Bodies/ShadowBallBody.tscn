@@ -63,7 +63,7 @@ script = ExtResource( 6 )
 
 [node name="Shadowball" type="AnimatedSprite" parent="."]
 frames = SubResource( 6 )
-frame = 1
+frame = 3
 playing = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
