@@ -1,11 +1,12 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Assets/Sprites/Map/tileset_v1.png" type="Texture" id=1]
-[ext_resource path="res://Scripts/ProceduralChunk.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/Map/SmartTiles.cs" type="Script" id=1]
+[ext_resource path="res://Assets/Sprites/Map/tileset_v1.png" type="Texture" id=2]
+
 
 [sub_resource type="TileSet" id=1]
 0/name = "Sea"
-0/texture = ExtResource( 1 )
+0/texture = ExtResource( 2 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 256, 256 )
@@ -24,7 +25,7 @@
 0/shapes = [  ]
 0/z_index = 0
 1/name = "Sand"
-1/texture = ExtResource( 1 )
+1/texture = ExtResource( 2 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
 1/region = Rect2( 0, 0, 256, 256 )
@@ -43,7 +44,7 @@
 1/shapes = [  ]
 1/z_index = 0
 2/name = "Grass"
-2/texture = ExtResource( 1 )
+2/texture = ExtResource( 2 )
 2/tex_offset = Vector2( 0, 0 )
 2/modulate = Color( 1, 1, 1, 1 )
 2/region = Rect2( 0, 0, 256, 256 )
@@ -62,7 +63,7 @@
 2/shapes = [  ]
 2/z_index = 0
 3/name = "Stone"
-3/texture = ExtResource( 1 )
+3/texture = ExtResource( 2 )
 3/tex_offset = Vector2( 0, 0 )
 3/modulate = Color( 1, 1, 1, 1 )
 3/region = Rect2( 0, 0, 256, 256 )
@@ -87,9 +88,9 @@ octaves = 4
 persistence = 0.7
 lacunarity = 3.0
 
-[node name="ProceduralChunk" type="TileMap"]
+[node name="SmartTiles" type="TileMap"]
 tile_set = SubResource( 1 )
 cell_size = Vector2( 16, 16 )
 format = 1
-script = ExtResource( 2 )
+script = ExtResource( 1 )
 noise = SubResource( 2 )

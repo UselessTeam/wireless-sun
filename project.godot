@@ -24,6 +24,7 @@ config/icon="res://icon.png"
 Network="*res://Nodes/Background/Network.tscn"
 ItemManager="*res://Nodes/Background/ItemManager.tscn"
 Inventory="*res://Nodes/Background/Inventory.tscn"
+SmartTiles="*res://Nodes/Map/SmartTiles.tscn"
 
 [display]
 

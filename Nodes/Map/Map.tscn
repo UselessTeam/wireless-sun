@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/Map/Map.cs" type="Script" id=1]
+
+[sub_resource type="OpenSimplexNoise" id=1]
+period = 32.0
+persistence = 0.7
+
+[node name="Map" type="Node2D"]
+script = ExtResource( 1 )
+noise = SubResource( 1 )
