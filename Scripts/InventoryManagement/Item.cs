@@ -25,25 +25,27 @@ namespace Item {
 		}
 
 		public static ItemCategory GetCategory(byte categoryId) {
-			if(categoryId == byte.MaxValue) {
-				return null;
-			}
 			return categories[categoryId];
 		}
 
 		public static ItemData GetItem(ItemId id) {
-			if(id == ItemId.NULL) {
-				return null;
-			}
 			return GetCategory(id.category).variants[id.variant];
 		}
 
 		public static ItemData GetItem(string name) {
 			ItemId id;
-			if (itemNames.TryGetValue (name, out id))
+			if (name != null && itemNames.TryGetValue (name.ToLower(), out id))
 				return GetItem(id);
 			GD.PrintErr ("Error: Trying to get a non existing item : " + name);
-			return new ItemData (name);
+			return ItemData.NULL; // TODO: Once Godot is updated (and fixes the GD.Print(null) crash) we can return null here
+		}
+
+		public static ItemId GetId(string name) {
+			ItemId id;
+			if (name != null && itemNames.TryGetValue (name.ToLower(), out id))
+				return id;
+			GD.PrintErr ("Error: Trying to get a non existing item : " + name);
+			return ItemId.NULL;
 		}
 	}
 
@@ -64,6 +66,10 @@ namespace Item {
 			this.category = category;
 			this.variant = variant;
 		}
+
+		public ItemData data { get { return Manager.GetItem(this); } }
+
+		// Overrides
 
 		public override bool Equals(object obj) {
 			if (!(obj is ItemId)) {
@@ -95,32 +101,43 @@ namespace Item {
 		public ItemId id;
 		public ItemCategory category { get { return Manager.GetCategory(id.category); } }
 
-		public int stack;
 		public string name;
+		public bool stackable;
 
-		public int frame;
+		public Graphics.Sprite sprite;
 
 		public ItemData() {
 			this.id = ItemId.NULL;
 			this.name = null;
 		}
-		public ItemData (ItemId id, string name = "NullName") {
-			this.id = id;
-			this.name = name;
-		}
-
-		public ItemData (string name = "NullName") {
-			this.id = ItemId.NULL;
-			this.name = name;
-		}
 
 		public override string ToString () {
+			if(this == NULL) {
+				return "NULL ITEM";
+			}
 			return name + " of type " + category + " (id=" + id.ToString () + ")";
 		}
+
+		public static readonly ItemData NULL = new ItemData();
 	}
 
 	public struct ItemStack {
-		ItemId itemId;
-		int size;
+		public ItemId item;
+		public ushort size;
+
+		public ItemStack(ItemId item, ushort size) {
+			this.item = item;
+			this.size = size;
+		}
+
+		public override string ToString() {
+			return item.data.name + "×" + size;
+		}
+	}
+
+	public static class ItemExtensions {
+		public static string ToPrint(this IEnumerable<ItemStack> stacks) {
+			return "["+string.Join(", ",stacks)+"]";
+		}
 	}
 }

@@ -51,7 +51,7 @@ public class Map : Node2D
 
 	private Dictionary<(int, int), Chunk> chunks = new Dictionary<(int, int), Chunk>();
 
-	private PackedScene baseChunk = ResourceLoader.Load("res://Nodes/Map/Chunk.tscn") as PackedScene;
+	private PackedScene baseChunk = (PackedScene)ResourceLoader.Load("res://Nodes/Map/Chunk.tscn");
 
 	private void GenerateAsyncObject(object chunk) {
 		Generate((Chunk) chunk);

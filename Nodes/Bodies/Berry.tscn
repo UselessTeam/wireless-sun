@@ -14,6 +14,8 @@ script = ExtResource( 1 )
 
 [node name="PickableControl" type="Node2D" parent="."]
 script = ExtResource( 2 )
+item = "Berry"
+amount = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )

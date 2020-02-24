@@ -5,11 +5,23 @@
         "variants": [
             {
                 "name":"wood",
-                "stack":64
+                "sprite": { "sheet":0, "x":1, "y":0 }
             },
             {
                 "name":"stone",
-                "stack":64
+                "sprite": { "sheet":0, "x":0, "y":1 }
+            },
+            {
+                "name":"ore",
+                "sprite": { "sheet":0, "x":1, "y":1 }
+            },
+            {
+                "name":"metal",
+                "sprite": { "sheet":0, "x":2, "y":1 }
+            },
+            {
+                "name":"coal",
+                "sprite": { "sheet":0, "x":3, "y":1 }
             }
         ]
     },
@@ -18,11 +30,11 @@
         "variants": [
             {
                 "name":"berry",
-                "stack":64
+                "sprite": { "sheet":0, "x":1, "y":2 }
             },
             {
                 "name":"crab leg",
-                "stack":64
+                "sprite": { "sheet":0, "x":2, "y":2 }
             }
         ]
     }

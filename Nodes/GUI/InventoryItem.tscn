@@ -1,0 +1,54 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Assets/Sprites/items.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Shaders/Outline.shader" type="Shader" id=2]
+[ext_resource path="res://Assets/Fonts/munro.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Assets/Sprites/GUI/gui_panel_light.png" type="Texture" id=4]
+[ext_resource path="res://Scripts/GUI/InventoryItem.cs" type="Script" id=5]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 2 )
+shader_param/outline_width = 1.0
+shader_param/outline_color = Color( 0.777344, 0.705705, 0.628555, 1 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 12, 12 )
+margin = Rect2( 1, 1, 2, 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 10
+outline_color = Color( 0.776471, 0.705882, 0.627451, 1 )
+font_data = ExtResource( 3 )
+
+[node name="InventoryItem" type="Control"]
+margin_right = 24.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 24 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Holder" type="Sprite" parent="."]
+position = Vector2( 12, 12 )
+texture = ExtResource( 4 )
+
+[node name="Item" type="Sprite" parent="Holder"]
+material = SubResource( 1 )
+texture = SubResource( 3 )
+
+[node name="Label" type="Label" parent="."]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_right = -2.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0.776471, 0.705882, 0.627451, 1 )
+text = "4"
+align = 2
+valign = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}

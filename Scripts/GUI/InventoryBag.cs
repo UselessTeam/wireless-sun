@@ -8,37 +8,30 @@ public class InventoryBag : PanelContainer
 	const int CELL_SIZE = 24;
 
 	[Export]
-	public int columns { get {
-			return _columns;
-		}
-		set{
-			_columns = value;
-			toUpdate = true;
-		}
-	}
+	public int columns { get; protected set; }
 
-	private GridContainer cachedGrid = null;
+	private InventoryGrid cachedGrid = null;
 
-	private bool toUpdate = true;
-
-	private GridContainer GetGrid() {
+	private InventoryGrid GetGrid() {
 		if(cachedGrid == null) {
-			cachedGrid = (GridContainer)GetNode("Grid");
+			cachedGrid = (InventoryGrid)GetNode("Grid");
 		}
 		return cachedGrid;
 	}
 
-	private int _columns;
 	public override void _Ready() {
-		if (toUpdate) {
-			toUpdate = false;
-			UpdateSize();
-		}
+		SetColumns(4);
+		Global.inventory.Connect("inventory_change", this, nameof(_on_inventory_change));
 	}
 
-	private void UpdateSize() {
+	private void SetColumns(int value) {
+		columns = value;
 		RectMinSize = new Vector2(columns*(CELL_SIZE+MARGIN) + MARGIN, RectMinSize.y);
 		// TODO: Send signal so grid can resize itself
 		GetGrid().Columns = columns;
+	}
+
+	public void _on_inventory_change() {
+		GetGrid().Display(Global.inventory.inventory);
 	}
 }
