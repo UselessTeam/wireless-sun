@@ -24,6 +24,7 @@ position = Vector2( 233.562, 198.284 )
 [node name="Camera2D" type="Camera2D" parent="PlayerBody"]
 rotating = true
 current = true
+zoom = Vector2( 0.5, 0.5 )
 drag_margin_h_enabled = true
 drag_margin_v_enabled = true
 script = ExtResource( 4 )

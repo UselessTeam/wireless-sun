@@ -1,0 +1,29 @@
+
+[
+    {
+        "category":"resources",
+        "variants": [
+            {
+                "name":"wood",
+                "stack":64
+            },
+            {
+                "name":"stone",
+                "stack":64
+            }
+        ]
+    },
+    {
+        "category":"food",
+        "variants": [
+            {
+                "name":"berry",
+                "stack":64
+            },
+            {
+                "name":"crab leg",
+                "stack":64
+            }
+        ]
+    }
+]
