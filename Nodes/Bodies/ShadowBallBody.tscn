@@ -10,6 +10,9 @@
 [sub_resource type="CircleShape2D" id=1]
 radius = 9.02684
 
+[sub_resource type="CircleShape2D" id=7]
+radius = 168.731
+
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 4 )
 region = Rect2( 0, 0, 32, 32 )
@@ -34,9 +37,6 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="CircleShape2D" id=7]
-radius = 168.731
-
 [node name="ShadowBallBody" type="KinematicBody2D"]
 collision_layer = 4
 collision_mask = 7
@@ -49,7 +49,6 @@ FLICKER_TIME = 0.2
 
 [node name="Attack" type="Node2D" parent="ShadowBallControl"]
 script = ExtResource( 3 )
-DAMAGE = 10.0
 
 [node name="Hitbox" type="Area2D" parent="ShadowBallControl/Attack"]
 collision_layer = 0
@@ -62,21 +61,20 @@ shape = SubResource( 1 )
 [node name="Health" type="Node2D" parent="ShadowBallControl"]
 script = ExtResource( 6 )
 
-[node name="Shadowball" type="AnimatedSprite" parent="."]
-frames = SubResource( 6 )
-frame = 2
-playing = true
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( -4.43527, 12.784, 3.22487, 12.784, 4.03802, 4.26392, -5.62297, 4.26392 )
-
-[node name="FieldOfView" type="Area2D" parent="."]
+[node name="FieldOfView" type="Area2D" parent="ShadowBallControl"]
 position = Vector2( -1, 0 )
 collision_layer = 0
 collision_mask = 2
 script = ExtResource( 5 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="FieldOfView"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShadowBallControl/FieldOfView"]
 shape = SubResource( 7 )
-[connection signal="damage_taken" from="." to="ShadowBallControl/Health" method="_OnDamageTaken"]
+
+[node name="Shadowball" type="AnimatedSprite" parent="."]
+frames = SubResource( 6 )
+playing = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -4.43527, 12.784, 3.22487, 12.784, 4.03802, 4.26392, -5.62297, 4.26392 )
 [connection signal="damage_taken" from="." to="ShadowBallControl" method="_OnDamageTaken"]
+[connection signal="damage_taken" from="." to="ShadowBallControl/Health" method="_OnDamageTaken"]
