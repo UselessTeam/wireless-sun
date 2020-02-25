@@ -32,7 +32,6 @@ public class GameHandler : Node2D {
 		newPlayer.SetNetworkMaster (id);
 		newPlayer.Position = position;
 		AddChild (newPlayer);
-
 	}
 
 	public void ControlMyPlayer (int id) {

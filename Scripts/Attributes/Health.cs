@@ -53,6 +53,7 @@ public class Health : Node2D
     {
         EmitSignal("died");
         GD.Print("Je suis mourru!");
+        MyUser.MyBody.QueueFree();
     }
 
 }

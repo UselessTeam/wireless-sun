@@ -71,6 +71,7 @@ script = ExtResource( 1 )
 
 [node name="Attack" type="Node2D" parent="PlayerControl"]
 script = ExtResource( 5 )
+DAMAGE = 30.0
 
 [node name="Sprite" type="AnimatedSprite" parent="PlayerControl/Attack"]
 visible = false

@@ -29,11 +29,12 @@ drag_margin_h_enabled = true
 drag_margin_v_enabled = true
 script = ExtResource( 4 )
 
-[node name="ShadowBallBody" parent="." instance=ExtResource( 2 )]
-position = Vector2( 84.6734, 59.3937 )
-
 [node name="BerrySpawner" parent="." instance=ExtResource( 5 )]
 position = Vector2( 171, 322 )
 
 [node name="ShadowSpaner" parent="." instance=ExtResource( 7 )]
-position = Vector2( 127, 149 )
+position = Vector2( 92, 97 )
+SPAWN_DELAY = 50.0
+
+[node name="ShadowBallBody" parent="ShadowSpaner" instance=ExtResource( 2 )]
+position = Vector2( -7.3266, -37.6063 )
