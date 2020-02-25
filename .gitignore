@@ -12,7 +12,6 @@ data_*/
 *.ttf
 *.png
 *.mp3
-*.shader
 *.mat
 *.wav
 *.ogg

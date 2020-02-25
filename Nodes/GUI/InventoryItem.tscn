@@ -8,15 +8,15 @@
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 2 )
-shader_param/outline_width = 1.0
-shader_param/outline_color = Color( 0.777344, 0.705705, 0.628555, 1 )
+shader_param/thickness = 1.0
+shader_param/color = Color( 0.772549, 0.701961, 0.619608, 1 )
 
-[sub_resource type="AtlasTexture" id=3]
+[sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 1 )
 region = Rect2( 0, 0, 12, 12 )
 margin = Rect2( 1, 1, 2, 2 )
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=3]
 size = 10
 outline_color = Color( 0.776471, 0.705882, 0.627451, 1 )
 font_data = ExtResource( 3 )
@@ -36,7 +36,7 @@ texture = ExtResource( 4 )
 
 [node name="Item" type="Sprite" parent="Holder"]
 material = SubResource( 1 )
-texture = SubResource( 3 )
+texture = SubResource( 2 )
 
 [node name="Label" type="Label" parent="."]
 anchor_top = 0.5
@@ -44,7 +44,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 2.0
 margin_right = -2.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.776471, 0.705882, 0.627451, 1 )
 text = "4"
 align = 2
