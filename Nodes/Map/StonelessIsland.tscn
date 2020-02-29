@@ -1,10 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://Nodes/Map/TilemapV1.tres" type="TileSet" id=1]
-[ext_resource path="res://Assets/Shaders/GradientMaterial.tres" type="Material" id=2]
 
 [node name="Island" type="TileMap"]
-material = ExtResource( 2 )
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
 format = 1

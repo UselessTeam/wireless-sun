@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Assets/Shaders/GradientMaterial.tres" type="Material" id=1]
+[ext_resource path="res://Scripts/Graphics/WorldShader.cs" type="Script" id=2]
+
+[node name="Screen" type="ColorRect"]
+visible = false
+material = ExtResource( 1 )
+margin_right = 200.0
+margin_bottom = 200.0
+color = Color( 1, 1, 1, 0 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
