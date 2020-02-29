@@ -4,6 +4,10 @@
 [ext_resource path="res://Scripts/GUI/GUI.cs" type="Script" id=2]
 
 [node name="GUI" type="CanvasLayer"]
+scale = Vector2( 2, 2 )
+transform = Transform2D( 2, 0, 0, 2, 0, 0 )
 script = ExtResource( 2 )
 
 [node name="Inventory" parent="." instance=ExtResource( 1 )]
+anchor_right = 0.5
+anchor_bottom = 0.5
