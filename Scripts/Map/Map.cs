@@ -82,22 +82,22 @@ public class Map : Node2D
 		Generate(chunk);
 	}
 
-	public Biom GetBiomAtPosition(float x, float y) {
+	public CornerType GetBiomAtPosition(float x, float y) {
 		return GetBiom((int)(x / Chunk.RESOLUTION), (int)(y / Chunk.RESOLUTION));
 	}
-	public Biom GetBiom(int x, int y) {
+	public CornerType GetBiom(int x, int y) {
 		float main_value = noise.GetNoise2d(x, y);
 		float secondary_value = noise.GetNoise2d(1200 - x, y - 1200);
 		if (main_value + 0.5*Math.Abs(secondary_value) < -0.15) {
-			return Biom.Sea;
+			return CornerType.Sea;
 		}
 		if (main_value + Math.Abs(secondary_value) < 0.15) {
-			return Biom.Sand;
+			return CornerType.Sand;
 		}
 		if (secondary_value < 0.05) {
-			return Biom.Grass;
+			return CornerType.Grass;
 		} else {
-			return Biom.Stone;
+			return CornerType.Stone;
 		}
 	}
 }

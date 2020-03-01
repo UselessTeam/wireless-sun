@@ -1,96 +1,12 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scripts/Map/SmartTiles.cs" type="Script" id=1]
-[ext_resource path="res://Assets/Sprites/Map/tileset_v1.png" type="Texture" id=2]
-
-
-[sub_resource type="TileSet" id=1]
-0/name = "Sea"
-0/texture = ExtResource( 2 )
-0/tex_offset = Vector2( 0, 0 )
-0/modulate = Color( 1, 1, 1, 1 )
-0/region = Rect2( 0, 0, 256, 256 )
-0/tile_mode = 1
-0/autotile/bitmask_mode = 0
-0/autotile/bitmask_flags = [ Vector2( 0, 4 ), 256, Vector2( 0, 5 ), 260, Vector2( 0, 6 ), 4, Vector2( 1, 4 ), 320, Vector2( 1, 5 ), 325, Vector2( 1, 6 ), 5, Vector2( 2, 4 ), 64, Vector2( 2, 5 ), 65, Vector2( 2, 6 ), 1, Vector2( 4, 0 ), 69, Vector2( 4, 1 ), 65, Vector2( 4, 2 ), 321, Vector2( 4, 3 ), 325, Vector2( 5, 0 ), 5, Vector2( 5, 2 ), 320, Vector2( 5, 3 ), 325, Vector2( 6, 0 ), 261, Vector2( 6, 1 ), 260, Vector2( 6, 2 ), 324, Vector2( 6, 3 ), 325, Vector2( 7, 0 ), 325, Vector2( 7, 1 ), 325, Vector2( 7, 2 ), 325, Vector2( 7, 3 ), 325 ]
-0/autotile/icon_coordinate = Vector2( 7, 3 )
-0/autotile/tile_size = Vector2( 16, 16 )
-0/autotile/spacing = 0
-0/autotile/occluder_map = [  ]
-0/autotile/navpoly_map = [  ]
-0/autotile/priority_map = [  ]
-0/autotile/z_index_map = [  ]
-0/occluder_offset = Vector2( 0, 0 )
-0/navigation_offset = Vector2( 0, 0 )
-0/shapes = [  ]
-0/z_index = 0
-1/name = "Sand"
-1/texture = ExtResource( 2 )
-1/tex_offset = Vector2( 0, 0 )
-1/modulate = Color( 1, 1, 1, 1 )
-1/region = Rect2( 0, 0, 256, 256 )
-1/tile_mode = 1
-1/autotile/bitmask_mode = 0
-1/autotile/bitmask_flags = [ Vector2( 0, 4 ), 69, Vector2( 0, 5 ), 65, Vector2( 0, 6 ), 321, Vector2( 0, 7 ), 325, Vector2( 1, 4 ), 5, Vector2( 1, 6 ), 320, Vector2( 1, 7 ), 325, Vector2( 2, 4 ), 261, Vector2( 2, 5 ), 260, Vector2( 2, 6 ), 324, Vector2( 2, 7 ), 325, Vector2( 3, 4 ), 325, Vector2( 3, 5 ), 325, Vector2( 3, 6 ), 325, Vector2( 3, 7 ), 325, Vector2( 4, 0 ), 256, Vector2( 4, 1 ), 260, Vector2( 4, 2 ), 4, Vector2( 4, 8 ), 256, Vector2( 4, 9 ), 260, Vector2( 4, 10 ), 4, Vector2( 4, 12 ), 256, Vector2( 4, 13 ), 260, Vector2( 4, 14 ), 4, Vector2( 5, 0 ), 320, Vector2( 5, 1 ), 325, Vector2( 5, 2 ), 5, Vector2( 5, 8 ), 320, Vector2( 5, 9 ), 325, Vector2( 5, 10 ), 5, Vector2( 5, 12 ), 320, Vector2( 5, 13 ), 325, Vector2( 5, 14 ), 5, Vector2( 6, 0 ), 64, Vector2( 6, 1 ), 65, Vector2( 6, 2 ), 1, Vector2( 6, 8 ), 64, Vector2( 6, 9 ), 65, Vector2( 6, 10 ), 1, Vector2( 6, 12 ), 64, Vector2( 6, 13 ), 65, Vector2( 6, 14 ), 1, Vector2( 8, 4 ), 69, Vector2( 8, 5 ), 65, Vector2( 8, 6 ), 321, Vector2( 8, 7 ), 325, Vector2( 9, 4 ), 5, Vector2( 9, 6 ), 320, Vector2( 9, 7 ), 325, Vector2( 10, 4 ), 261, Vector2( 10, 5 ), 260, Vector2( 10, 6 ), 324, Vector2( 10, 7 ), 325, Vector2( 11, 4 ), 325, Vector2( 11, 5 ), 325, Vector2( 11, 6 ), 325, Vector2( 11, 7 ), 325, Vector2( 12, 4 ), 69, Vector2( 12, 5 ), 65, Vector2( 12, 6 ), 321, Vector2( 12, 7 ), 325, Vector2( 13, 4 ), 5, Vector2( 13, 6 ), 320, Vector2( 13, 7 ), 325, Vector2( 14, 4 ), 261, Vector2( 14, 5 ), 260, Vector2( 14, 6 ), 324, Vector2( 14, 7 ), 325, Vector2( 15, 4 ), 325, Vector2( 15, 5 ), 325, Vector2( 15, 6 ), 325, Vector2( 15, 7 ), 325 ]
-1/autotile/icon_coordinate = Vector2( 3, 7 )
-1/autotile/tile_size = Vector2( 16, 16 )
-1/autotile/spacing = 0
-1/autotile/occluder_map = [  ]
-1/autotile/navpoly_map = [  ]
-1/autotile/priority_map = [  ]
-1/autotile/z_index_map = [  ]
-1/occluder_offset = Vector2( 0, 0 )
-1/navigation_offset = Vector2( 0, 0 )
-1/shapes = [  ]
-1/z_index = 0
-2/name = "Grass"
-2/texture = ExtResource( 2 )
-2/tex_offset = Vector2( 0, 0 )
-2/modulate = Color( 1, 1, 1, 1 )
-2/region = Rect2( 0, 0, 256, 256 )
-2/tile_mode = 1
-2/autotile/bitmask_mode = 0
-2/autotile/bitmask_flags = [ Vector2( 4, 8 ), 69, Vector2( 4, 9 ), 65, Vector2( 4, 10 ), 321, Vector2( 4, 11 ), 325, Vector2( 5, 8 ), 5, Vector2( 5, 10 ), 320, Vector2( 5, 11 ), 325, Vector2( 6, 8 ), 261, Vector2( 6, 9 ), 260, Vector2( 6, 10 ), 324, Vector2( 6, 11 ), 325, Vector2( 7, 8 ), 325, Vector2( 7, 9 ), 325, Vector2( 7, 10 ), 325, Vector2( 7, 11 ), 325, Vector2( 8, 4 ), 256, Vector2( 8, 5 ), 260, Vector2( 8, 6 ), 4, Vector2( 8, 12 ), 256, Vector2( 8, 13 ), 260, Vector2( 8, 14 ), 4, Vector2( 9, 4 ), 320, Vector2( 9, 5 ), 325, Vector2( 9, 6 ), 5, Vector2( 9, 12 ), 320, Vector2( 9, 13 ), 325, Vector2( 9, 14 ), 5, Vector2( 10, 4 ), 64, Vector2( 10, 5 ), 65, Vector2( 10, 6 ), 1, Vector2( 10, 12 ), 64, Vector2( 10, 13 ), 65, Vector2( 10, 14 ), 1, Vector2( 12, 8 ), 69, Vector2( 12, 9 ), 65, Vector2( 12, 10 ), 321, Vector2( 12, 11 ), 325, Vector2( 13, 8 ), 5, Vector2( 13, 10 ), 320, Vector2( 13, 11 ), 325, Vector2( 14, 8 ), 261, Vector2( 14, 9 ), 260, Vector2( 14, 10 ), 324, Vector2( 14, 11 ), 325, Vector2( 15, 8 ), 325, Vector2( 15, 9 ), 325, Vector2( 15, 10 ), 325, Vector2( 15, 11 ), 325 ]
-2/autotile/icon_coordinate = Vector2( 9, 5 )
-2/autotile/tile_size = Vector2( 16, 16 )
-2/autotile/spacing = 0
-2/autotile/occluder_map = [  ]
-2/autotile/navpoly_map = [  ]
-2/autotile/priority_map = [  ]
-2/autotile/z_index_map = [  ]
-2/occluder_offset = Vector2( 0, 0 )
-2/navigation_offset = Vector2( 0, 0 )
-2/shapes = [  ]
-2/z_index = 0
-3/name = "Stone"
-3/texture = ExtResource( 2 )
-3/tex_offset = Vector2( 0, 0 )
-3/modulate = Color( 1, 1, 1, 1 )
-3/region = Rect2( 0, 0, 256, 256 )
-3/tile_mode = 1
-3/autotile/bitmask_mode = 0
-3/autotile/bitmask_flags = [ Vector2( 4, 12 ), 69, Vector2( 4, 13 ), 65, Vector2( 4, 14 ), 321, Vector2( 4, 15 ), 325, Vector2( 5, 12 ), 5, Vector2( 5, 14 ), 320, Vector2( 5, 15 ), 325, Vector2( 6, 12 ), 261, Vector2( 6, 13 ), 260, Vector2( 6, 14 ), 324, Vector2( 6, 15 ), 325, Vector2( 7, 12 ), 325, Vector2( 7, 13 ), 325, Vector2( 7, 14 ), 325, Vector2( 7, 15 ), 325, Vector2( 8, 12 ), 69, Vector2( 8, 13 ), 65, Vector2( 8, 14 ), 321, Vector2( 8, 15 ), 325, Vector2( 9, 12 ), 5, Vector2( 9, 14 ), 320, Vector2( 9, 15 ), 325, Vector2( 10, 12 ), 261, Vector2( 10, 13 ), 260, Vector2( 10, 14 ), 324, Vector2( 10, 15 ), 325, Vector2( 11, 12 ), 325, Vector2( 11, 13 ), 325, Vector2( 11, 14 ), 325, Vector2( 11, 15 ), 325, Vector2( 12, 4 ), 256, Vector2( 12, 5 ), 260, Vector2( 12, 6 ), 4, Vector2( 12, 8 ), 256, Vector2( 12, 9 ), 260, Vector2( 12, 10 ), 4, Vector2( 13, 4 ), 320, Vector2( 13, 5 ), 325, Vector2( 13, 6 ), 5, Vector2( 13, 8 ), 320, Vector2( 13, 9 ), 325, Vector2( 13, 10 ), 5, Vector2( 14, 4 ), 64, Vector2( 14, 5 ), 65, Vector2( 14, 6 ), 1, Vector2( 14, 8 ), 64, Vector2( 14, 9 ), 65, Vector2( 14, 10 ), 1 ]
-3/autotile/icon_coordinate = Vector2( 13, 9 )
-3/autotile/tile_size = Vector2( 16, 16 )
-3/autotile/spacing = 0
-3/autotile/occluder_map = [  ]
-3/autotile/navpoly_map = [  ]
-3/autotile/priority_map = [  ]
-3/autotile/z_index_map = [  ]
-3/occluder_offset = Vector2( 0, 0 )
-3/navigation_offset = Vector2( 0, 0 )
-3/shapes = [  ]
-3/z_index = 0
-
-[sub_resource type="OpenSimplexNoise" id=2]
-seed = 3
-octaves = 4
-persistence = 0.7
-lacunarity = 3.0
+[ext_resource path="res://Assets/Tiles/SmartTilemap.tres" type="TileSet" id=2]
+[ext_resource path="res://Assets/Tiles/world_tileset.tres" type="TileSet" id=3]
 
 [node name="SmartTiles" type="TileMap"]
-tile_set = SubResource( 1 )
+tile_set = ExtResource( 2 )
 cell_size = Vector2( 16, 16 )
 format = 1
 script = ExtResource( 1 )
-noise = SubResource( 2 )
+world_tileset = ExtResource( 3 )

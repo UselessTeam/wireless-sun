@@ -22,24 +22,25 @@ public class Chunk : TileMap
 			for(int x = 0; x < SIZE; x++) {
 				for(int y = 0; y < SIZE; y++) {
 					CellType cell = new CellType(GetBiom(x, y), GetBiom(x+1, y), GetBiom(x, y+1), GetBiom(x+1, y+1));
-					SetCell(x, y, 0, autotileCoord: tiles.GetCell(cell));
+					var key = tiles.GetCell(cell);
+					SetCell(x, y, key.tileSet, autotileCoord: key.coord);
 				}
 			}
 		}
 	}
 
-	private Biom[] map = new Biom[SIZE_PLUS_ONE * SIZE_PLUS_ONE];
+	private CornerType[] map = new CornerType[SIZE_PLUS_ONE * SIZE_PLUS_ONE];
 
-	public void SetBiom(int x, int y, Biom biom) {
+	public void SetBiom(int x, int y, CornerType biom) {
 		map[x + y * SIZE_PLUS_ONE] = biom;
 	}
 
-	public Biom GetBiom(int x, int y) {
+	public CornerType GetBiom(int x, int y) {
 		return map[x + y * SIZE_PLUS_ONE];
 	}
 	public const int SIZE = 32;
 	private const int SIZE_PLUS_ONE = SIZE + 1;
-	public const int RESOLUTION = 16;
+	public const int RESOLUTION = 24;
 
 	public const int PIXEL_SIZE = SIZE * RESOLUTION;
 }

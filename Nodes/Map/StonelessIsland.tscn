@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Nodes/Map/TilemapV1.tres" type="TileSet" id=1]
+[ext_resource path="res://Assets/Tiles/TilemapV1.tres" type="TileSet" id=1]
+
 
 [node name="Island" type="TileMap"]
 tile_set = ExtResource( 1 )
