@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using MetaTile;
 
 public class Map : Node2D
 {
@@ -82,22 +83,22 @@ public class Map : Node2D
 		Generate(chunk);
 	}
 
-	public CornerType GetBiomAtPosition(float x, float y) {
+	public PointType GetBiomAtPosition(float x, float y) {
 		return GetBiom((int)(x / Chunk.RESOLUTION), (int)(y / Chunk.RESOLUTION));
 	}
-	public CornerType GetBiom(int x, int y) {
+	public PointType GetBiom(int x, int y) {
 		float main_value = noise.GetNoise2d(x, y);
 		float secondary_value = noise.GetNoise2d(1200 - x, y - 1200);
 		if (main_value + 0.5*Math.Abs(secondary_value) < -0.15) {
-			return CornerType.Sea;
+			return PointType.Sea;
 		}
 		if (main_value + Math.Abs(secondary_value) < 0.15) {
-			return CornerType.Sand;
+			return PointType.Sand;
 		}
 		if (secondary_value < 0.05) {
-			return CornerType.Grass;
+			return PointType.Grass;
 		} else {
-			return CornerType.Stone;
+			return PointType.Stone;
 		}
 	}
 }

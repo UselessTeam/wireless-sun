@@ -1,16 +1,19 @@
 using Godot;
 using System;
+using MetaTile;
 
 public class Chunk : TileMap
 {
 	private SmartTiles tiles;
 	public int x { get; private set; }
 	public int y { get; private set; }
+	public TileMap otherLayer;
 
 	public void Setup(SmartTiles tiles, int x, int y) {
 		this.tiles = tiles;
 		this.x = x;
 		this.y = y;
+		otherLayer = GetNode("Other") as TileMap;
 	}
 
 	private bool modified = true;
@@ -23,19 +26,19 @@ public class Chunk : TileMap
 				for(int y = 0; y < SIZE; y++) {
 					CellType cell = new CellType(GetBiom(x, y), GetBiom(x+1, y), GetBiom(x, y+1), GetBiom(x+1, y+1));
 					var key = tiles.GetCell(cell);
-					SetCell(x, y, key.tileSet, autotileCoord: key.coord);
+					key.Apply(this, x, y);
 				}
 			}
 		}
 	}
 
-	private CornerType[] map = new CornerType[SIZE_PLUS_ONE * SIZE_PLUS_ONE];
+	private PointType[] map = new PointType[SIZE_PLUS_ONE * SIZE_PLUS_ONE];
 
-	public void SetBiom(int x, int y, CornerType biom) {
+	public void SetBiom(int x, int y, PointType biom) {
 		map[x + y * SIZE_PLUS_ONE] = biom;
 	}
 
-	public CornerType GetBiom(int x, int y) {
+	public PointType GetBiom(int x, int y) {
 		return map[x + y * SIZE_PLUS_ONE];
 	}
 	public const int SIZE = 32;
