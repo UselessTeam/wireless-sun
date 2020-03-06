@@ -17,6 +17,7 @@ stream = ExtResource( 6 )
 autoplay = true
 
 [node name="Island" parent="." instance=ExtResource( 9 )]
+cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 
 [node name="PlayerBody" parent="." instance=ExtResource( 1 )]
 position = Vector2( 233.562, 198.284 )

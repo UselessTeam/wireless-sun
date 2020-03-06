@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/House.cs" type="Script" id=1]
+[ext_resource path="res://Assets/Tiles/Walls/WallTileset.tres" type="TileSet" id=2]
+
+[node name="House" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 12, 12 )
+cell_quadrant_size = 6
+format = 1
+script = ExtResource( 1 )

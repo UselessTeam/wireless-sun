@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using MetaTile;
-public class SmartTiles : TileMap
+public class SmartWorldTiles : TileMap
 {
 	private const uint TOP_LEFT = 1;
 	private const uint TOP_RIGHT = 4;

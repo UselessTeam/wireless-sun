@@ -10,11 +10,11 @@ public class Map : Node2D
 	[Export]
 	private OpenSimplexNoise noise; // = new OpenSimplexNoise();
 
-	private SmartTiles tiles;
+	private SmartWorldTiles tiles;
 
 	public override void _Ready()
 	{
-		tiles = (SmartTiles)GetNode("/root/SmartTiles");
+		tiles = (SmartWorldTiles)GetNode("/root/SmartTiles/World");
 		generateAsyncStart = new ParameterizedThreadStart(GenerateAsyncObject);
 	}
 

@@ -4,12 +4,13 @@ using MetaTile;
 
 public class Chunk : TileMap
 {
-	private SmartTiles tiles;
+	private SmartWorldTiles tiles;
 	public int x { get; private set; }
 	public int y { get; private set; }
-	public TileMap otherLayer;
 
-	public void Setup(SmartTiles tiles, int x, int y) {
+	private TileMap otherLayer;
+	
+	public void Setup(SmartWorldTiles tiles, int x, int y) {
 		this.tiles = tiles;
 		this.x = x;
 		this.y = y;
@@ -26,7 +27,7 @@ public class Chunk : TileMap
 				for(int y = 0; y < SIZE; y++) {
 					CellType cell = new CellType(GetBiom(x, y), GetBiom(x+1, y), GetBiom(x, y+1), GetBiom(x+1, y+1));
 					var key = tiles.GetCell(cell);
-					key.Apply(this, x, y);
+					key.Apply(x, y, this, otherLayer);
 				}
 			}
 		}

@@ -47,10 +47,10 @@ namespace MetaTile {
 			return new CornerKey(a.tileSet, a.x, a.y, b.tileSet, b.x, b.y);
 		}
 
-		public void Apply(Chunk chunk, int x, int y) {
-			chunk.SetCell(x, y, tileSet, autotileCoord: coord);
-			if(otherLayer) {
-				chunk.otherLayer.SetCell(x, y, otherTileSet, autotileCoord: otherCoord);
+		public void Apply(int x, int y, TileMap first, TileMap second ) {
+			first.SetCell(x, y, tileSet, autotileCoord: coord);
+			if(otherLayer && second != null) {
+				second.SetCell(x, y, otherTileSet, autotileCoord: otherCoord);
 			}
 		}
 	}
@@ -71,11 +71,11 @@ namespace MetaTile {
 			this.corners = corners;
 		}
 
-		public void Apply(Chunk chunk, int x, int y) {
-			this.corners[0].Apply(chunk, 2*x, 2*y);
-			this.corners[1].Apply(chunk, 2*x+1, 2*y);
-			this.corners[2].Apply(chunk, 2*x, 2*y+1);
-			this.corners[3].Apply(chunk, 2*x+1, 2*y+1);
+		public void Apply(int x, int y, TileMap first, TileMap second = null) {
+			this.corners[0].Apply(2*x, 2*y, first, second);
+			this.corners[1].Apply(2*x+1, 2*y, first, second);
+			this.corners[2].Apply(2*x, 2*y+1, first, second);
+			this.corners[3].Apply(2*x+1, 2*y+1, first, second);
 		}
 
 		public static readonly TileKey Null = new TileKey(byte.MaxValue, 0, 0);
@@ -281,7 +281,7 @@ namespace MetaTile {
 		private byte currentY = 0;
 		private const byte SIZE = 64;
 
-		public Builder(SmartTiles smartTiles) {
+		public Builder(SmartWorldTiles smartTiles) {
 			this.world_tileset = smartTiles.world_tileset;
 			this.world_image = smartTiles.world_tileset.TileGetTexture(0).GetData();
 			this.raw_tiles = smartTiles.tiles;

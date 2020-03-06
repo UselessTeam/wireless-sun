@@ -1,12 +1,24 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Scripts/Map/SmartTiles.cs" type="Script" id=1]
-[ext_resource path="res://Assets/Tiles/SmartTilemap.tres" type="TileSet" id=2]
-[ext_resource path="res://Assets/Tiles/world_tileset.tres" type="TileSet" id=3]
+[ext_resource path="res://Scripts/Map/SmartWorldTiles.cs" type="Script" id=1]
+[ext_resource path="res://Assets/Tiles/World/SmartTilemap.tres" type="TileSet" id=2]
+[ext_resource path="res://Assets/Tiles/World/world_tileset.tres" type="TileSet" id=3]
+[ext_resource path="res://Assets/Tiles/Walls/WallTileset.tres" type="TileSet" id=4]
+[ext_resource path="res://Scripts/Map/SmartBuildingTiles.cs" type="Script" id=5]
 
-[node name="SmartTiles" type="TileMap"]
+[node name="SmartTiles" type="Node"]
+
+[node name="World" type="TileMap" parent="."]
 tile_set = ExtResource( 2 )
-cell_size = Vector2( 16, 16 )
+cell_size = Vector2( 12, 12 )
+cell_quadrant_size = 6
 format = 1
 script = ExtResource( 1 )
 world_tileset = ExtResource( 3 )
+
+[node name="Walls" type="TileMap" parent="."]
+tile_set = ExtResource( 4 )
+cell_size = Vector2( 12, 12 )
+cell_quadrant_size = 6
+format = 1
+script = ExtResource( 5 )
