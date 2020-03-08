@@ -31,6 +31,7 @@ script = ExtResource( 4 )
 
 [node name="BerrySpawner" parent="." instance=ExtResource( 5 )]
 position = Vector2( 171, 322 )
+SPAWN_DELAY = 1.0
 
 [node name="ShadowSpawner" parent="." instance=ExtResource( 7 )]
 position = Vector2( 92, 97 )

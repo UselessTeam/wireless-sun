@@ -2,6 +2,8 @@ using System;
 using Godot;
 
 public class _Spawner : Node2D {
+	const int NON_SPAWNEE_CHILDREN = 1;
+
 	[Export] public float SPAWN_DELAY = 2;
 	[Export] public float MAX_COUNT = 10;
 	[Export] public PackedScene SpawnPrefab;
@@ -18,7 +20,8 @@ public class _Spawner : Node2D {
 	public override void _Ready () {
 		// GD.Print (GetTree ().GetNetworkUniqueId ().ToString () + " " + IsNetworkMaster () + Network.IsConnectionStarted);
 		if (!IsMaster)
-			GD.Print ("Spawn everyone");
+			Rpc ("SendAllSpawnees", GetTree ().GetNetworkUniqueId ());
+
 	}
 
 	public override void _Process (float delta) {
@@ -30,14 +33,18 @@ public class _Spawner : Node2D {
 				if (Network.IsConnectionStarted)
 					Rpc ("SpawnOne", position, spawnID);
 				else
-					SpawnOne (position, spawnID);
+					SpawnOne (position, spawnID.ToString ());
 				spawnID++;
 			}
 		}
 	}
 
+	int GetNumberSpawnees () {
+		return GetChildCount () - NON_SPAWNEE_CHILDREN;
+	}
+
 	// Weather the spawner is active
-	bool IsActive () { return GetChildCount () < MAX_COUNT; }
+	bool IsActive () { return GetNumberSpawnees () < MAX_COUNT; }
 
 	Vector2 GenerateSpawnPosition () {
 		double theta = General.rng.NextDouble () * 2 * Math.PI;
@@ -46,11 +53,22 @@ public class _Spawner : Node2D {
 	}
 
 	[PuppetSync]
-	void SpawnOne (Vector2 position, int id) {
+	void SpawnOne (Vector2 position, string name) {
 		var spawnBody = SpawnPrefab.Instance ().GetNode<Body> ("./");
-		spawnBody.Name = id.ToString ();
+		spawnBody.Name = name;
 		spawnBody.Position = position;
 		AddChild (spawnBody);
+	}
+
+	[Master]
+	void SendAllSpawnees (int id) {
+		for (int i = 0; i < GetNumberSpawnees (); i++) {
+			var spawnee = (Body) GetChild (i + NON_SPAWNEE_CHILDREN);
+			var name = spawnee.Name;
+			GD.Print ("Spawning ", name);
+			// var position = spawnee.Position;
+			RpcId (id, "SpawnOne", new Vector2 (0, 0), name);
+		}
 	}
 
 	void CheckChildren () {

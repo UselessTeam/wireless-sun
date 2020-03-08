@@ -7,7 +7,6 @@ public class InventoryGrid : GridContainer {
 
 	private List<InventoryItem> items = new List<InventoryItem> ();
 	public void Display (List<ItemStack> stacks) {
-		GD.Print ("Displaying: ", stacks.ToPrint ());
 		if (items.Count > stacks.Count) {
 			for (int i = stacks.Count; i < items.Count; i++) {
 				items[i].QueueFree ();
