@@ -25,7 +25,8 @@ public class Lobby : Control {
 
 	void _OnHostPressed () {
 		Network.Host ();
-		Global.LoadGameScene ();
+		this.Hide ();
+		GetNode<Control> ("../SaveMenu").Show ();
 	}
 
 	void _OnJoinPressed () {
@@ -33,7 +34,7 @@ public class Lobby : Control {
 	}
 
 	void _OnJoinedAServer () {
-		Global.LoadGameScene ();
+		Global.LoadGameScene ("");
 	}
 
 }

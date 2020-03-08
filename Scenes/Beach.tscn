@@ -18,17 +18,6 @@ autoplay = true
 
 [node name="Island" parent="." instance=ExtResource( 9 )]
 
-[node name="PlayerBody" parent="." instance=ExtResource( 1 )]
-position = Vector2( 233.562, 198.284 )
-
-[node name="Camera2D" type="Camera2D" parent="PlayerBody"]
-rotating = true
-current = true
-zoom = Vector2( 0.5, 0.5 )
-drag_margin_h_enabled = true
-drag_margin_v_enabled = true
-script = ExtResource( 4 )
-
 [node name="BerrySpawner" parent="." instance=ExtResource( 5 )]
 position = Vector2( 171, 322 )
 SPAWN_DELAY = 1.0
@@ -39,3 +28,14 @@ SPAWN_DELAY = 50.0
 
 [node name="ShadowBallBody" parent="ShadowSpawner" instance=ExtResource( 2 )]
 position = Vector2( -7.3266, -37.6063 )
+
+[node name="PlayerBody" parent="." instance=ExtResource( 1 )]
+position = Vector2( 233.562, 198.284 )
+
+[node name="Camera2D" type="Camera2D" parent="PlayerBody"]
+rotating = true
+current = true
+zoom = Vector2( 0.5, 0.5 )
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+script = ExtResource( 4 )

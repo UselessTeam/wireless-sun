@@ -60,6 +60,14 @@ public class PC : _Control {
         }
     }
 
-    public override void _PhysicsProcess (float delta) { }
+    public override void SaveIn (Godot.Collections.Dictionary<string, object> saveObject) {
+        saveObject["HP"] = GetNode<Health> ("Health").HP;
+        saveObject["Damage"] = GetNode<_Attack> ("Attack").DAMAGE;
+    }
+
+    public override void LoadData (Godot.Collections.Dictionary<string, object> saveObject) {
+        GetNode<Health> ("Health").HP = (float) saveObject["HP"];
+        GetNode<_Attack> ("Attack").DAMAGE = (float) saveObject["Damage"];
+    }
 
 }

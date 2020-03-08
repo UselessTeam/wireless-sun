@@ -31,9 +31,9 @@ public class _Spawner : Node2D {
 				timeSinceLastSpawn = 0;
 				var position = GenerateSpawnPosition ();
 				if (Network.IsConnectionStarted)
-					Rpc ("SpawnOne", position, spawnID);
+					Rpc ("SpawnOne", spawnID.ToString (), position);
 				else
-					SpawnOne (position, spawnID.ToString ());
+					SpawnOne (spawnID.ToString (), position);
 				spawnID++;
 			}
 		}
@@ -53,7 +53,7 @@ public class _Spawner : Node2D {
 	}
 
 	[PuppetSync]
-	void SpawnOne (Vector2 position, string name) {
+	void SpawnOne (string name, Vector2 position) {
 		var spawnBody = SpawnPrefab.Instance ().GetNode<Body> ("./");
 		spawnBody.Name = name;
 		spawnBody.Position = position;
@@ -66,18 +66,8 @@ public class _Spawner : Node2D {
 			var spawnee = (Body) GetChild (i + NON_SPAWNEE_CHILDREN);
 			var name = spawnee.Name;
 			GD.Print ("Spawning ", name);
-			// var position = spawnee.Position;
-			RpcId (id, "SpawnOne", new Vector2 (0, 0), name);
+			var position = spawnee.Position;
+			RpcId (id, "SpawnOne", name, new Vector2 (0, 0));
 		}
 	}
-
-	void CheckChildren () {
-
-	}
-
-	[Puppet]
-	void CheckChild (string Name) {
-
-	}
-
 }

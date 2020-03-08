@@ -18,6 +18,8 @@ public abstract class _Control : Node2D {
         MyBody.StartFlicker (FLICKER_TIME);
     }
 
-    // [Master] void CheckDeath
+    // Save and load data of the object in a file
+    public abstract void SaveIn (Godot.Collections.Dictionary<string, object> saveObject);
+    public abstract void LoadData (Godot.Collections.Dictionary<string, object> saveObject);
 
 }

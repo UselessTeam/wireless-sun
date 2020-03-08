@@ -22,12 +22,6 @@ public class GameHandler : Node2D {
 			Layer[name] = (uint) 1 << i - 1;
 		} // TODO move this to Global
 
-		// Server stuff
-		// GetTree ().Connect ("network_peer_connected", this, "_OnPlayerConnected");
-		// GetTree ().Connect ("network_peer_disconnected", this, "_OnPlayerDisconnected");
-
-		// GetTree ().Connect ("server_disconnected", this, "_OnServerDisconnected");
-
 		if (Network.IsConnectionStarted) {
 			ControlMyPlayer (GetTree ().GetNetworkUniqueId ());
 			Network._OnGameHandlerAwake ();
@@ -57,4 +51,10 @@ public class GameHandler : Node2D {
 		myPlayer.SetNetworkMaster (id);
 	}
 
+	public override void _Process (float delta) {
+		if (!Network.IsConnectionStarted || IsNetworkMaster ()) {
+			if (Input.IsActionPressed ("save"))
+				Global.SaveGame ("savename");
+		}
+	}
 }

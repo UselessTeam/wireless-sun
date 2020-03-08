@@ -102,28 +102,11 @@ public class Network : Node2D {
 	public void _OnServerDisconnected () {
 		GD.Print ("Disconnecting from server");
 		GetTree ().NetworkPeer = null;
-		for (int i = 0; i < nConnectedPlayers; i++) {
-			int id = connectedPlayers[i];
-			// if (id != 0 && connectedPlayers[i] != serverID)
-			// gameHandler.RemovePlayer (i);
-		}
-
+		Global.LoadMenuScene ();
 	}
 
 	public void _OnConnectionFailed () {
 		GD.Print ("Connection failed!");
 		IsConnectionStarted = false;
 	}
-
-	public override void _Process (float delta) {
-		if (!IsConnectionStarted) {
-			if (Input.IsActionJustPressed ("host_game ")) {
-				Host ();
-			}
-			if (Input.IsActionJustPressed ("join_game ")) {
-				Join (DEFAULT_IP);
-			}
-		}
-	}
-
 }

@@ -41,6 +41,8 @@ public class Body : KinematicBody2D {
 
 	[Puppet] Vector2 PuppetPosition = new Vector2 (0, 0);
 
+	public _Control MyControl { get { return GetChildOrNull<_Control> (0); } }
+
 	public bool CanMove { get { return !isImpact; } }
 
 	// Call whenever the body is hit for some time
@@ -88,5 +90,18 @@ public class Body : KinematicBody2D {
 				Position = PuppetPosition;
 		}
 
+	}
+
+	public Godot.Collections.Dictionary<string, object> MakeSave () {
+		var saveObject = new Godot.Collections.Dictionary<string, object> () { { "Filename", Filename }, { "Parent", GetParent ().GetPath () } };
+		saveObject["PositionX"] = Position.x;
+		saveObject["PositionY"] = Position.y;
+		MyControl.SaveIn (saveObject);
+		return saveObject;
+	}
+
+	public void LoadData (Godot.Collections.Dictionary<string, object> saveObject) {
+		Position = new Vector2 ((float) saveObject["PositionX"], (float) saveObject["PositionY"]);
+		MyControl.LoadData (saveObject);
 	}
 }

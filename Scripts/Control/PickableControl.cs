@@ -18,4 +18,7 @@ public class PickableControl : _Control {
 		Global.inventory.Add (Item.Manager.GetId (item));
 		GetParent<Body> ().QueueFree ();
 	}
+
+	public override void SaveIn (Godot.Collections.Dictionary<string, object> saveObject) { }
+	public override void LoadData (Godot.Collections.Dictionary<string, object> saveObject) { }
 }

@@ -61,7 +61,9 @@ radius = 14.699
 [sub_resource type="CircleShape2D" id=11]
 radius = 58.5806
 
-[node name="PlayerBody" type="KinematicBody2D"]
+[node name="PlayerBody" type="KinematicBody2D" groups=[
+"Persistent",
+]]
 collision_layer = 2
 collision_mask = 5
 script = ExtResource( 7 )
@@ -110,6 +112,6 @@ script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Picker/FieldOfView"]
 shape = SubResource( 11 )
-[connection signal="damage_taken" from="." to="PlayerControl/Health" method="_OnDamageTaken"]
 [connection signal="damage_taken" from="." to="PlayerControl" method="_OnDamageTaken"]
+[connection signal="damage_taken" from="." to="PlayerControl/Health" method="_OnDamageTaken"]
 [connection signal="animation_finished" from="PlayerControl/Attack/Sprite" to="PlayerControl/Attack" method="_OnAttackFinished"]
