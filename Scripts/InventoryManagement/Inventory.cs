@@ -9,8 +9,6 @@ public class Inventory : Node2D {
 	public delegate void inventory_change ();
 	public override void _Ready () {
 		Global.inventory = this;
-		GD.Print (Item.Manager.GetItem ("Berry"));
-		GD.Print (Item.Manager.GetItem ("ItemQuiExistePas"));
 	}
 
 	public void Add (ItemId item, short quantity = 1) {

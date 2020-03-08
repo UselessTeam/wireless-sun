@@ -1,14 +1,17 @@
 using System;
 using Godot;
 
-public class Network : Node2D {
-	// [Signal] delegate void PlayerDisconnected (int id);
-	// [Signal] delegate void ServerDisconnected (int id);
+public struct PlayerData {
+	public int id;
+	public string name;
+	public Vector2 position;
+}
 
+public class Network : Node2D {
 	const string DEFAULT_IP = "127.0.0.1";
 	// const string DEFAULT_IP = "192.168.1.5";
 	const int DEFAULT_PORT = 31400;
-	const int MAX_PLAYERS = 3;
+	const int MAX_PLAYERS = 4;
 
 	public static bool IsConnectionStarted = false;
 	public static bool IsServer { get { return !IsConnectionStarted || Instance.GetTree ().IsNetworkServer (); } }
@@ -19,7 +22,13 @@ public class Network : Node2D {
 	int nConnectedPlayers = 1;
 	int[] connectedPlayers = new int[MAX_PLAYERS];
 
-	GameHandler gameHandler { get { return GameHandler.Instance; } }
+	// GameHandler gameHandler { get { return GameHandler.Instance; } }
+
+	void PrintPlayers () {
+		GD.Print ("Players:");
+		for (int i = 0; i < nConnectedPlayers; i++)
+			GD.Print (connectedPlayers[i].ToString ());
+	}
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready () {
@@ -35,34 +44,59 @@ public class Network : Node2D {
 		GetTree ().Connect ("connection_failed", this, "_OnConnectionFailed");
 	}
 
+	public static void Host () {
+		GD.Print ("Creating server");
+		var peer = new NetworkedMultiplayerENet ();
+		peer.CreateServer (DEFAULT_PORT, MAX_PLAYERS);
+		Instance.GetTree ().NetworkPeer = peer;
+		IsConnectionStarted = true;
+		Instance._OnJoinedAServer ();
+	}
+
+	public static void Join (string IP) {
+		GD.Print ("Joining server");
+		var peer = new NetworkedMultiplayerENet ();
+		peer.CreateClient ((IP != "") ? IP : DEFAULT_IP, DEFAULT_PORT);
+		Instance.GetTree ().NetworkPeer = peer;
+		IsConnectionStarted = true;
+	}
+
+	public static void _OnGameHandlerAwake () {
+		for (int i = 1; i < Instance.nConnectedPlayers; i++)
+			GameHandler.SpawnPlayer (Instance.connectedPlayers[i], new Vector2 (0, 0));
+	}
+
+	public void _OnPlayerConnected (int id) {
+		connectedPlayers[nConnectedPlayers] = id;
+		nConnectedPlayers++;
+		PrintPlayers ();
+
+		GameHandler.SpawnPlayer (id, new Vector2 (0, 0));
+		// gameHandler.RpcId (id, "SpawnPlayer ", serverID, GameHandler.myPlayer.Position);
+
+	}
+
 	public void _OnPlayerDisconnected (int id) {
-		GD.Print ("Player leaving : " + id);
-		gameHandler.RemovePlayer (id);
+		GD.Print ("Player leaving: " + id);
+		// gameHandler.RemovePlayer (id);
 
 		for (int i = 0; i < nConnectedPlayers; i++) {
 			if (connectedPlayers[i] == id) {
 				nConnectedPlayers--;
 				connectedPlayers[i] = connectedPlayers[nConnectedPlayers];
 				connectedPlayers[nConnectedPlayers] = 0;
+				GameHandler.RemovePlayer (connectedPlayers[i]);
 				return;
 			}
 		}
-		GD.Print ("ALERT! ID of the disconnecting player not found");
-	}
-
-	public void _OnPlayerConnected (int id) {
-		connectedPlayers[nConnectedPlayers] = id;
-		nConnectedPlayers++;
-
-		gameHandler.RpcId (id, "SpawnPlayer", serverID, GameHandler.myPlayer.Position);
-
+		GD.Print ("ALERT!ID of the disconnecting player not found ");
 	}
 
 	public void _OnJoinedAServer () {
 		GD.Print ("Server joined!");
-		gameHandler.SetNetworkMaster (1);
 		connectedPlayers[0] = serverID;
-		gameHandler.ControlMyPlayer (serverID);
+		// gameHandler.ControlMyPlayer (serverID);
+		PrintPlayers ();
 	}
 
 	public void _OnServerDisconnected () {
@@ -70,43 +104,26 @@ public class Network : Node2D {
 		GetTree ().NetworkPeer = null;
 		for (int i = 0; i < nConnectedPlayers; i++) {
 			int id = connectedPlayers[i];
-			if (id != 0 && connectedPlayers[i] != serverID)
-				gameHandler.RemovePlayer (i);
+			// if (id != 0 && connectedPlayers[i] != serverID)
+			// gameHandler.RemovePlayer (i);
 		}
 
 	}
 
 	public void _OnConnectionFailed () {
-		GD.Print ("Connection failed !");
+		GD.Print ("Connection failed!");
 		IsConnectionStarted = false;
 	}
 
-	//  // Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process (float delta) {
 		if (!IsConnectionStarted) {
-			if (Input.IsActionJustPressed ("host_game")) {
+			if (Input.IsActionJustPressed ("host_game ")) {
 				Host ();
 			}
-			if (Input.IsActionJustPressed ("join_game")) {
+			if (Input.IsActionJustPressed ("join_game ")) {
 				Join (DEFAULT_IP);
 			}
 		}
-	}
-
-	public void Host () {
-		GD.Print ("Creating server");
-		var peer = new NetworkedMultiplayerENet ();
-		peer.CreateServer (DEFAULT_PORT, MAX_PLAYERS);
-		GetTree ().NetworkPeer = peer;
-		IsConnectionStarted = true;
-		_OnJoinedAServer ();
-	}
-	public void Join (string IP) {
-		GD.Print ("Joining server");
-		var peer = new NetworkedMultiplayerENet ();
-		peer.CreateClient ((IP != "") ? IP : DEFAULT_IP, DEFAULT_PORT);
-		GetTree ().NetworkPeer = peer;
-		IsConnectionStarted = true;
 	}
 
 }

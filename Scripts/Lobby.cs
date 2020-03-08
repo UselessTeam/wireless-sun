@@ -3,26 +3,37 @@ using Godot;
 
 public class Lobby : Control {
 
-	string PlayerName = "";
-	string IpAdress = "";
+	public static Lobby Instance { get { return instance; } }
+	static Lobby instance = null;
+
+	public override void _Ready () {
+		instance = this;
+		GetTree ().Connect ("connected_to_server", this, "_OnJoinedAServer");
+	}
+
+	string name = "";
+	string ipAdress = "";
 
 	void _OnNameChanged (string new_text) {
-		PlayerName = new_text;
+		name = new_text;
+		Global.username = name;
 	}
 
 	void _OnIpChanged (string new_text) {
-		IpAdress = new_text;
+		ipAdress = new_text;
 	}
 
 	void _OnHostPressed () {
-		LoadGame ();
+		Network.Host ();
+		Global.LoadGameScene ();
 	}
 
 	void _OnJoinPressed () {
-		LoadGame ();
+		Network.Join (ipAdress);
 	}
 
-	void LoadGame () {
-		GetTree ().ChangeScene ("res://Scenes/Beach.tscn");
+	void _OnJoinedAServer () {
+		Global.LoadGameScene ();
 	}
+
 }
