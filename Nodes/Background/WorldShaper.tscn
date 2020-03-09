@@ -4,7 +4,6 @@
 [ext_resource path="res://Scripts/Graphics/WorldShader.cs" type="Script" id=2]
 
 [node name="Screen" type="ColorRect"]
-visible = false
 material = ExtResource( 1 )
 margin_right = 200.0
 margin_bottom = 200.0

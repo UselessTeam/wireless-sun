@@ -11,12 +11,12 @@ public class SaveMenu : Control {
 	}
 
 	void _OnLoadPressed () {
-		Global.LoadGameScene ("");
+		Global.LoadGameScene ("saveName");
 	}
 
 	void _OnNewPressed () {
-		Global.MakeNewGameScene ("");
-		Global.LoadGameScene ("");
+		Global.MakeNewGameScene ("saveName");
+		Global.LoadGameScene ("saveName");
 	}
 
 }

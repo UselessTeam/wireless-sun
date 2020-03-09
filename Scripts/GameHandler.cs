@@ -11,6 +11,7 @@ public class GameHandler : Node2D {
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready () {
+		Global._OnGameSceneStarted ();
 		myPlayer = GetNode<Body> ("PlayerBody");
 		myInstance = this;
 
@@ -54,7 +55,7 @@ public class GameHandler : Node2D {
 	public override void _Process (float delta) {
 		if (!Network.IsConnectionStarted || IsNetworkMaster ()) {
 			if (Input.IsActionPressed ("save"))
-				Global.SaveGame ("savename");
+				Global.SaveGame ();
 		}
 	}
 }
