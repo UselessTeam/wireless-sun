@@ -20,7 +20,7 @@ public class InventoryBag : PanelContainer {
 
 	public override void _Ready () {
 		SetColumns (4);
-		Global.inventory.Connect ("inventory_change", this, nameof (_on_inventory_change));
+		GameRoot.inventory.Connect ("inventory_change", this, nameof (_on_inventory_change));
 	}
 
 	private void SetColumns (int value) {
@@ -31,6 +31,6 @@ public class InventoryBag : PanelContainer {
 	}
 
 	public void _on_inventory_change () {
-		GetGrid ().Display (Global.inventory.inventory);
+		GetGrid ().Display (GameRoot.inventory.inventory);
 	}
 }

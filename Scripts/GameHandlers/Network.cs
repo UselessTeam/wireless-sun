@@ -63,7 +63,7 @@ public class Network : Node2D {
 
 	public static void _OnGameHandlerAwake () {
 		for (int i = 1; i < Instance.nConnectedPlayers; i++)
-			GameHandler.SpawnPlayer (Instance.connectedPlayers[i], new Vector2 (0, 0));
+			Gameplay.SpawnPlayer (Instance.connectedPlayers[i], new Vector2 (0, 0));
 	}
 
 	public void _OnPlayerConnected (int id) {
@@ -71,7 +71,7 @@ public class Network : Node2D {
 		nConnectedPlayers++;
 		PrintPlayers ();
 
-		GameHandler.SpawnPlayer (id, new Vector2 (0, 0));
+		Gameplay.SpawnPlayer (id, new Vector2 (0, 0));
 		// gameHandler.RpcId (id, "SpawnPlayer ", serverID, GameHandler.myPlayer.Position);
 
 	}
@@ -85,7 +85,7 @@ public class Network : Node2D {
 				nConnectedPlayers--;
 				connectedPlayers[i] = connectedPlayers[nConnectedPlayers];
 				connectedPlayers[nConnectedPlayers] = 0;
-				GameHandler.RemovePlayer (connectedPlayers[i]);
+				Gameplay.RemovePlayer (connectedPlayers[i]);
 				return;
 			}
 		}
@@ -102,7 +102,7 @@ public class Network : Node2D {
 	public void _OnServerDisconnected () {
 		GD.Print ("Disconnecting from server");
 		GetTree ().NetworkPeer = null;
-		Global.LoadMenuScene ();
+		GameRoot.LoadMenuScene ();
 	}
 
 	public void _OnConnectionFailed () {

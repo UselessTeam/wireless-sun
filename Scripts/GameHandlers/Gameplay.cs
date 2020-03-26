@@ -2,16 +2,16 @@ using System;
 using System.Collections.Generic;
 using Godot;
 
-public class GameHandler : Node2D {
-	static public GameHandler Instance { get { return myInstance; } }
+public class Gameplay : Node2D {
+	static public Gameplay Instance { get { return myInstance; } }
 
-	static private GameHandler myInstance = null;
+	static private Gameplay myInstance = null;
 	static public Body myPlayer;
 	static public Dictionary<string, uint> Layer = new Dictionary<string, uint> ();
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready () {
-		Global._OnGameSceneStarted ();
+		GameRoot._OnGameSceneStarted ();
 		myPlayer = GetNode<Body> ("PlayerBody");
 		myInstance = this;
 
@@ -55,7 +55,7 @@ public class GameHandler : Node2D {
 	public override void _Process (float delta) {
 		if (!Network.IsConnectionStarted || IsNetworkMaster ()) {
 			if (Input.IsActionPressed ("save"))
-				Global.SaveGame ();
+				Save.SaveGame ();
 		}
 	}
 }

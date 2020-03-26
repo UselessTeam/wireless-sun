@@ -8,7 +8,7 @@ public class Inventory : Node2D {
 	[Signal]
 	public delegate void inventory_change ();
 	public override void _Ready () {
-		Global.inventory = this;
+		GameRoot.inventory = this;
 	}
 
 	public void Add (ItemId item, short quantity = 1) {

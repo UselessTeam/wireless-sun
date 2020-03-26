@@ -16,7 +16,7 @@ public class Lobby : Control {
 
 	void _OnNameChanged (string new_text) {
 		name = new_text;
-		Global.username = name;
+		GameRoot.username = name;
 	}
 
 	void _OnIpChanged (string new_text) {
@@ -34,7 +34,7 @@ public class Lobby : Control {
 	}
 
 	void _OnJoinedAServer () {
-		Global.LoadGameScene ("");
+		GameRoot.LoadGameScene ("");
 	}
 
 	// void _StartGame () {

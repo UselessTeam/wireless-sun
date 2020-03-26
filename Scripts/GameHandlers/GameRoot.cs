@@ -1,26 +1,55 @@
 using Godot;
 
-public class Global : Node {
+public class GameRoot : Node {
 	public static Inventory inventory;
-	public static Global global;
+	private static GameRoot instance;
+	public static GameRoot Instance { get { return instance; } }
+
 	public static string username = "";
 
 	public override void _Ready () {
-		global = this;
+		instance = this;
 		Item.Manager.Load ();
 	}
 
+	public static void LoadGameScene (string saveName) {
+		instance.GetTree ().ChangeScene ("res://Scenes/Beach.tscn"); // We should load the game scene corresponding to saveName
+		Save.CurrentSave = saveName;
+	}
+
+	public static void LoadMenuScene () {
+		instance.GetTree ().ChangeScene ("res://Scenes/Menu.tscn");
+		Save.CurrentSave = "";
+	}
+
+	public static void BuildNewWorld (string saveName) {
+		Save.MakeNewSave (saveName);
+	}
+
+	public static void _OnGameSceneStarted () {
+		if (Save.CurrentSave != "")
+			Save.LoadGame ();
+	}
+}
+
+public static class Save {
+
 	public static string saveLocation = "res://save";
 	static string currentSave = "";
+	static public string CurrentSave {
+		get { return currentSave; }
+		set { currentSave = value; }
+	}
 
 	static Directory Directory = new Directory ();
 	static File File = new File ();
+
 	static string SaveLocation (string saveName) {
 		return saveLocation + "/" + saveName + ".save";
 	}
 
 	// Scene changing
-	public static void MakeNewGameScene (string saveName) {
+	public static void MakeNewSave (string saveName) {
 		// Create a the map and save it as a scene 
 		// TODO
 		//Remove any previous save
@@ -28,22 +57,6 @@ public class Global : Node {
 			Directory.Remove (SaveLocation (saveName));
 		if (!Directory.DirExists (saveLocation))
 			Directory.MakeDir (saveLocation);
-		GD.Print ("hi");
-
-	}
-
-	public static void LoadGameScene (string saveName) {
-		global.GetTree ().ChangeScene ("res://Scenes/Beach.tscn"); // We should load the game scene corresponding to saveName
-		Global.currentSave = saveName;
-	}
-	public static void _OnGameSceneStarted () {
-		if (currentSave != "")
-			LoadGame ();
-	}
-
-	public static void LoadMenuScene () {
-		global.GetTree ().ChangeScene ("res://Scenes/Menu.tscn");
-		currentSave = "";
 	}
 
 	// Save and load game
@@ -52,7 +65,7 @@ public class Global : Node {
 		var saveGame = new File ();
 		saveGame.Open (SaveLocation (currentSave), File.ModeFlags.Write);
 
-		var saveNodes = global.GetTree ().GetNodesInGroup ("Persistent");
+		var saveNodes = GameRoot.Instance.GetTree ().GetNodesInGroup ("Persistent");
 		foreach (Node saveNode in saveNodes) {
 			if (saveNode.Filename.Empty ()) {
 				GD.Print ("persistent node " + saveNode.Name + " is not an instanced scene, skipped");
@@ -73,7 +86,7 @@ public class Global : Node {
 		GD.Print ("Saved game : " + currentSave);
 
 	}
-	static void LoadGame () {
+	public static void LoadGame () {
 		var saveGame = new File ();
 		if (!saveGame.FileExists (SaveLocation (currentSave))) {
 			GD.Print ("Loaded empty save");
@@ -81,7 +94,7 @@ public class Global : Node {
 		}
 
 		// First we delete all the Persistent nodes, in order to make sure the game state is clean
-		var saveNodes = global.GetTree ().GetNodesInGroup ("Persistent");
+		var saveNodes = GameRoot.Instance.GetTree ().GetNodesInGroup ("Persistent");
 		foreach (Node saveNode in saveNodes)
 			saveNode.QueueFree ();
 
@@ -98,7 +111,7 @@ public class Global : Node {
 			// Firstly, we need to create the object and add it to the tree and set its position.
 			var newObjectScene = (PackedScene) ResourceLoader.Load (nodeData["Filename"].ToString ());
 			var newObject = (Node) newObjectScene.Instance ();
-			global.GetNode (nodeData["Parent"].ToString ()).AddChild (newObject);
+			GameRoot.Instance.GetNode (nodeData["Parent"].ToString ()).AddChild (newObject);
 
 			// Call the node's load function
 			if (!newObject.HasMethod ("LoadData")) {

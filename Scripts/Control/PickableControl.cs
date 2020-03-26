@@ -15,7 +15,7 @@ public class PickableControl : _Control {
 	}
 
 	[PuppetSync] public void Gather () {
-		Global.inventory.Add (Item.Manager.GetId (item));
+		GameRoot.inventory.Add (Item.Manager.GetId (item));
 		GetParent<Body> ().QueueFree ();
 	}
 

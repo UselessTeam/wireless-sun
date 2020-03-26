@@ -1,7 +1,0 @@
-{"Filename":"res://Nodes/Bodies/Berry.tscn","Parent":"/root/Beach/BerrySpawner","PositionX":-59.015846,"PositionY":-41.809067}
-{"Filename":"res://Nodes/Bodies/Berry.tscn","Parent":"/root/Beach/BerrySpawner","PositionX":6.946988,"PositionY":58.425514}
-{"Filename":"res://Nodes/Bodies/Berry.tscn","Parent":"/root/Beach/BerrySpawner","PositionX":32.01582,"PositionY":-1.793571}
-{"Filename":"res://Nodes/Bodies/Berry.tscn","Parent":"/root/Beach/BerrySpawner","PositionX":-51.393562,"PositionY":-7.562593}
-{"Filename":"res://Nodes/Bodies/Berry.tscn","Parent":"/root/Beach/BerrySpawner","PositionX":-8.771921,"PositionY":-33.846161}
-{"Filename":"res://Nodes/Bodies/ShadowBallBody.tscn","Parent":"/root/Beach/ShadowSpawner","PositionX":-7.3266,"PositionY":-37.6063,"HP":50}
-{"Filename":"res://Nodes/Bodies/PlayerBody.tscn","Parent":"/root/Beach","PositionX":339.222595,"PositionY":304.349487,"HP":50,"Damage":30}
