@@ -1,0 +1,52 @@
+[
+    {
+        "location": "firecamp",
+        "crafts": [
+            {
+                "result": "torch",
+                "ingredients": [
+                    {"name" :"stick","amount":1}
+                ]
+            }
+        ]
+    },
+    {
+        "location": "crafting_table",
+        "crafts": [
+            {
+                "result": "axe",
+                "ingredients": [
+                    {"name" :"stick", "amount":2},
+                    {"name" :"stone", "amount":3}
+                ]
+            },
+            {
+                "result": "pickaxe",
+                "ingredients": [
+                    {"name" :"stick", "amount":2},
+                    {"name" :"wood", "amount":2},
+                    {"name" :"stone", "amount":1}
+                ]
+            }
+        ]
+    },
+    {
+        "location": "forge",
+        "crafts": [
+            {
+                "result": "sword",
+                "ingredients": [
+                    {"name" :"ore", "amount":4},
+                    {"name" :"stone", "amount":3}
+                ]
+            },
+            {
+                "result": "hoe",
+                "ingredients": [
+                    {"name":"stick", "amount":4},
+                    {"name":"ore", "amount":3}
+                ]
+            }
+        ]
+    }
+]

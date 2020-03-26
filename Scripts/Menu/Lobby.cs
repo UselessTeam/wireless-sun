@@ -37,4 +37,9 @@ public class Lobby : Control {
 		Global.LoadGameScene ("");
 	}
 
+	// void _StartGame () {
+	// 	//
+	// 	Global.LoadGameScene ("");
+	// }
+
 }

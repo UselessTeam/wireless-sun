@@ -7,6 +7,18 @@
                 "sprite": { "sheet":0, "x":1, "y":0 }
             },
             {
+                "name":"stick",
+                "sprite": { "sheet":0, "x":0, "y":0 }
+            },
+            {
+                "name":"flower",
+                "sprite": { "sheet":0, "x":2, "y":0 }
+            },
+            {
+                "name":"herb",
+                "sprite": { "sheet":0, "x":3, "y":0 }
+            },
+            {
                 "name":"stone",
                 "sprite": { "sheet":0, "x":0, "y":1 }
             },
@@ -21,6 +33,10 @@
             {
                 "name":"coal",
                 "sprite": { "sheet":0, "x":3, "y":1 }
+            },
+            {
+                "name":"shadow_ball",
+                "sprite": { "sheet":0, "x":3, "y":4 }
             }
         ]
     },
@@ -34,6 +50,39 @@
             {
                 "name":"crab_leg",
                 "sprite": { "sheet":0, "x":2, "y":2 }
+            },
+            {
+                "name":"mushroom",
+                "sprite": { "sheet":0, "x":0, "y":2 }
+            },
+            {
+                "name":"fish",
+                "sprite": { "sheet":0, "x":3, "y":2 }
+            }
+        ]
+    },
+        {
+        "category":"equipement",
+        "variants": [
+            {
+                "name":"sword",
+                "sprite": { "sheet":0, "x":0, "y":3 }
+            },
+            {
+                "name":"hoe",
+                "sprite": { "sheet":0, "x":1, "y":3 }
+            },
+            {
+                "name":"axe",
+                "sprite": { "sheet":0, "x":2, "y":3 }
+            },
+            {
+                "name":"pickaxe",
+                "sprite": { "sheet":0, "x":3, "y":3 }
+            },
+            {
+                "name":"torch",
+                "sprite": { "sheet":0, "x":0, "y":5 }
             }
         ]
     }
