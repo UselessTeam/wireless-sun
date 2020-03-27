@@ -10,6 +10,7 @@ public class GameRoot : Node {
 	public override void _Ready () {
 		instance = this;
 		Item.Manager.Load ();
+		Craft.Manager.Load ();
 	}
 
 	public static void LoadGameScene (string saveName) {
