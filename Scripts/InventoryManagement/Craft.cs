@@ -96,6 +96,7 @@ namespace Craft {
         public CraftLocation location { get { return Manager.GetLocationById (id.location); } }
 
         public string result;
+        public short amount = 1;
         public Ingredient[] ingredients;
 
         public CraftData () {

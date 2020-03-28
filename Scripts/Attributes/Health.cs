@@ -6,6 +6,11 @@ public class Health : Node2D {
     [Export][Puppet] private float _HP = 50;
 
     [Signal] delegate void hp_changed (float HP);
+    [Signal] delegate void died ();
+
+    public override void _Ready () {
+        Connect ("died", MyUser, "_OnDied");
+    }
 
     public _Control MyUser { get { return GetParent<_Control> (); } }
 
@@ -34,17 +39,12 @@ public class Health : Node2D {
         }
     }
 
-    [Signal] delegate void died ();
-
     public void _OnDamageTaken (float damage) {
         HP -= damage;
-        GD.Print ("ouiouiouille");
     }
 
     [Puppet]
     public void Die () {
         EmitSignal ("died");
-        GD.Print ("Je suis mourru!");
-        MyUser.MyBody.QueueFree ();
     }
 }

@@ -70,4 +70,11 @@ public class PC : _Control {
         GetNode<_Attack> ("Attack").DAMAGE = (float) saveObject["Damage"];
     }
 
+    public new void _OnDied () {
+        if (IsMaster) {
+            Gameplay.Instance._OnPlayerDied ();
+        } else {
+            base._OnDied ();
+        }
+    }
 }

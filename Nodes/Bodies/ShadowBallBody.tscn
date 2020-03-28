@@ -51,6 +51,7 @@ FLICKER_TIME = 0.2
 
 [node name="Attack" type="Node2D" parent="ShadowBallControl"]
 script = ExtResource( 3 )
+DAMAGE = 1000.0
 
 [node name="Hitbox" type="Area2D" parent="ShadowBallControl/Attack"]
 collision_layer = 0
@@ -79,5 +80,5 @@ playing = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PoolVector2Array( -4.43527, 12.784, 3.22487, 12.784, 4.03802, 4.26392, -5.62297, 4.26392 )
-[connection signal="damage_taken" from="." to="ShadowBallControl" method="_OnDamageTaken"]
 [connection signal="damage_taken" from="." to="ShadowBallControl/Health" method="_OnDamageTaken"]
+[connection signal="damage_taken" from="." to="ShadowBallControl" method="_OnDamageTaken"]

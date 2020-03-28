@@ -3,6 +3,7 @@ using Godot;
 
 public class GUI : CanvasLayer {
 	public InventoryGUI inventory;
+	public CraftingGUI crafting;
 	public enum Window {
 		Nothing,
 		Inventory,
@@ -13,6 +14,8 @@ public class GUI : CanvasLayer {
 		current = Window.Nothing;
 		inventory = (InventoryGUI) GetNode ("Inventory");
 		inventory.Hide ();
+		crafting = (CraftingGUI) GetNode ("Crafting");
+		crafting.Hide ();
 	}
 
 	public GUIWindow GetWindowNode (Window window) {

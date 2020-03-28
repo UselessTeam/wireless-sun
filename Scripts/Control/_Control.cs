@@ -11,7 +11,7 @@ public abstract class _Control : Node2D {
     public Body MyBody { get { return GetParent<Body> (); } }
 
     public void _OnDied () {
-
+        MyBody.QueueFree ();
     }
 
     public void _OnDamageTaken (float damage) {
