@@ -1,12 +1,11 @@
 using System;
 using Godot;
 
-public class _Spawner : Node2D {
+public abstract class _Spawner : Node2D {
 	const int NON_SPAWNEE_CHILDREN = 1;
 
 	[Export] public float SPAWN_DELAY = 2;
 	[Export] public float MAX_COUNT = 10;
-	[Export] public PackedScene SpawnPrefab;
 
 	public bool IsMaster { get { return !Network.IsConnectionStarted || IsNetworkMaster (); } }
 	public bool IsTrueMaster { get { return Network.IsConnectionStarted && IsNetworkMaster (); } }
@@ -52,9 +51,11 @@ public class _Spawner : Node2D {
 
 	}
 
+	abstract protected Body GetSpawnee ();
+
 	[PuppetSync]
 	void SpawnOne (string name, Vector2 position) {
-		var spawnBody = SpawnPrefab.Instance ().GetNode<Body> ("./");
+		var spawnBody = GetSpawnee ();
 		spawnBody.Name = name;
 		spawnBody.Position = position;
 		AddChild (spawnBody);

@@ -137,4 +137,15 @@ namespace Item {
 			return "[" + string.Join (", ", stacks) + "]";
 		}
 	}
+
+	public static class Builder {
+		public static string baseItemPath = "res://Nodes/Bodies/Item.tscn";
+
+		public static Body MakeBody (string item, short quantity = 1) {
+			var body = ((PackedScene) GD.Load (baseItemPath)).Instance ().GetNode<Body> ("./");
+			body.GetNode<PickableControl> ("./PickableControl").Set (item, quantity);
+			((AtlasTexture) (body.GetNode<Sprite> ("Sprite")).Texture).Region = Manager.GetItem (Manager.GetId (item)).sprite.GetRect ();
+			return body;
+		}
+	}
 }

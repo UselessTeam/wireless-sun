@@ -2,8 +2,10 @@ using System;
 using Godot;
 
 public class PickableControl : _Control {
-	[Export] string item;
-	[Export] int amount;
+	[Export] public string item;
+	[Export] public short quantity = 1;
+
+	public void Set (string item, short quantity) { this.item = item; this.quantity = quantity; }
 
 	public void _OnCollisionWithPlayer (KinematicCollision2D collInfo) {
 		if (IsMaster) {
@@ -15,10 +17,9 @@ public class PickableControl : _Control {
 	}
 
 	[PuppetSync] public void Gather () {
-		GameRoot.inventory.Add (Item.Manager.GetId (item));
+		GameRoot.inventory.Add (Item.Manager.GetId (item), quantity);
 		GetParent<Body> ().QueueFree ();
 	}
 
-	public override void SaveIn (Godot.Collections.Dictionary<string, object> saveObject) { }
-	public override void LoadData (Godot.Collections.Dictionary<string, object> saveObject) { }
+	public override void SaveIn (Godot.Collections.Dictionary<string, object> saveObject) { } public override void LoadData (Godot.Collections.Dictionary<string, object> saveObject) { }
 }
