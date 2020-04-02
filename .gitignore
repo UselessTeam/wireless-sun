@@ -17,3 +17,6 @@ mono_crash*
 *.wav
 *.ogg
 *.save
+*.exe
+*.pck
+*.x86_64

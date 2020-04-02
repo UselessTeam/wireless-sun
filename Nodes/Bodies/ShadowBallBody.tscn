@@ -11,7 +11,7 @@
 radius = 9.02684
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 168.731
+radius = 134.004
 
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 4 )
@@ -43,7 +43,7 @@ animations = [ {
 collision_layer = 4
 collision_mask = 7
 script = ExtResource( 2 )
-WALK_SPEED = 65.0
+WALK_SPEED = 30.0
 
 [node name="ShadowBallControl" type="Node2D" parent="."]
 script = ExtResource( 1 )
@@ -51,7 +51,7 @@ FLICKER_TIME = 0.2
 
 [node name="Attack" type="Node2D" parent="ShadowBallControl"]
 script = ExtResource( 3 )
-DAMAGE = 1000.0
+DAMAGE = 20.0
 
 [node name="Hitbox" type="Area2D" parent="ShadowBallControl/Attack"]
 collision_layer = 0
@@ -75,7 +75,7 @@ shape = SubResource( 2 )
 
 [node name="Shadowball" type="AnimatedSprite" parent="."]
 frames = SubResource( 7 )
-frame = 3
+frame = 1
 playing = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
