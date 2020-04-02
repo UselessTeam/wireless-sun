@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/GUI/CraftGUI.cs" type="Script" id=1]
+
+[node name="Craft" type="PanelContainer"]
+margin_right = 142.0
+margin_bottom = 38.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Grid" type="GridContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 135.0
+margin_bottom = 31.0
+custom_constants/vseparation = 2
+custom_constants/hseparation = 2
+columns = 5

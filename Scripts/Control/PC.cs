@@ -57,6 +57,8 @@ public class PC : _Control {
                 MyBody.NextMovement = inputMovement;
                 inputMovement = new Vector2 (0, 0);
             }
+            if (Input.IsActionPressed ("interact") && currentInteraction != null)
+                currentInteraction.Interact ();
         }
     }
 
@@ -77,4 +79,19 @@ public class PC : _Control {
             base._OnDied ();
         }
     }
+
+    _Interactable currentInteraction;
+    Sprite interactionSprite { get { return GetNode<Sprite> ("InteractionSprite"); } }
+
+    public void _InteractEntered (_Interactable interaction) {
+        currentInteraction = interaction;
+        interactionSprite.Show ();
+    }
+
+    public void _InteractExited (_Interactable interaction) {
+        if (interaction == currentInteraction)
+            currentInteraction = null;
+        interactionSprite.Hide ();
+    }
+
 }

@@ -13,8 +13,8 @@ columns = 4
 [node name="Grid" type="GridContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 31.0
-margin_bottom = 31.0
+margin_right = 7.0
+margin_bottom = 7.0
 custom_constants/vseparation = 2
 custom_constants/hseparation = 2
 columns = 4

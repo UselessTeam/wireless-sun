@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Scripts/Control/PC.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Attributes/FieldOfView.cs" type="Script" id=2]
@@ -9,49 +9,50 @@
 [ext_resource path="res://Scripts/Body.cs" type="Script" id=7]
 [ext_resource path="res://Scripts/InventoryManagement/Picker.cs" type="Script" id=8]
 [ext_resource path="res://Scripts/Attributes/Health.cs" type="Script" id=9]
+[ext_resource path="res://Assets/Sprites/interact.png" type="Texture" id=10]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 6 )
-region = Rect2( 0, 0, 24, 24 )
+region = Rect2( 0, 24, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 6 )
-region = Rect2( 24, 0, 24, 24 )
+region = Rect2( 24, 24, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 6 )
-region = Rect2( 48, 0, 24, 24 )
+region = Rect2( 48, 24, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 6 )
-region = Rect2( 72, 0, 24, 24 )
+region = Rect2( 72, 24, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 6 )
-region = Rect2( 0, 24, 24, 24 )
+region = Rect2( 0, 0, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 6 )
-region = Rect2( 24, 24, 24, 24 )
+region = Rect2( 24, 0, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 6 )
-region = Rect2( 48, 24, 24, 24 )
+region = Rect2( 48, 0, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=8]
 atlas = ExtResource( 6 )
-region = Rect2( 72, 24, 24, 24 )
+region = Rect2( 72, 0, 24, 24 )
 
 [sub_resource type="SpriteFrames" id=9]
 animations = [ {
 "frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
 "loop": true,
-"name": "straight",
+"name": "diagonal",
 "speed": 20.0
 }, {
 "frames": [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
 "loop": true,
-"name": "diagonal",
+"name": "straight",
 "speed": 20.0
 } ]
 
@@ -68,8 +69,11 @@ collision_layer = 2
 collision_mask = 5
 script = ExtResource( 7 )
 
+[node name="HumanCharacter" parent="." instance=ExtResource( 4 )]
+
 [node name="PlayerControl" type="Node2D" parent="."]
 script = ExtResource( 1 )
+FLICKER_TIME = 1.5
 
 [node name="Attack" type="Node2D" parent="PlayerControl"]
 script = ExtResource( 5 )
@@ -85,6 +89,7 @@ stream = ExtResource( 3 )
 pitch_scale = 1.25
 
 [node name="Hitbox" type="Area2D" parent="PlayerControl/Attack"]
+visible = false
 collision_layer = 0
 collision_mask = 4
 
@@ -94,15 +99,19 @@ disabled = true
 
 [node name="Health" type="Node2D" parent="PlayerControl"]
 script = ExtResource( 9 )
-_HP = 1.0
 
-[node name="HumanCharacter" parent="." instance=ExtResource( 4 )]
+[node name="InteractionSprite" type="Sprite" parent="PlayerControl"]
+visible = false
+position = Vector2( -0.643921, -17.1029 )
+texture = ExtResource( 10 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+visible = false
 position = Vector2( -15.0909, -13.7735 )
 polygon = PoolVector2Array( 11.1692, 18.3211, 17.5905, 18.0832, 17.8283, 24.5046, 10.9313, 24.5046 )
 
 [node name="Picker" type="Node2D" parent="."]
+visible = false
 script = ExtResource( 8 )
 
 [node name="FieldOfView" type="Area2D" parent="Picker"]
@@ -110,8 +119,8 @@ collision_layer = 0
 collision_mask = 8
 script = ExtResource( 2 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Picker/FieldOfView"]
+[node name="FOVCollision" type="CollisionShape2D" parent="Picker/FieldOfView"]
 shape = SubResource( 11 )
-[connection signal="damage_taken" from="." to="PlayerControl/Health" method="_OnDamageTaken"]
 [connection signal="damage_taken" from="." to="PlayerControl" method="_OnDamageTaken"]
+[connection signal="damage_taken" from="." to="PlayerControl/Health" method="_OnDamageTaken"]
 [connection signal="animation_finished" from="PlayerControl/Attack/Sprite" to="PlayerControl/Attack" method="_OnAttackFinished"]

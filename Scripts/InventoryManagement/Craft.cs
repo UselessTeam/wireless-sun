@@ -96,7 +96,7 @@ namespace Craft {
         public CraftLocation location { get { return Manager.GetLocationById (id.location); } }
 
         public string result;
-        public short amount = 1;
+        public ushort amount = 1;
         public Ingredient[] ingredients;
 
         public CraftData () {
@@ -111,11 +111,18 @@ namespace Craft {
             return result + " is craftable at " + location + " (id=" + id.ToString () + ")";
         }
 
+        public Item.ItemStack ToItemStack () {
+            return new Item.ItemStack (Item.Manager.GetId (result), amount);
+        }
+
         public static readonly CraftData NULL = new CraftData ();
     }
 
     public class Ingredient {
         public string item;
         public ushort amount;
+        public Item.ItemStack ToItemStack () {
+            return new Item.ItemStack (Item.Manager.GetId (item), amount);
+        }
     }
 }

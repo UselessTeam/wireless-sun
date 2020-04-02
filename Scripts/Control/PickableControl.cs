@@ -3,9 +3,9 @@ using Godot;
 
 public class PickableControl : _Control {
 	[Export] public string item;
-	[Export] public short quantity = 1;
+	[Export] public ushort quantity = 1;
 
-	public void Set (string item, short quantity) { this.item = item; this.quantity = quantity; }
+	public void SetStack (string item, ushort quantity) { this.item = item; this.quantity = quantity; }
 
 	public void _OnCollisionWithPlayer (KinematicCollision2D collInfo) {
 		if (IsMaster) {

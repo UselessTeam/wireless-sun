@@ -12,7 +12,7 @@ public class Inventory : Node2D {
 		GameRoot.inventory = this;
 	}
 
-	public void Add (ItemId item, short quantity = 1) {
+	public void Add (ItemId item, ushort quantity = 1) {
 		for (int i = 0; i < inventory.Count; i++) {
 			if (inventory[i].item == item) {
 				inventory[i] = new ItemStack (item, (ushort) (inventory[i].size + quantity));
@@ -24,7 +24,7 @@ public class Inventory : Node2D {
 		EmitSignal (nameof (inventory_change));
 	}
 
-	public void Remove (ItemId item, short quantity = 1) {
+	public void Remove (ItemId item, ushort quantity = 1) {
 		for (int i = 0; i < inventory.Count; i++) {
 			if (inventory[i].item == item) {
 				int newQuantity = inventory[i].size - quantity;

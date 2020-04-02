@@ -21,12 +21,15 @@ __meta__ = {
 }
 
 [node name="InventoryBag" parent="CenterContainer" instance=ExtResource( 1 )]
-margin_left = 330.0
-margin_top = 281.0
-margin_right = 368.0
-margin_bottom = 319.0
+margin_left = 342.0
+margin_top = 293.0
+margin_right = 356.0
+margin_bottom = 307.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_right = 0.2
 anchor_bottom = 1.0
 margin_right = 120.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
