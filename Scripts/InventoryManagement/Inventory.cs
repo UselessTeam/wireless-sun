@@ -38,8 +38,9 @@ public class Inventory : Node2D {
 		}
 		GD.PrintErr ("[Inventory] Couldn't remove ", quantity, " of ", item.data);
 	}
+	public bool Contains (ItemStack stack) { return Contains (stack.item, stack.size); }
 
-	public bool Contains (ItemId item, short quantity = 1) {
+	public bool Contains (ItemId item, ushort quantity = 1) {
 		for (int i = 0; i < inventory.Count; i++) {
 			if (inventory[i].item == item) {
 				return inventory[i].size >= quantity;
@@ -63,4 +64,6 @@ public class Inventory : Node2D {
 		};
 		return true;
 	}
+
+	public void Use () { }
 }

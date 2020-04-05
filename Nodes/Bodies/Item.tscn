@@ -8,6 +8,7 @@
 radius = 6.19216
 
 [sub_resource type="AtlasTexture" id=2]
+resource_local_to_scene = true
 atlas = ExtResource( 3 )
 region = Rect2( 0, 24, 12, 12 )
 
@@ -27,4 +28,3 @@ shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = SubResource( 2 )
-[connection signal="body_collision" from="." to="PickableControl" method="_OnCollisionWithPlayer"]

@@ -2,6 +2,8 @@ using System;
 using Godot;
 
 public class ShadowBallControl : _Control {
+	[Export] public float FLICKER_TIME = 3;
+
 	FieldOfView myFOV {
 		get { return GetNode<FieldOfView> ("FieldOfView"); }
 	}
@@ -21,6 +23,10 @@ public class ShadowBallControl : _Control {
 				MyBody.NextMovement = direction;
 			}
 		}
+	}
+
+	public override void _OnDamageTaken (float damage) {
+		MyBody.StartFlicker (FLICKER_TIME);
 	}
 
 	public override void SaveIn (Godot.Collections.Dictionary<string, object> saveObject) {

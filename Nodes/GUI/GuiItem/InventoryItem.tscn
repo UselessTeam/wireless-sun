@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Nodes/GUI/GuiItem/ItemSpriteHolder.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/GUI/GuiItem/InventoryItem.cs" type="Script" id=5]
+
+[node name="InventoryItem" type="Control"]
+margin_right = 24.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 24 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Holder" parent="." instance=ExtResource( 1 )]

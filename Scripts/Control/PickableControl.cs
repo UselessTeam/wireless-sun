@@ -5,6 +5,10 @@ public class PickableControl : _Control {
 	[Export] public string item;
 	[Export] public ushort quantity = 1;
 
+	public override void _Ready () {
+		MyBody.Connect ("body_collision", this, "_OnCollisionWithPlayer");
+	}
+
 	public void SetStack (string item, ushort quantity) { this.item = item; this.quantity = quantity; }
 
 	public void _OnCollisionWithPlayer (KinematicCollision2D collInfo) {
@@ -21,5 +25,6 @@ public class PickableControl : _Control {
 		GetParent<Body> ().QueueFree ();
 	}
 
-	public override void SaveIn (Godot.Collections.Dictionary<string, object> saveObject) { } public override void LoadData (Godot.Collections.Dictionary<string, object> saveObject) { }
+	public override void SaveIn (Godot.Collections.Dictionary<string, object> saveObject) { }
+	public override void LoadData (Godot.Collections.Dictionary<string, object> saveObject) { }
 }

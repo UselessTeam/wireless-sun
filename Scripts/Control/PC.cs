@@ -2,12 +2,16 @@ using System;
 using Godot;
 
 public class PC : _Control {
+    [Export] public float FLICKER_TIME = 3;
+
     bool isAttacking = false;
     public bool IsAttacking { get { return isAttacking; } set { isAttacking = value; } }
 
     public new bool CanMove { get { return !isAttacking && MyBody.CanMove; } }
 
-    public override void _Ready () { }
+    public override void _Ready () {
+        MyBody.Connect ("damage_taken", this, "_OnDamageTaken");
+    }
 
     string[] ActionList = {
         "action_1" // Attack
@@ -70,6 +74,10 @@ public class PC : _Control {
     public override void LoadData (Godot.Collections.Dictionary<string, object> saveObject) {
         GetNode<Health> ("Health").HP = (float) saveObject["HP"];
         GetNode<_Attack> ("Attack").DAMAGE = (float) saveObject["Damage"];
+    }
+
+    public override void _OnDamageTaken (float damage) {
+        MyBody.StartFlicker (FLICKER_TIME);
     }
 
     public new void _OnDied () {

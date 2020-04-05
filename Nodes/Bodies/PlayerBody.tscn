@@ -11,60 +11,58 @@
 [ext_resource path="res://Scripts/Attributes/Health.cs" type="Script" id=9]
 [ext_resource path="res://Assets/Sprites/interact.png" type="Texture" id=10]
 
-[sub_resource type="AtlasTexture" id=1]
+[sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 6 )
 region = Rect2( 0, 24, 24, 24 )
 
-[sub_resource type="AtlasTexture" id=2]
+[sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 6 )
 region = Rect2( 24, 24, 24, 24 )
 
-[sub_resource type="AtlasTexture" id=3]
+[sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 6 )
 region = Rect2( 48, 24, 24, 24 )
 
-[sub_resource type="AtlasTexture" id=4]
+[sub_resource type="AtlasTexture" id=8]
 atlas = ExtResource( 6 )
 region = Rect2( 72, 24, 24, 24 )
 
-[sub_resource type="AtlasTexture" id=5]
+[sub_resource type="AtlasTexture" id=9]
 atlas = ExtResource( 6 )
 region = Rect2( 0, 0, 24, 24 )
 
-[sub_resource type="AtlasTexture" id=6]
+[sub_resource type="AtlasTexture" id=10]
 atlas = ExtResource( 6 )
 region = Rect2( 24, 0, 24, 24 )
 
-[sub_resource type="AtlasTexture" id=7]
+[sub_resource type="AtlasTexture" id=11]
 atlas = ExtResource( 6 )
 region = Rect2( 48, 0, 24, 24 )
 
-[sub_resource type="AtlasTexture" id=8]
+[sub_resource type="AtlasTexture" id=12]
 atlas = ExtResource( 6 )
 region = Rect2( 72, 0, 24, 24 )
 
-[sub_resource type="SpriteFrames" id=9]
+[sub_resource type="SpriteFrames" id=13]
 animations = [ {
-"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
+"frames": [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
 "loop": true,
 "name": "diagonal",
 "speed": 20.0
 }, {
-"frames": [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
+"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ) ],
 "loop": true,
 "name": "straight",
 "speed": 20.0
 } ]
 
-[sub_resource type="CircleShape2D" id=10]
+[sub_resource type="CircleShape2D" id=14]
 radius = 14.699
 
-[sub_resource type="CircleShape2D" id=11]
+[sub_resource type="CircleShape2D" id=15]
 radius = 58.5806
 
-[node name="PlayerBody" type="KinematicBody2D" groups=[
-"Persistent",
-]]
+[node name="PlayerBody" type="KinematicBody2D"]
 collision_layer = 2
 collision_mask = 5
 script = ExtResource( 7 )
@@ -81,7 +79,7 @@ DAMAGE = 30.0
 
 [node name="Sprite" type="AnimatedSprite" parent="PlayerControl/Attack"]
 visible = false
-frames = SubResource( 9 )
+frames = SubResource( 13 )
 animation = "straight"
 
 [node name="SFX" type="AudioStreamPlayer2D" parent="PlayerControl/Attack"]
@@ -94,7 +92,7 @@ collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerControl/Attack/Hitbox"]
-shape = SubResource( 10 )
+shape = SubResource( 14 )
 disabled = true
 
 [node name="Health" type="Node2D" parent="PlayerControl"]
@@ -120,7 +118,5 @@ collision_mask = 8
 script = ExtResource( 2 )
 
 [node name="FOVCollision" type="CollisionShape2D" parent="Picker/FieldOfView"]
-shape = SubResource( 11 )
-[connection signal="damage_taken" from="." to="PlayerControl" method="_OnDamageTaken"]
-[connection signal="damage_taken" from="." to="PlayerControl/Health" method="_OnDamageTaken"]
+shape = SubResource( 15 )
 [connection signal="animation_finished" from="PlayerControl/Attack/Sprite" to="PlayerControl/Attack" method="_OnAttackFinished"]

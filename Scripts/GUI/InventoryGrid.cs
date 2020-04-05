@@ -3,7 +3,7 @@ using Godot;
 using Item;
 
 public class InventoryGrid : GridContainer {
-	private PackedScene packedInventoryItem = (PackedScene) ResourceLoader.Load ("res://Nodes/GUI/InventoryItem.tscn");
+	private PackedScene packedInventoryItem = (PackedScene) ResourceLoader.Load ("res://Nodes/GUI/GuiItem/InventoryItem.tscn");
 
 	private List<InventoryItem> items = new List<InventoryItem> ();
 	public void Display (List<ItemStack> stacks) {

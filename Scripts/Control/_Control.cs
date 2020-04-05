@@ -2,7 +2,6 @@ using System;
 using Godot;
 
 public abstract class _Control : Node2D {
-    [Export] public float FLICKER_TIME = 3;
 
     public bool CanMove { get { return GetParent<Body> ().CanMove; } }
     public bool IsMaster { get { return !Network.IsConnectionStarted || IsNetworkMaster (); } }
@@ -10,12 +9,10 @@ public abstract class _Control : Node2D {
 
     public Body MyBody { get { return GetParent<Body> (); } }
 
+    public virtual void _OnDamageTaken (float damage) { }
+
     public void _OnDied () {
         MyBody.QueueFree ();
-    }
-
-    public void _OnDamageTaken (float damage) {
-        MyBody.StartFlicker (FLICKER_TIME);
     }
 
     // Save and load data of the object in a file

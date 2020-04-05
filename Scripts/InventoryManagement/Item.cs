@@ -122,6 +122,8 @@ namespace Item {
 		public ItemId item;
 		public ushort size;
 
+		public ItemStack (string item, ushort size) { this.item = Manager.GetId (item); this.size = size; }
+
 		public ItemStack (ItemId item, ushort size) {
 			this.item = item;
 			this.size = size;

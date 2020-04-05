@@ -3,24 +3,24 @@ using Craft;
 using Godot;
 
 public class CraftGUI : PanelContainer {
-    private PackedScene packedInventoryItem = (PackedScene) ResourceLoader.Load ("res://Nodes/GUI/InventoryItem.tscn");
-    private PackedScene packedCraftingArrow = (PackedScene) ResourceLoader.Load ("res://Nodes/GUI/CraftingArrow.tscn");
+    private PackedScene packedCraftableItem = (PackedScene) ResourceLoader.Load ("res://Nodes/GUI/GuiItem/CraftableItem.tscn");
+    private PackedScene packedIngredientItem = (PackedScene) ResourceLoader.Load ("res://Nodes/GUI/GuiItem/IngredientItem.tscn");
+    private PackedScene packedCraftingArrow = (PackedScene) ResourceLoader.Load ("res://Nodes/GUI/GuiItem/CraftingArrow.tscn");
 
     public GridContainer myGrid { get { return GetNode<GridContainer> ("Grid"); } }
 
     public void Display (CraftData craft) {
 
         foreach (var ingredient in craft.ingredients) {
-            var ingredientItem = (InventoryItem) packedInventoryItem.Instance ();
+            var ingredientItem = (IngredientItem) packedIngredientItem.Instance ();
             myGrid.AddChild (ingredientItem);
             ingredientItem.Display (ingredient.ToItemStack ());
-            GD.Print (ingredient.item);
         }
         var arrow = packedCraftingArrow.Instance ();
         myGrid.AddChild (arrow);
-        var result = (InventoryItem) packedInventoryItem.Instance ();
+        var result = (CraftableItem) packedCraftableItem.Instance ();
         myGrid.AddChild (result);
-        result.Display (craft.ToItemStack ());
+        result.Display (craft);
 
     }
 

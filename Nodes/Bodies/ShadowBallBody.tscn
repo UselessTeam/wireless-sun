@@ -75,9 +75,8 @@ shape = SubResource( 2 )
 
 [node name="Shadowball" type="AnimatedSprite" parent="."]
 frames = SubResource( 7 )
+frame = 2
 playing = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PoolVector2Array( -4.43527, 12.784, 3.22487, 12.784, 4.03802, 4.26392, -5.62297, 4.26392 )
-[connection signal="damage_taken" from="." to="ShadowBallControl/Health" method="_OnDamageTaken"]
-[connection signal="damage_taken" from="." to="ShadowBallControl" method="_OnDamageTaken"]

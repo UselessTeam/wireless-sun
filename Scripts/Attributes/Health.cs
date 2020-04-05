@@ -10,6 +10,7 @@ public class Health : Node2D {
 
     public override void _Ready () {
         Connect ("died", MyUser, "_OnDied");
+        MyUser.MyBody.Connect ("damage_taken", this, "_OnDamageTaken");
     }
 
     public _Control MyUser { get { return GetParent<_Control> (); } }
