@@ -10,7 +10,7 @@ public class PC : _Control {
     public new bool CanMove { get { return !isAttacking && MyBody.CanMove; } }
 
     public override void _Ready () {
-        MyBody.Connect ("damage_taken", this, "_OnDamageTaken");
+        base._Ready ();
     }
 
     string[] ActionList = {
@@ -66,14 +66,21 @@ public class PC : _Control {
         }
     }
 
-    public override void SaveIn (Godot.Collections.Dictionary<string, object> saveObject) {
+    public new Godot.Collections.Dictionary<string, object> MakeSave () {
+        var saveObject = base.MakeSave ();
         saveObject["HP"] = GetNode<Health> ("Health").HP;
         saveObject["Damage"] = GetNode<_Attack> ("Attack").DAMAGE;
+        if (IsMaster)
+            saveObject["MyPlayer"] = true;
+        return saveObject;
     }
 
-    public override void LoadData (Godot.Collections.Dictionary<string, object> saveObject) {
-        GetNode<Health> ("Health").HP = (float) saveObject["HP"];
-        GetNode<_Attack> ("Attack").DAMAGE = (float) saveObject["Damage"];
+    public new void LoadData (Godot.Collections.Dictionary<string, object> saveObject) {
+        base.LoadData (saveObject);
+        GetNode<Health> ("Health").HP = Convert.ToSingle (saveObject["HP"]);
+        GetNode<_Attack> ("Attack").DAMAGE = Convert.ToSingle (saveObject["Damage"]);
+        if (saveObject.ContainsKey ("MyPlayer"))
+            MyBody.Name = "MyPlayer";
     }
 
     public override void _OnDamageTaken (float damage) {

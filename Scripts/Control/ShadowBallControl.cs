@@ -8,8 +8,6 @@ public class ShadowBallControl : _Control {
 		get { return GetNode<FieldOfView> ("FieldOfView"); }
 	}
 
-	public override void _Ready () { }
-
 	public bool CanSeePlayer {
 		get { return myFOV.IsPlayerDetected (); }
 	}
@@ -29,11 +27,14 @@ public class ShadowBallControl : _Control {
 		MyBody.StartFlicker (FLICKER_TIME);
 	}
 
-	public override void SaveIn (Godot.Collections.Dictionary<string, object> saveObject) {
+	public new Godot.Collections.Dictionary<string, object> MakeSave () {
+		var saveObject = base.MakeSave ();
 		saveObject["HP"] = GetNode<Health> ("Health").HP;
+		return saveObject;
 	}
 
-	public override void LoadData (Godot.Collections.Dictionary<string, object> saveObject) {
-		GetNode<Health> ("Health").HP = (float) saveObject["HP"];
+	public new void LoadData (Godot.Collections.Dictionary<string, object> saveObject) {
+		base.LoadData (saveObject);
+		GetNode<Health> ("Health").HP = Convert.ToSingle (saveObject["HP"]);
 	}
 }

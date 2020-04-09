@@ -3,12 +3,15 @@ using Godot;
 
 public class Health : Node2D {
     // Class that manages HP, HP recovery, Death, ect ...
-    [Export][Puppet] private float _HP = 50;
+    [Export][Puppet] public float MAX_HP = 50;
+
+    private float _HP;
 
     [Signal] delegate void hp_changed (float HP);
     [Signal] delegate void died ();
 
     public override void _Ready () {
+        _HP = MAX_HP;
         Connect ("died", MyUser, "_OnDied");
         MyUser.MyBody.Connect ("damage_taken", this, "_OnDamageTaken");
     }

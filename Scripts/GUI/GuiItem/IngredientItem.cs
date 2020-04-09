@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-public abstract class IngredientItem : BlandItem {
+public abstract class IngredientItem : _GUIItem {
     public new void Display (Item.ItemStack stack) {
         base.Display (stack);
         if (!GameRoot.inventory.Contains (stack)) {

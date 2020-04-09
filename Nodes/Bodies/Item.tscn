@@ -4,13 +4,13 @@
 [ext_resource path="res://Scripts/Control/PickableControl.cs" type="Script" id=2]
 [ext_resource path="res://Assets/Sprites/items.png" type="Texture" id=3]
 
-[sub_resource type="CircleShape2D" id=1]
-radius = 6.19216
-
-[sub_resource type="AtlasTexture" id=2]
+[sub_resource type="AtlasTexture" id=1]
 resource_local_to_scene = true
 atlas = ExtResource( 3 )
 region = Rect2( 0, 24, 12, 12 )
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 6.19216
 
 [node name="Item" type="KinematicBody2D" groups=[
 "Persistent",
@@ -23,8 +23,8 @@ script = ExtResource( 1 )
 script = ExtResource( 2 )
 item = "Berry"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
+[node name="Sprite" type="Sprite" parent="PickableControl"]
+texture = SubResource( 1 )
 
-[node name="Sprite" type="Sprite" parent="."]
-texture = SubResource( 2 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )

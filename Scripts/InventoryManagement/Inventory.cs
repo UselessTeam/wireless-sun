@@ -28,7 +28,7 @@ public class Inventory : Node2D {
 		for (int i = 0; i < inventory.Count; i++) {
 			if (inventory[i].item == item) {
 				int newQuantity = inventory[i].size - quantity;
-				if (newQuantity > 0) {
+				if (newQuantity >= 0) {
 					inventory[i] = new ItemStack (item, (ushort) newQuantity);
 					EmitSignal (nameof (inventory_change));
 					return;
@@ -65,5 +65,18 @@ public class Inventory : Node2D {
 		return true;
 	}
 
-	public void Use () { }
+	public void Use (ItemId item) {
+		if (!Contains (new ItemStack (item, 1))) {
+			GD.Print ("You don't have this item :", item);
+			return;
+		}
+		if (item.category == Item.Manager.GetCategory ("equipement").id) {
+			Remove (item);
+			GetNode<_GUIItem> ("/root/GUI/EquipedItem").Display (new ItemStack (item, 0));
+		}
+		if (item.category == Item.Manager.GetCategory ("food").id) {
+			Remove (item);
+			GD.Print ("Miam, it's delicious!");
+		}
+	}
 }

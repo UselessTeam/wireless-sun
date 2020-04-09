@@ -6,10 +6,15 @@ public class PickableControl : _Control {
 	[Export] public ushort quantity = 1;
 
 	public override void _Ready () {
+		base._Ready ();
 		MyBody.Connect ("body_collision", this, "_OnCollisionWithPlayer");
 	}
 
-	public void SetStack (string item, ushort quantity) { this.item = item; this.quantity = quantity; }
+	public void SetStack (string item, ushort quantity) {
+		this.item = item;
+		this.quantity = quantity;
+		((AtlasTexture) (GetNode<Sprite> ("Sprite")).Texture).Region = Item.Manager.GetItem (Item.Manager.GetId (item)).sprite.GetRect ();
+	}
 
 	public void _OnCollisionWithPlayer (KinematicCollision2D collInfo) {
 		if (IsMaster) {
@@ -25,6 +30,15 @@ public class PickableControl : _Control {
 		GetParent<Body> ().QueueFree ();
 	}
 
-	public override void SaveIn (Godot.Collections.Dictionary<string, object> saveObject) { }
-	public override void LoadData (Godot.Collections.Dictionary<string, object> saveObject) { }
+	public new Godot.Collections.Dictionary<string, object> MakeSave () {
+		var saveObject = base.MakeSave ();
+		saveObject["Item"] = item;
+		saveObject["Quantity"] = (int) quantity;
+		return saveObject;
+	}
+
+	public new void LoadData (Godot.Collections.Dictionary<string, object> saveObject) {
+		base.LoadData (saveObject);
+		SetStack (saveObject["Item"].ToString (), Convert.ToUInt16 (saveObject["Quantity"]));
+	}
 }

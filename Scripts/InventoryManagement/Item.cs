@@ -27,6 +27,14 @@ namespace Item {
 		public static ItemCategory GetCategory (byte categoryId) {
 			return categories[categoryId];
 		}
+		public static ItemCategory GetCategory (string categoryName) {
+			foreach (var category in categories) {
+				if (category.name == categoryName)
+					return category;
+			}
+			GD.Print ("This category does not exist :", categoryName);
+			return null;
+		}
 
 		public static ItemData GetItem (ItemId id) {
 			return GetCategory (id.category).variants[id.variant];
@@ -146,7 +154,6 @@ namespace Item {
 		public static Body MakeBody (string item, ushort quantity = 1) {
 			var body = ((PackedScene) GD.Load (baseItemPath)).Instance ().GetNode<Body> ("./");
 			body.GetNode<PickableControl> ("./PickableControl").SetStack (item, quantity);
-			((AtlasTexture) (body.GetNode<Sprite> ("Sprite")).Texture).Region = Manager.GetItem (Manager.GetId (item)).sprite.GetRect ();
 			return body;
 		}
 	}

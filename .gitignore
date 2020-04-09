@@ -17,6 +17,9 @@ mono_crash*
 *.wav
 *.ogg
 *.save
+
+# Build related stuff
 *.exe
 *.pck
 *.x86_64
+Builds/*

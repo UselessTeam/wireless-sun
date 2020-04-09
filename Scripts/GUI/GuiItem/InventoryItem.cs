@@ -4,6 +4,6 @@ using Godot;
 public class InventoryItem : SelectableItem {
 	// Action to perform when double click
 	public override void DoubleClick () {
-		return;
+		GameRoot.inventory.Use (myStack.item);
 	}
 }

@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-public abstract class SelectableItem : BlandItem {
+public abstract class SelectableItem : _GUIItem {
 
 	public override void _Ready () {
 		this.Connect ("mouse_entered", this, "_on_InventoryItem_mouse_entered");

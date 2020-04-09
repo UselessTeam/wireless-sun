@@ -2,6 +2,7 @@ using System;
 using Godot;
 
 public class Body : KinematicBody2D {
+	[Export] public float IMPACT_FACTOR = 1.0f;
 	[Export] public float WALK_SPEED = 100;
 
 	[Signal] delegate void body_collision (KinematicCollision2D collInfo);
@@ -41,17 +42,19 @@ public class Body : KinematicBody2D {
 
 	[Puppet] Vector2 PuppetPosition = new Vector2 (0, 0);
 
-	public _Control MyControl { get { return GetChildOrNull<_Control> (0); } }
-
 	public bool CanMove { get { return !isImpact; } }
+
+	public override void _Ready () {
+		AddToGroup ("ReloadOnSave");
+	}
 
 	// Call whenever the body is hit for some time
 	public void StartImpact (Vector2 direction, float time, float damage = 0) {
-		if (!isFlicker) {
+		if (!isFlicker && IMPACT_FACTOR > 0) {
 			EmitSignal ("damage_taken", damage);
 			isImpact = true;
 			impactTime = time;
-			impactDirection = direction;
+			impactDirection = direction * IMPACT_FACTOR;
 		}
 	}
 
@@ -92,16 +95,8 @@ public class Body : KinematicBody2D {
 
 	}
 
-	public Godot.Collections.Dictionary<string, object> MakeSave () {
-		var saveObject = new Godot.Collections.Dictionary<string, object> () { { "Filename", Filename }, { "Parent", GetParent ().GetPath () } };
-		saveObject["PositionX"] = Position.x;
-		saveObject["PositionY"] = Position.y;
-		MyControl.SaveIn (saveObject);
-		return saveObject;
+	public void LoadData (Godot.Collections.Dictionary<string, object> saveObject) {
+		GetChild ((int) saveObject["ControlPosition"]).Call ("LoadData", saveObject);
 	}
 
-	public void LoadData (Godot.Collections.Dictionary<string, object> saveObject) {
-		Position = new Vector2 ((float) saveObject["PositionX"], (float) saveObject["PositionY"]);
-		MyControl.LoadData (saveObject);
-	}
 }

@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Godot;
+using Newtonsoft.Json;
 
 public class GameRoot : Node {
 	public static Inventory inventory;
@@ -24,7 +26,7 @@ public class GameRoot : Node {
 	}
 
 	public static void BuildNewWorld (string saveName) {
-		Save.MakeNewSave (saveName);
+		Save.MakeNewSave (saveName); //Erase any save that has the same name as ours
 	}
 
 	public static void _OnGameSceneStarted () {
@@ -66,22 +68,10 @@ public static class Save {
 		var saveGame = new File ();
 		saveGame.Open (SaveLocation (currentSave), File.ModeFlags.Write);
 
-		var saveNodes = GameRoot.Instance.GetTree ().GetNodesInGroup ("Persistent");
+		var saveNodes = GameRoot.Instance.GetTree ().GetNodesInGroup ("SaveNodes");
 		foreach (Node saveNode in saveNodes) {
-			if (saveNode.Filename.Empty ()) {
-				GD.Print ("persistent node " + saveNode.Name + " is not an instanced scene, skipped");
-				continue;
-			}
-
-			// Call the node's save function
-			if (!saveNode.HasMethod ("MakeSave")) {
-				GD.Print ("persistent node " + saveNode.Name + " is missing a MakeSave() function, skipped");
-				continue;
-			}
-			var nodeData = saveNode.Call ("MakeSave");
-
-			// Store the save dictionary as a new line in the save file
-			saveGame.StoreLine (JSON.Print (nodeData));
+			// if (saveNode.GetParent ().Filename.Empty ()) { GD.Print ("control node " + saveNode.Name + " is not an instanced scene, skipped"); continue; }
+			saveGame.StoreLine (JSON.Print (saveNode.Call ("MakeSave")));
 		}
 		saveGame.Close ();
 		GD.Print ("Saved game : " + currentSave);
@@ -94,10 +84,10 @@ public static class Save {
 			return; // No save to load
 		}
 
-		// First we delete all the Persistent nodes, in order to make sure the game state is clean
-		var saveNodes = GameRoot.Instance.GetTree ().GetNodesInGroup ("Persistent");
-		foreach (Node saveNode in saveNodes)
-			saveNode.QueueFree ();
+		// First we delete all the Controls nodes, in order to make sure the game state is clean
+		var nodes = GameRoot.Instance.GetTree ().GetNodesInGroup ("ReloadOnSave");
+		foreach (Node node in nodes)
+			node.QueueFree ();
 
 		// Load the file line by line and process that dictionary to restore the object
 		// it represents.
@@ -105,23 +95,26 @@ public static class Save {
 
 		while (saveGame.GetPosition () < saveGame.GetLen ()) {
 			// Get the saved dictionary from the next line in the save file
-			var line = saveGame.GetLine ();
-			GD.Print (line);
-			GD.Print (JSON.Print (JSON.Parse (line).Result));
-			dynamic nodeData = (JSON.Parse (line).Result); //Godot.Collections.Dictionary<string, object>
-			// Firstly, we need to create the object and add it to the tree and set its position.
-			var newObjectScene = (PackedScene) ResourceLoader.Load (nodeData["Filename"].ToString ());
-			var newObject = (Node) newObjectScene.Instance ();
-			GameRoot.Instance.GetNode (nodeData["Parent"].ToString ()).AddChild (newObject);
-
-			// Call the node's load function
-			if (!newObject.HasMethod ("LoadData")) {
-				GD.Print ("persistent node " + newObject.Name + " is missing a Load function, skipped");
+			// var line = saveGame.GetLine ();
+			// dynamic nodeData = (JSON.Parse (line).Result); //Godot.Collections.Dictionary<string, object>
+			var nodeData = JsonConvert.DeserializeObject<Dictionary<string, object>> (saveGame.GetLine ());
+			if (nodeData == null) GD.Print ("null");
+			// Firstly, we need to check if we need to create the object 
+			Node loadNode;
+			if (nodeData.ContainsKey ("Filename")) {
+				loadNode = (Node) ((PackedScene) ResourceLoader.Load (nodeData["Filename"].ToString ())).Instance ();
+				loadNode.Name = nodeData["Name"].ToString ();
+				GameRoot.Instance.GetNode (nodeData["Parent"].ToString ()).AddChild (loadNode);
+			} else {
+				loadNode = GameRoot.Instance.GetNode (nodeData["Path"].ToString ());
+			}
+			// // Call the node's load function
+			if (!loadNode.HasMethod ("LoadData")) {
+				GD.Print ("persistent node " + loadNode.Name + " is missing a Load function, skipped");
 				continue;
 			}
-			newObject.Call ("LoadData", nodeData);
+			loadNode.Call ("LoadData", nodeData);
 		}
-
 		saveGame.Close ();
 		GD.Print ("Loaded save : " + currentSave);
 	}
