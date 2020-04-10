@@ -100,6 +100,8 @@ namespace Item {
 		public static bool operator != (ItemId a, ItemId b) {
 			return !a.Equals (b);
 		}
+
+		public override string ToString () { return Manager.GetItem (this).name; }
 	}
 
 	public class ItemData {

@@ -2,7 +2,6 @@
 
 [ext_resource path="res://Scripts/GameHandlers/Camera.cs" type="Script" id=1]
 
-
 [node name="Camera2D" type="Camera2D"]
 rotating = true
 current = true

@@ -6,7 +6,7 @@
 [node name="InventoryItem" type="Control"]
 margin_right = 24.0
 margin_bottom = 24.0
-rect_min_size = Vector2( 24, 24 )
+rect_min_size = Vector2( 48, 48 )
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false

@@ -29,7 +29,9 @@ GUI="*res://Nodes/GUI/GUI.tscn"
 
 [display]
 
+window/size/fullscreen=true
 window/per_pixel_transparency/allowed=true
+window/stretch/aspect="keep"
 
 [importer_defaults]
 

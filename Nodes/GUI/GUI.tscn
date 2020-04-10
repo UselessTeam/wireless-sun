@@ -6,48 +6,21 @@
 [ext_resource path="res://Scripts/GUI/CraftListGUI.cs" type="Script" id=4]
 [ext_resource path="res://Assets/Fonts/montserrat_eb_32.tres" type="DynamicFont" id=5]
 [ext_resource path="res://Assets/Fonts/montserrat_eb_24.tres" type="DynamicFont" id=6]
-[ext_resource path="res://Nodes/GUI/GuiItem/BlandItem.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Nodes/GUI/GuiItem/HoverableItem.tscn" type="PackedScene" id=7]
 
 [node name="GUI" type="CanvasLayer"]
-scale = Vector2( 2, 2 )
-transform = Transform2D( 2, 0, 0, 2, 0, 0 )
 script = ExtResource( 2 )
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Inventory" parent="." instance=ExtResource( 1 )]
 anchor_right = 0.5
 anchor_bottom = 0.5
-
-[node name="DeathScreen" type="Control" parent="."]
-visible = false
 margin_right = 512.0
 margin_bottom = 300.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ColorRect" type="ColorRect" parent="DeathScreen"]
-margin_right = 512.0
-margin_bottom = 300.0
-color = Color( 0.25098, 0.25098, 0.25098, 0.772549 )
-
-[node name="Label" type="Label" parent="DeathScreen"]
-margin_left = 134.562
-margin_top = 98.9296
-margin_right = 357.562
-margin_bottom = 138.93
-custom_fonts/font = ExtResource( 5 )
-text = "You are dead"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label2" type="Label" parent="DeathScreen"]
-margin_left = 147.673
-margin_top = 133.357
-margin_right = 394.673
-margin_bottom = 164.357
-custom_fonts/font = ExtResource( 6 )
-text = "Press R to respawn"
 
 [node name="Crafting" type="VBoxContainer" parent="."]
 margin_left = 14.3197
@@ -69,3 +42,39 @@ margin_left = 17.4296
 margin_top = 270.672
 margin_right = 41.4296
 margin_bottom = 294.672
+
+[node name="DeathScreen" type="Control" parent="."]
+visible = false
+margin_right = 1024.0
+margin_bottom = 600.0
+rect_clip_content = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="DeathScreen"]
+margin_right = 1024.0
+margin_bottom = 600.0
+color = Color( 0.25098, 0.25098, 0.25098, 0.772549 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="DeathScreen"]
+margin_left = 352.748
+margin_top = 227.036
+margin_right = 689.748
+margin_bottom = 287.036
+custom_fonts/font = ExtResource( 5 )
+text = "You are dead"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="DeathScreen"]
+margin_left = 336.95
+margin_top = 280.22
+margin_right = 705.95
+margin_bottom = 325.22
+custom_fonts/font = ExtResource( 6 )
+text = "Press R to respawn"

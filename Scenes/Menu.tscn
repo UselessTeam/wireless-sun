@@ -50,7 +50,7 @@ __meta__ = {
 [node name="NameLabeledField" type="HBoxContainer" parent="Lobby/VBoxContainer"]
 margin_top = 80.0
 margin_right = 944.0
-margin_bottom = 121.0
+margin_bottom = 135.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -58,7 +58,7 @@ __meta__ = {
 [node name="Label" type="Label" parent="Lobby/VBoxContainer/NameLabeledField"]
 margin_top = 5.0
 margin_right = 470.0
-margin_bottom = 36.0
+margin_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -70,22 +70,22 @@ valign = 1
 [node name="Field" type="LineEdit" parent="Lobby/VBoxContainer/NameLabeledField"]
 margin_left = 474.0
 margin_right = 944.0
-margin_bottom = 41.0
+margin_bottom = 55.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 2 )
 
 [node name="HostButton" type="Button" parent="Lobby/VBoxContainer"]
-margin_top = 133.0
+margin_top = 147.0
 margin_right = 944.0
-margin_bottom = 170.0
+margin_bottom = 198.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 2 )
 text = "Host Game"
 
 [node name="LabeledField" type="HBoxContainer" parent="Lobby/VBoxContainer"]
-margin_top = 182.0
+margin_top = 210.0
 margin_right = 944.0
-margin_bottom = 223.0
+margin_bottom = 265.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -93,7 +93,7 @@ __meta__ = {
 [node name="Label" type="Label" parent="Lobby/VBoxContainer/LabeledField"]
 margin_top = 5.0
 margin_right = 470.0
-margin_bottom = 36.0
+margin_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -105,14 +105,14 @@ valign = 1
 [node name="Field" type="LineEdit" parent="Lobby/VBoxContainer/LabeledField"]
 margin_left = 474.0
 margin_right = 944.0
-margin_bottom = 41.0
+margin_bottom = 55.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 2 )
 
 [node name="JoinButton" type="Button" parent="Lobby/VBoxContainer"]
-margin_top = 235.0
+margin_top = 277.0
 margin_right = 944.0
-margin_bottom = 272.0
+margin_bottom = 328.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 2 )
 text = "Join Game"

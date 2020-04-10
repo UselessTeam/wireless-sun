@@ -18,6 +18,7 @@ radius = 6.19216
 collision_layer = 8
 collision_mask = 2
 script = ExtResource( 1 )
+WALK_SPEED = 160.0
 
 [node name="PickableControl" type="Node2D" parent="."]
 script = ExtResource( 2 )

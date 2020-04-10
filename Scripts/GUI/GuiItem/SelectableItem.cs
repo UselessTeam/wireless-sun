@@ -1,11 +1,10 @@
 using System;
 using Godot;
 
-public abstract class SelectableItem : _GUIItem {
+public abstract class SelectableItem : HoverableItem {
 
 	public override void _Ready () {
-		this.Connect ("mouse_entered", this, "_on_InventoryItem_mouse_entered");
-		this.Connect ("mouse_exited", this, "_on_InventoryItem_mouse_exited");
+		base._Ready ();
 		this.Connect ("gui_input", this, "_on_InventoryItem_gui_input");
 	}
 	bool isSelected = false;
@@ -21,14 +20,6 @@ public abstract class SelectableItem : _GUIItem {
 	}
 	// Action to perform when double click
 	public abstract void DoubleClick ();
-
-	// Mouse hover
-	public void _on_InventoryItem_mouse_entered () {
-		GetNode<CanvasItem> ("Holder/Hover").Show ();
-	}
-	public void _on_InventoryItem_mouse_exited () {
-		GetNode<CanvasItem> ("Holder/Hover").Hide ();
-	}
 
 	public void _on_InventoryItem_gui_input (InputEvent _input) {
 		if (_input.IsActionPressed ("ui_select")) {

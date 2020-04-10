@@ -10,7 +10,6 @@ public class MinableControl : _Control {
 	// public void AddStack (string item, ushort quantity) { this.items.Add (item); this.quantities.Add (quantity); }
 
 	public new void _OnDied () {
-		GD.Print (items.Length);
 		for (int i = 0; i < items.Length; i++) {
 			var item = items[i];
 			// var quantity = quantities[i];
