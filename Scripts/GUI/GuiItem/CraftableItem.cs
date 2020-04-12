@@ -4,7 +4,7 @@ using Godot;
 public class CraftableItem : SelectableItem {
 	Craft.CraftData craft;
 	public void Display (Craft.CraftData craft) {
-		base.Display (new Item.ItemStack (craft.result, craft.amount));
+		base.Display (craft.ToItemSlot ());
 		this.craft = craft;
 
 	}

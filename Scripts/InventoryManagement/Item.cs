@@ -63,6 +63,7 @@ namespace Item {
 		[JsonProperty ("category")]
 		public string name;
 		public ItemData[] variants;
+		public ushort stackSize;
 	}
 
 	public struct ItemId {
@@ -101,7 +102,10 @@ namespace Item {
 			return !a.Equals (b);
 		}
 
-		public override string ToString () { return Manager.GetItem (this).name; }
+		public override string ToString () {
+			if (this == NULL) return "";
+			return Manager.GetItem (this).name;
+		}
 	}
 
 	public class ItemData {
@@ -109,7 +113,7 @@ namespace Item {
 		public ItemCategory category { get { return Manager.GetCategory (id.category); } }
 
 		public string name;
-		public bool stackable;
+		public ushort stackSize { get { return category.stackSize; } }
 
 		public Graphics.Sprite sprite;
 
@@ -128,35 +132,9 @@ namespace Item {
 		public static readonly ItemData NULL = new ItemData ();
 	}
 
-	public struct ItemStack {
-		public ItemId item;
-		public ushort size;
-
-		public ItemStack (string item, ushort size) { this.item = Manager.GetId (item); this.size = size; }
-
-		public ItemStack (ItemId item, ushort size) {
-			this.item = item;
-			this.size = size;
-		}
-
-		public override string ToString () {
-			return item.data.name + "×" + size;
-		}
-	}
-
 	public static class ItemExtensions {
 		public static string ToPrint (this IEnumerable<ItemStack> stacks) {
 			return "[" + string.Join (", ", stacks) + "]";
-		}
-	}
-
-	public static class Builder {
-		public static string baseItemPath = "res://Nodes/Bodies/Item.tscn";
-
-		public static Body MakeBody (string item, ushort quantity = 1) {
-			var body = ((PackedScene) GD.Load (baseItemPath)).Instance ().GetNode<Body> ("./");
-			body.GetNode<PickableControl> ("./PickableControl").SetStack (item, quantity);
-			return body;
 		}
 	}
 }

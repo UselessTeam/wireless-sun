@@ -111,8 +111,8 @@ namespace Craft {
             return result + " is craftable at " + location + " (id=" + id.ToString () + ")";
         }
 
-        public Item.ItemStack ToItemStack () {
-            return new Item.ItemStack (Item.Manager.GetId (result), amount);
+        public Item.ItemSlot ToItemSlot () {
+            return Item.Builder.MakeSlot (Item.Manager.GetId (result), amount);
         }
 
         public static readonly CraftData NULL = new CraftData ();
@@ -121,8 +121,8 @@ namespace Craft {
     public class Ingredient {
         public string item;
         public ushort amount;
-        public Item.ItemStack ToItemStack () {
-            return new Item.ItemStack (Item.Manager.GetId (item), amount);
+        public Item.ItemSlot ToItemSlot () {
+            return Item.Builder.MakeSlot (Item.Manager.GetId (item), amount);
         }
     }
 }

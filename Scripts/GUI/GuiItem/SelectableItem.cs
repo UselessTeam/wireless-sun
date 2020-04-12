@@ -15,8 +15,10 @@ public abstract class SelectableItem : HoverableItem {
 	}
 	// Action to perform when selected once
 	public void Select () {
-		isSelected = true;
-		GetNode<Sprite> ("Holder/Select").Show ();
+		if (MySlot.item != Item.ItemId.NULL) {
+			isSelected = true;
+			GetNode<Sprite> ("Holder/Select").Show ();
+		}
 	}
 	// Action to perform when double click
 	public abstract void DoubleClick ();

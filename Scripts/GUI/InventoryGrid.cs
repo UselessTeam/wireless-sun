@@ -6,7 +6,7 @@ public class InventoryGrid : GridContainer {
 	private PackedScene packedInventoryItem = (PackedScene) ResourceLoader.Load ("res://Nodes/GUI/GuiItem/InventoryItem.tscn");
 
 	private List<InventoryItem> items = new List<InventoryItem> ();
-	public void Display (List<ItemStack> stacks) {
+	public void Display (List<ItemSlot> stacks) {
 		if (items.Count > stacks.Count) {
 			for (int i = stacks.Count; i < items.Count; i++) {
 				items[i].QueueFree ();

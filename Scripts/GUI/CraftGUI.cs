@@ -14,7 +14,7 @@ public class CraftGUI : PanelContainer {
         foreach (var ingredient in craft.ingredients) {
             var ingredientItem = (IngredientItem) packedIngredientItem.Instance ();
             myGrid.AddChild (ingredientItem);
-            ingredientItem.Display (ingredient.ToItemStack ());
+            ingredientItem.Display (ingredient.ToItemSlot ());
         }
         var arrow = packedCraftingArrow.Instance ();
         myGrid.AddChild (arrow);

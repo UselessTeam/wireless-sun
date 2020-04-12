@@ -4,46 +4,71 @@ using Godot;
 using Item;
 
 public class Inventory : Node2D {
-	public List<ItemStack> inventory = new List<ItemStack> ();
+	const ushort INVENTORY_SIZE = 24;
+	public List<ItemSlot> inventory = new List<ItemSlot> ();
 
 	[Signal]
 	public delegate void inventory_change ();
 	public override void _Ready () {
 		GameRoot.inventory = this;
+		for (int i = 0; i < INVENTORY_SIZE; i++)
+			inventory.Add (Item.Builder.MakeSlot (ItemId.NULL));
 	}
 
 	public void Add (ItemId item, ushort quantity = 1) {
-		for (int i = 0; i < inventory.Count; i++) {
-			if (inventory[i].item == item) {
-				inventory[i] = new ItemStack (item, (ushort) (inventory[i].size + quantity));
-				EmitSignal (nameof (inventory_change));
-				return;
+		ItemData data = Item.Manager.GetItem (item);
+		if (data.stackSize > 1)
+			for (int i = 0; i < inventory.Count; i++) {
+				if (inventory[i].item == item) {
+					ushort newSize = (ushort) Mathf.Min ((inventory[i] as ItemStack).size + quantity, data.stackSize);
+					quantity -= (ushort) (newSize - (inventory[i] as ItemStack).size);
+					(inventory[i] as ItemStack).size = newSize;
+					if (quantity == 0) {
+						EmitSignal (nameof (inventory_change));
+						return;
+					}
+				}
 			}
-		}
-		inventory.Add (new ItemStack (item, (ushort) quantity));
-		EmitSignal (nameof (inventory_change));
+		for (int i = 0; i < inventory.Count; i++)
+			if (inventory[i].item == ItemId.NULL) {
+				inventory[i] = Item.Builder.MakeSlot (item, (ushort) Mathf.Min (quantity, data.stackSize));
+				quantity -= (ushort) Mathf.Min (quantity, data.stackSize);
+				if (quantity == 0) {
+					EmitSignal (nameof (inventory_change));
+					return;
+				}
+			}
+		GD.Print ("Inventory Overflow, the rest of the items were lost");
 	}
+
+	public void Remove (ItemSlot slot) { Remove (slot.item, slot.size); }
 
 	public void Remove (ItemId item, ushort quantity = 1) {
 		for (int i = 0; i < inventory.Count; i++) {
 			if (inventory[i].item == item) {
-				int newQuantity = inventory[i].size - quantity;
-				if (newQuantity >= 0) {
-					inventory[i] = new ItemStack (item, (ushort) newQuantity);
+				int newSize = inventory[i].size - quantity;
+				if (newSize > 0) {
+					(inventory[i] as ItemStack).size -= quantity;
 					EmitSignal (nameof (inventory_change));
 					return;
+				} else {
+					inventory[i] = Item.Builder.MakeSlot (ItemId.NULL);
 				}
-				break;
+				if (newSize < 0)
+					quantity = (ushort) (-newSize);
+				else return;
 			}
 		}
 		GD.PrintErr ("[Inventory] Couldn't remove ", quantity, " of ", item.data);
 	}
-	public bool Contains (ItemStack stack) { return Contains (stack.item, stack.size); }
 
-	public bool Contains (ItemId item, ushort quantity = 1) {
+	public bool Contains (ItemSlot slot) { return Contains (slot.item, slot.size); }
+
+	public bool Contains (ItemId item, int quantity = 1) {
 		for (int i = 0; i < inventory.Count; i++) {
 			if (inventory[i].item == item) {
-				return inventory[i].size >= quantity;
+				quantity -= inventory[i].size;
+				if (quantity <= 0) return true;
 			}
 		}
 		return false;
@@ -52,29 +77,29 @@ public class Inventory : Node2D {
 	public void MakeCraft (CraftId craftId) {
 		CraftData craft = Craft.Manager.GetCraft (craftId);
 		foreach (Ingredient ingredient in craft.ingredients) {
-			Remove (Item.Manager.GetId (ingredient.item));
+			Remove (ingredient.ToItemSlot ());
 		};
 		Add (Item.Manager.GetId (craft.result), craft.amount);
 	}
 
 	public bool CanCraft (CraftId craft) {
 		foreach (Ingredient ingredient in Craft.Manager.GetCraft (craft).ingredients) {
-			if (!Contains (Item.Manager.GetId (ingredient.item)))
+			if (!Contains (ingredient.ToItemSlot ()))
 				return false;
 		};
 		return true;
 	}
 
 	public void Use (ItemId item) {
-		if (!Contains (new ItemStack (item, 1))) {
+		if (item == ItemId.NULL)
+			return;
+		if (!Contains (item)) {
 			GD.Print ("You don't have this item :", item);
 			return;
-		}
-		if (item.category == Item.Manager.GetCategory ("equipement").id) {
+		} else if (item.category == Item.Manager.GetCategory ("equipement").id) {
 			Remove (item);
-			GetNode<_GUIItem> ("/root/GUI/EquipedItem").Display (new ItemStack (item, 0));
-		}
-		if (item.category == Item.Manager.GetCategory ("food").id) {
+			GetNode<_GUIItem> ("/root/GUI/EquipedItem").Display (Item.Builder.MakeSlot (item));
+		} else if (item.category == Item.Manager.GetCategory ("food").id) {
 			Remove (item);
 			GD.Print ("Miam, it's delicious!");
 		}

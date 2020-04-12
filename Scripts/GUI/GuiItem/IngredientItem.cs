@@ -2,11 +2,18 @@ using System;
 using Godot;
 
 public abstract class IngredientItem : HoverableItem {
-    public new void Display (Item.ItemStack stack) {
-        base.Display (stack);
-        if (!GameRoot.inventory.Contains (stack)) {
+    public override void _Ready () {
+        GameRoot.inventory.Connect (nameof (Inventory.inventory_change), this, nameof (CheckIngredient));
+    }
+
+    public new void Display (Item.ItemSlot slot) {
+        base.Display (slot);
+        CheckIngredient ();
+    }
+
+    public void CheckIngredient () {
+        if (!GameRoot.inventory.Contains (MySlot)) {
             this.Modulate = new Color (1, .5f, .5f);
         }
-
     }
 }

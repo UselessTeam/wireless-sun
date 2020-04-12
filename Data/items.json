@@ -1,6 +1,7 @@
 [
     {
         "category":"resources",
+        "stackSize":12,
         "variants": [
             {
                 "name":"wood",
@@ -42,6 +43,7 @@
     },
     {
         "category":"food",
+        "stackSize": 6,
         "variants": [
             {
                 "name":"berry",
@@ -63,6 +65,7 @@
     },
     {
         "category":"equipement",
+        "stackSize": 1,
         "variants": [
             {
                 "name":"sword",

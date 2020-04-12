@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-public class GUI : CanvasLayer {
+public class GUI : Node {
 	public InventoryGUI inventory;
 	public CraftListGUI crafting;
 	public enum Window {

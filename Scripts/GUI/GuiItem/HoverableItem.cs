@@ -8,7 +8,8 @@ public abstract class HoverableItem : _GUIItem {
     }
     // Mouse hover
     public void _on_InventoryItem_mouse_entered () {
-        GetNode<CanvasItem> ("Holder/Hover").Show ();
+        if (MySlot.item != Item.ItemId.NULL)
+            GetNode<CanvasItem> ("Holder/Hover").Show ();
     }
     public void _on_InventoryItem_mouse_exited () {
         GetNode<CanvasItem> ("Holder/Hover").Hide ();
