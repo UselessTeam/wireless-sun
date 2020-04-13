@@ -3,7 +3,7 @@ using Godot;
 
 public class Health : Node2D {
     // Class that manages HP, HP recovery, Death, ect ...
-    [Export][Puppet] public float MAX_HP = 50;
+    [Export][Puppet] public float MAX_HP = 100;
 
     private float _HP;
 

@@ -62,8 +62,14 @@ public class Gameplay : Node2D {
 		if (!Network.IsConnectionStarted || IsNetworkMaster ()) {
 			if (Input.IsActionJustPressed ("save"))
 				Save.SaveGame ();
-			if (myPlayer == null && Input.IsActionPressed ("respawn"))
-				Respawn ();
+		}
+		if (myPlayer == null && Input.IsActionPressed ("respawn"))
+			Respawn ();
+		if (Input.IsActionJustPressed ("pause")) {
+			// if (!Network.IsConnectionStarted) {
+			GetTree ().Paused = true;
+			GetNode<Control> ("/root/GUI/PauseMenu").Show ();
+			// }
 		}
 	}
 

@@ -2,30 +2,38 @@ using System;
 using Godot;
 
 public abstract class _Spawner : Node2D {
-	const int NON_SPAWNEE_CHILDREN = 1;
+	int NON_SPAWNEE_CHILDREN = 1;
 
-	[Export] public float SPAWN_DELAY = 2;
-	[Export] public int RANDOM_TIME_SPREAD = 50;
-	[Export] public float MAX_COUNT = 10;
+	[Export] public float SPAWN_DELAY = 2; // Time (in seconds) between two spawns
+	[Export] public int RANDOM_TIME_SPREAD = 50; // Random spread of the time between two spawns
+	[Export] public float MAX_COUNT = 10; // Max number of spawned objects exising at the same time
+	[Export] public float MAX_TRIES = 10; // Number of times this node will try to spawn an object 
 
 	// public double next_spawn_delay;
 
 	public bool IsMaster { get { return !Network.IsConnectionStarted || IsNetworkMaster (); } }
 	public bool IsTrueMaster { get { return Network.IsConnectionStarted && IsNetworkMaster (); } }
 
-	public float Radius { get { return ((CircleShape2D) GetNode<CollisionShape2D> ("Area2D/CollisionShape2D").Shape).Radius; } }
+	public float Radius {
+		get { return ((CircleShape2D) GetNode<CollisionShape2D> ("Area2D/CollisionShape2D").Shape).Radius; }
+		set {
+			((CircleShape2D) GetNode<CollisionShape2D> ("Area2D/CollisionShape2D").Shape).Radius = value; }
+	}
 
 	double timeUntilNext;
 
 	int spawnID = 0;
 
+	Area2D checkArea = null;
+
 	public override void _Ready () {
-		// GD.Print (GetTree ().GetNetworkUniqueId ().ToString () + " " + IsNetworkMaster () + Network.IsConnectionStarted);
+		NON_SPAWNEE_CHILDREN = GetChildCount ();
 		if (!IsMaster)
 			Rpc ("SendAllSpawnees", GetTree ().GetNetworkUniqueId ());
 		if (IsMaster)
 			AddToGroup ("SaveNodes");
 		timeUntilNext = NextSpawnDelay ();
+		checkArea = GetNodeOrNull<Area2D> ("CheckArea");
 	}
 
 	public double NextSpawnDelay () { return SPAWN_DELAY * (1 + General.rng.Next (-RANDOM_TIME_SPREAD, RANDOM_TIME_SPREAD) / 100.0); }
@@ -35,12 +43,26 @@ public abstract class _Spawner : Node2D {
 			timeUntilNext -= delta;
 			if (timeUntilNext <= 0) {
 				timeUntilNext = SPAWN_DELAY * (1 + General.rng.Next (-RANDOM_TIME_SPREAD, RANDOM_TIME_SPREAD) / 100.0);
-				var position = GenerateSpawnPosition (Radius);
-				if (Network.IsConnectionStarted)
-					Rpc ("SpawnOne", spawnID.ToString (), position);
-				else
-					SpawnOne (spawnID.ToString (), position);
-				spawnID++;
+				Vector2 position;
+				ushort numberTries = 0;
+				do {
+					position = GenerateSpawnPosition (Radius);
+					checkArea.Position = position;
+					numberTries++;
+					if (numberTries >= MAX_TRIES) {
+						numberTries = 0;
+						break;
+					}
+				} while (checkArea != null && checkArea.GetOverlappingBodies ().Count > 0);
+				if (numberTries > 0) {
+					if (Network.IsConnectionStarted)
+						Rpc ("SpawnOne", spawnID.ToString (), position);
+					else
+						SpawnOne (spawnID.ToString (), position);
+					spawnID++;
+				} else {
+					GD.Print ("Could not find a good spot to spawn the object");
+				}
 			}
 		}
 	}
@@ -91,7 +113,6 @@ public abstract class _Spawner : Node2D {
 		return saveObject;
 	}
 	public void LoadData (Godot.Collections.Dictionary<string, object> saveObject) {
-		GD.Print (saveObject);
 		Position = new Vector2 (Convert.ToSingle (saveObject["PositionX"]), Convert.ToSingle (saveObject["PositionY"]));
 		timeUntilNext = Convert.ToSingle (saveObject["TimeUntilNext"]);
 		spawnID = Convert.ToInt32 (saveObject["SpawnID"]);

@@ -99,9 +99,14 @@ public class Network : Node2D {
 		PrintPlayers ();
 	}
 
-	public void _OnServerDisconnected () {
-		GD.Print ("Disconnecting from server");
+	public void DisconnectNetwork () {
+		IsConnectionStarted = false;
 		GetTree ().NetworkPeer = null;
+	}
+
+	public void _OnServerDisconnected () {
+		GD.Print ("Lost connection with the server");
+		DisconnectNetwork ();
 		GameRoot.LoadMenuScene ();
 	}
 
