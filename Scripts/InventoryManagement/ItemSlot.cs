@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Godot;
 using Newtonsoft.Json;
@@ -8,12 +9,16 @@ namespace Item {
         public ItemId item;
         public abstract string GetLabel ();
         public abstract override string ToString ();
+        public virtual string Serialize () {
+            return JSON.Print (new Dictionary<string, object> () { { "IDcategory", item.category }, { "IDvariant", item.variant }, { "Size", size } });
+        }
     }
 
     public class EmptySlot : ItemSlot {
         public EmptySlot () { item = ItemId.NULL; }
         public override string ToString () { return ""; }
         public override string GetLabel () { return ""; }
+
     }
 
     public class ItemStack : ItemSlot {
@@ -59,6 +64,11 @@ namespace Item {
             if (data.stackSize == 1)
                 return new UniqueItem (id);
             return new ItemStack (id, quantity);
+        }
+
+        public static ItemSlot DeserializeSlot (string serializedData) {
+            var slotData = JsonConvert.DeserializeObject<Dictionary<string, object>> (serializedData);
+            return MakeSlot (new ItemId (Convert.ToByte (slotData["IDcategory"]), Convert.ToByte (slotData["IDvariant"])), Convert.ToUInt16 (slotData["Size"]));
         }
 
         public static Body MakeBody (string item, ushort quantity = 1) {

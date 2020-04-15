@@ -21,6 +21,7 @@ public class GameRoot : Node {
 	}
 
 	public static void LoadMenuScene () {
+		Instance.GetNode<GUI> ("/root/GUI").Toggle (GUI.Window.Nothing);
 		instance.GetTree ().ChangeScene ("res://Scenes/Menu.tscn");
 		Save.CurrentSave = "";
 	}

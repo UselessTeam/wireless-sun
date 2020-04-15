@@ -39,10 +39,4 @@ public class GUI : Node {
 			Open (window);
 		}
 	}
-
-	public override void _Input (InputEvent @event) {
-		if (@event.IsActionPressed ("inventory")) {
-			Toggle (Window.Inventory);
-		}
-	}
 }

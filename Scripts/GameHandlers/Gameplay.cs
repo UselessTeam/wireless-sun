@@ -71,6 +71,9 @@ public class Gameplay : Node2D {
 			GetNode<Control> ("/root/GUI/PauseMenu").Show ();
 			// }
 		}
+		if (Input.IsActionJustPressed ("inventory")) {
+			GetNode<GUI> ("/root/GUI").Toggle (GUI.Window.Inventory);
+		}
 	}
 
 	public void _OnPlayerDied () {

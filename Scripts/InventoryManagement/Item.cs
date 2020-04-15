@@ -5,9 +5,18 @@ using Newtonsoft.Json;
 namespace Item {
 	public static class Manager {
 		private static ItemCategory[] categories;
+		private static List<ItemCategory> categories2;
 
 		private static Dictionary<string, ItemId> itemNames = new Dictionary<string, ItemId> ();
 		public static void Load () {
+			var saveGame = new File ();
+			saveGame.Open ("Data/items2.json", File.ModeFlags.Read);
+			while (saveGame.GetPosition () < saveGame.GetLen ()) {
+				var data = JsonConvert.DeserializeObject<Dictionary<string, object>> (saveGame.GetLine ());
+				if (data.ContainsKey ("category"))
+					categories2.Add (new ItemCategory ());
+			}
+
 			Godot.File file = new Godot.File ();
 			file.Open ("res://Data/items.json", Godot.File.ModeFlags.Read);
 			categories = JsonConvert.DeserializeObject<ItemCategory[]> (file.GetAsText ());

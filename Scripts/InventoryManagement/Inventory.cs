@@ -10,9 +10,11 @@ public class Inventory : Node2D {
 	[Signal]
 	public delegate void inventory_change ();
 	public override void _Ready () {
+		AddToGroup ("SaveNodes");
 		GameRoot.inventory = this;
 		for (int i = 0; i < INVENTORY_SIZE; i++)
 			inventory.Add (Item.Builder.MakeSlot (ItemId.NULL));
+		EmitSignal (nameof (inventory_change));
 	}
 
 	public void Add (ItemId item, ushort quantity = 1) {
@@ -103,5 +105,17 @@ public class Inventory : Node2D {
 			Remove (item);
 			GD.Print ("Miam, it's delicious!");
 		}
+	}
+
+	public Godot.Collections.Dictionary<string, object> MakeSave () {
+		var saveObject = new Godot.Collections.Dictionary<string, object> () { { "Path", GetPath () } };
+		for (int i = 0; i < INVENTORY_SIZE; i++)
+			saveObject["Item" + i.ToString ()] = inventory[i].Serialize ();
+		return saveObject;
+	}
+	public void LoadData (Godot.Collections.Dictionary<string, object> saveObject) {
+		for (int i = 0; i < INVENTORY_SIZE; i++)
+			inventory[i] = Builder.DeserializeSlot (saveObject["Item" + i.ToString ()].ToString ());
+		EmitSignal (nameof (inventory_change));
 	}
 }
