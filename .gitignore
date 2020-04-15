@@ -9,13 +9,7 @@ export_presets.cfg
 data_*/
 mono_crash*
 
-# Heavy assets ignores
-*.ttf
-*.png
-*.mp3
-*.mat
-# *.wav
-# *.ogg
+# Save files
 *.save
 
 # Build related stuff
