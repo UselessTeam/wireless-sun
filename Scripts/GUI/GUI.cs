@@ -4,9 +4,11 @@ using Godot;
 public class GUI : Node {
 	public InventoryGUI inventory;
 	public CraftListGUI crafting;
+	public PauseMenu pauseMenu;
 	public enum Window {
 		Nothing,
 		Inventory,
+		Pause,
 		Option,
 	}
 	public Window current;
@@ -16,10 +18,15 @@ public class GUI : Node {
 		inventory.Hide ();
 		crafting = GetNode<CraftListGUI> ("Crafting");
 		crafting.Hide ();
+		pauseMenu = GetNode<PauseMenu> ("PauseMenu");
+		pauseMenu.Hide ();
 	}
 
 	public GUIWindow GetWindowNode (Window window) {
 		if (window == Window.Inventory) {
+			return inventory;
+		}
+		if (window == Window.Pause) {
 			return inventory;
 		}
 		return null;

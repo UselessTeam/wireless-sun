@@ -48,6 +48,7 @@ __meta__ = {
 }
 
 [node name="NameLabeledField" type="HBoxContainer" parent="Lobby/VBoxContainer"]
+visible = false
 margin_top = 80.0
 margin_right = 1840.0
 margin_bottom = 135.0
@@ -74,18 +75,26 @@ margin_bottom = 55.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 2 )
 
-[node name="HostButton" type="Button" parent="Lobby/VBoxContainer"]
-margin_top = 147.0
+[node name="SoloButton" type="Button" parent="Lobby/VBoxContainer"]
+margin_top = 80.0
 margin_right = 1840.0
-margin_bottom = 198.0
+margin_bottom = 131.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 2 )
+text = "Solo Game"
+
+[node name="HostButton" type="Button" parent="Lobby/VBoxContainer"]
+margin_top = 143.0
+margin_right = 1840.0
+margin_bottom = 194.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 2 )
 text = "Host Game"
 
 [node name="LabeledField" type="HBoxContainer" parent="Lobby/VBoxContainer"]
-margin_top = 210.0
+margin_top = 206.0
 margin_right = 1840.0
-margin_bottom = 265.0
+margin_bottom = 261.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -110,9 +119,9 @@ size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 2 )
 
 [node name="JoinButton" type="Button" parent="Lobby/VBoxContainer"]
-margin_top = 277.0
+margin_top = 273.0
 margin_right = 1840.0
-margin_bottom = 328.0
+margin_bottom = 324.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 2 )
 text = "Join Game"
@@ -139,7 +148,7 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="SaveMenu/VBoxContainer"]
-margin_right = 944.0
+margin_right = 1840.0
 margin_bottom = 52.0
 custom_fonts/font = ExtResource( 3 )
 text = "Main Menu"
@@ -147,7 +156,7 @@ align = 1
 
 [node name="HSeparator" type="HSeparator" parent="SaveMenu/VBoxContainer"]
 margin_top = 64.0
-margin_right = 944.0
+margin_right = 1840.0
 margin_bottom = 68.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -155,20 +164,21 @@ __meta__ = {
 
 [node name="NewGameButton" type="Button" parent="SaveMenu/VBoxContainer"]
 margin_top = 80.0
-margin_right = 944.0
-margin_bottom = 117.0
+margin_right = 1840.0
+margin_bottom = 131.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 2 )
 text = "New Game"
 
 [node name="LoadButton" type="Button" parent="SaveMenu/VBoxContainer"]
-margin_top = 129.0
-margin_right = 944.0
-margin_bottom = 166.0
+margin_top = 143.0
+margin_right = 1840.0
+margin_bottom = 194.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 2 )
 text = "Load Previous Game"
 [connection signal="text_changed" from="Lobby/VBoxContainer/NameLabeledField/Field" to="Lobby" method="_OnNameChanged"]
+[connection signal="pressed" from="Lobby/VBoxContainer/SoloButton" to="Lobby" method="_OnSoloPressed"]
 [connection signal="pressed" from="Lobby/VBoxContainer/HostButton" to="Lobby" method="_OnHostPressed"]
 [connection signal="text_changed" from="Lobby/VBoxContainer/LabeledField/Field" to="Lobby" method="_OnIpChanged"]
 [connection signal="button_down" from="Lobby/VBoxContainer/JoinButton" to="Lobby" method="_OnJoinPressed"]

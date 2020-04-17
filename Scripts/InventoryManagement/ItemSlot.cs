@@ -7,10 +7,11 @@ namespace Item {
     public abstract class ItemSlot {
         public ushort size { get { return ((this as ItemStack) != null) ? (this as ItemStack).size : (ushort) 1; } }
         public ItemId item;
+
         public abstract string GetLabel ();
         public abstract override string ToString ();
         public virtual string Serialize () {
-            return JSON.Print (new Dictionary<string, object> () { { "IDcategory", item.category }, { "IDvariant", item.variant }, { "Size", size } });
+            return JSON.Print (new Dictionary<string, object> () { { "IDcategory", item.category }, { "IDvariant", item.item }, { "Size", size } });
         }
     }
 
@@ -44,11 +45,13 @@ namespace Item {
             return item.data.name;
         }
     }
-    public class Equipement : UniqueItem {
-        float damage = 4;
-        public Equipement (ItemId item) : base (item) {}
+    public class EquipementSlot : UniqueItem {
+        public EquipementSlot (ItemId item) : base (item) {}
+        public EquipementData equipementData { get { return Manager.GetItem<EquipementData> (item); } }
         public override string ToString () {
-            return item.data.name + "\n" + damage.ToString () + " damage";
+            return item.data.name + "\n" +
+                equipementData.damage.ToString () + " damage" + "\n" +
+                "x" + equipementData.range.ToString () + " range";
         }
     }
 
@@ -60,7 +63,7 @@ namespace Item {
                 return new EmptySlot ();
             var data = Manager.GetItem (id);
             if (data.category == Manager.GetCategory ("equipement"))
-                return new Equipement (id);
+                return new EquipementSlot (id);
             if (data.stackSize == 1)
                 return new UniqueItem (id);
             return new ItemStack (id, quantity);

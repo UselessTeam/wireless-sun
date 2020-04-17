@@ -24,6 +24,7 @@ public class GameRoot : Node {
 		Instance.GetNode<GUI> ("/root/GUI").Toggle (GUI.Window.Nothing);
 		instance.GetTree ().ChangeScene ("res://Scenes/Menu.tscn");
 		Save.CurrentSave = "";
+		inventory.InitializeEmpty ();
 	}
 
 	public static void BuildNewWorld (string saveName) {

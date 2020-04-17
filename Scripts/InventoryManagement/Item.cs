@@ -4,33 +4,48 @@ using Newtonsoft.Json;
 
 namespace Item {
 	public static class Manager {
-		private static ItemCategory[] categories;
-		private static List<ItemCategory> categories2;
+		// private static ItemCategory[] categories;
+		private static List<ItemCategory> categories; // = new List<ItemCategory> ();
 
 		private static Dictionary<string, ItemId> itemNames = new Dictionary<string, ItemId> ();
 		public static void Load () {
-			var saveGame = new File ();
-			saveGame.Open ("Data/items2.json", File.ModeFlags.Read);
-			while (saveGame.GetPosition () < saveGame.GetLen ()) {
-				var data = JsonConvert.DeserializeObject<Dictionary<string, object>> (saveGame.GetLine ());
-				if (data.ContainsKey ("category"))
-					categories2.Add (new ItemCategory ());
-			}
+			// var saveGame = new File ();
+			// saveGame.Open ("Data/items2.json", File.ModeFlags.Read);
+			// while (saveGame.GetPosition () < saveGame.GetLen ()) {
+			// 	var data = JsonConvert.DeserializeObject<Dictionary<string, object>> (saveGame.GetLine ());
+			// 	if (data.ContainsKey ("category"))
+			// 		categories2.Add (new ItemCategory ());
+			// }
 
 			Godot.File file = new Godot.File ();
 			file.Open ("res://Data/items.json", Godot.File.ModeFlags.Read);
-			categories = JsonConvert.DeserializeObject<ItemCategory[]> (file.GetAsText ());
+			categories = JsonConvert.DeserializeObject<List<ItemCategory>> (file.GetAsText ());
 			byte categoryId = 0;
+			file.Close ();
+
+			LoadEquipements ();
+
 			foreach (ItemCategory category in categories) {
 				category.id = categoryId;
-				byte variantId = 0;
-				foreach (ItemData item in category.variants) {
-					item.id = new ItemId (categoryId, variantId);
+				byte itemId = 0;
+				foreach (ItemData item in category.items) {
+					item.id = new ItemId (categoryId, itemId);
 					itemNames[item.name] = item.id;
-					variantId += 1;
+					itemId += 1;
 				}
 				categoryId += 1;
 			}
+		}
+
+		public static void LoadEquipements () {
+			var file = new File ();
+			file.Open ("res://Data/equipement.json", File.ModeFlags.Read);
+			var equipements = new ItemCategory ();
+			equipements.name = "equipement";
+			equipements.stackSize = 1;
+			equipements.items = JsonConvert.DeserializeObject<EquipementData[]> (file.GetAsText ()); //new List<ItemData> ();
+			file.Close ();
+			categories.Add (equipements);
 		}
 
 		public static ItemCategory GetCategory (byte categoryId) {
@@ -46,15 +61,20 @@ namespace Item {
 		}
 
 		public static ItemData GetItem (ItemId id) {
-			return GetCategory (id.category).variants[id.variant];
+			return GetItem<ItemData> (id);
 		}
-
 		public static ItemData GetItem (string name) {
+			return GetItem<ItemData> (name);
+		}
+		public static T GetItem<T> (ItemId id) where T : ItemData {
+			return (T) GetCategory (id.category).items[id.item];
+		}
+		public static T GetItem<T> (string name) where T : ItemData {
 			ItemId id;
 			if (name != null && itemNames.TryGetValue (name.ToLower (), out id))
-				return GetItem (id);
+				return (T) GetItem<T> (id);
 			GD.PrintErr ("Error: Trying to get a non existing item : " + name);
-			return ItemData.NULL; // TODO: Once Godot is updated (and fixes the GD.Print(null) crash) we can return null here
+			return (T) ItemData.NULL; // TODO: Once Godot is updated (and fixes the GD.Print(null) crash) we can return null here
 		}
 
 		public static ItemId GetId (string name) {
@@ -71,18 +91,18 @@ namespace Item {
 
 		[JsonProperty ("category")]
 		public string name;
-		public ItemData[] variants;
+		public ItemData[] items;
 		public ushort stackSize;
 	}
 
 	public struct ItemId {
 		public byte category;
-		public byte variant;
+		public byte item;
 
 		public static readonly ItemId NULL = new ItemId (byte.MaxValue, byte.MaxValue);
-		public ItemId (byte category, byte variant) {
+		public ItemId (byte category, byte item) {
 			this.category = category;
-			this.variant = variant;
+			this.item = item;
 		}
 
 		public ItemData data { get { return Manager.GetItem (this); } }
@@ -96,11 +116,11 @@ namespace Item {
 
 			ItemId other = (ItemId) obj;
 
-			return this.category.Equals (other.category) && this.variant.Equals (other.variant);
+			return this.category.Equals (other.category) && this.item.Equals (other.item);
 		}
 
 		public override int GetHashCode () {
-			return this.category.GetHashCode () + 65565 * this.variant.GetHashCode ();
+			return this.category.GetHashCode () + 65565 * this.item.GetHashCode ();
 		}
 
 		public static bool operator == (ItemId a, ItemId b) {
@@ -139,6 +159,11 @@ namespace Item {
 		}
 
 		public static readonly ItemData NULL = new ItemData ();
+	}
+	public class EquipementData : ItemData {
+		public float damage = 0;
+		public float range = 1;
+		public string type = "none";
 	}
 
 	public static class ItemExtensions {

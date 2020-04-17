@@ -1,0 +1,72 @@
+[
+    {
+        "type": "sword",
+        "sprite": {
+            "sheet": 0,
+            "x": 0,
+            "y": 3
+        },
+        "name": "iron_sword",
+        "damage": 100
+    },
+    {
+        "type": "sword",
+        "sprite": {
+            "sheet": 0,
+            "x": 0,
+            "y": 3
+        },
+        "name": "bronze_sword",
+        "damage": 150
+    },
+    {
+        "type": "hoe",
+        "name": "iron_hoe",
+        "damage": 40,
+        "sprite": {
+            "sheet": 0,
+            "x": 1,
+            "y": 3
+        }
+    },
+    {
+        "type": "axe",
+        "name": "iron_axe",
+        "damage": 120,
+        "sprite": {
+            "sheet": 0,
+            "x": 2,
+            "y": 3
+        }
+    },
+    {
+        "type": "pickaxe",
+        "name": "iron_pickaxe",
+        "damage": 10,
+        "sprite": {
+            "sheet": 0,
+            "x": 3,
+            "y": 3
+        }
+    },
+    {
+        "type": "lamp",
+        "name": "torch",
+        "damage": 50,
+        "sprite": {
+            "sheet": 0,
+            "x": 0,
+            "y": 5
+        }
+    },
+    {
+        "type": "lamp",
+        "name": "torch",
+        "damage": 50,
+        "sprite": {
+            "sheet": 0,
+            "x": 0,
+            "y": 5
+        }
+    }
+]

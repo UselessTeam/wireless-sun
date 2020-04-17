@@ -1,61 +1,55 @@
 using System;
 using Godot;
 
-public class PlayerAttack : _Attack
-{
+public class PlayerAttack : _Attack {
 
-    [Export] public float DISTANCE_TO_PLAYER = 15;
+    public new float damage { get { return GameRoot.inventory.equipement.GetDamage (); } }
+    public float range { get { return GameRoot.inventory.equipement.GetRange (); } }
+
+    [Export] public float base_distance_to_player = 15;
+    [Export] public float distance_to_player { get { return base_distance_to_player * range; } }
 
     double LimitAngle = Math.PI / 8; //Limite a partir de laquelle l'attaque est horizontale
 
-    public AnimatedSprite MySprite
-    {
-        get { return GetNode<AnimatedSprite>("Sprite"); }
+    public AnimatedSprite MySprite {
+        get { return GetNode<AnimatedSprite> ("Sprite"); }
     }
 
-    public override void _Ready()
-    {
-        base._Ready();
+    public override void _Ready () {
+        base._Ready ();
     }
 
-    public void _OnAttackFinished()
-    {
-        MySprite.Hide();
-        MySprite.Stop();
-        GetParent<PC>().IsAttacking = false;
-
-        GetNode<CollisionShape2D>("Hitbox/CollisionShape2D").Disabled = true;
+    public float OrientedAngle (Vector2 U, Vector2 V) {
+        float alpha = U.Cross (V);
+        return U.AngleTo (V) * alpha / Math.Abs (alpha);
     }
 
-    public float OrientedAngle(Vector2 U, Vector2 V)
-    {
-        float alpha = U.Cross(V);
-        return U.AngleTo(V) * alpha / Math.Abs(alpha);
-    }
-
-    public void _StartAttack()
-    {
+    public void _StartAttack () {
         // Enable the attack's collisionBox
-        GetNode<CollisionShape2D>("Hitbox/CollisionShape2D").Disabled = false;
+        Scale = new Vector2 (range, range);
+        GetNode<CollisionShape2D> ("Hitbox/CollisionShape2D").Disabled = false;
 
         // Put the attack sprite at the right position and show it
         Vector2 direction = MyUserBody.FacingDirection;
-        Position = DISTANCE_TO_PLAYER * direction;
-        Rotation = direction.Angle();
-        if (Rotation % Math.PI / 2 < LimitAngle && (-Rotation) % Math.PI / 2 < LimitAngle)
-        {
-            MySprite.Play("straight");
-        }
-        else
-        {
+        Position = distance_to_player * direction;
+        Rotation = direction.Angle ();
+        if (Rotation % Math.PI / 2 < LimitAngle && (-Rotation) % Math.PI / 2 < LimitAngle) {
+            MySprite.Play ("straight");
+        } else {
             // Rotation = OrientedAngle (direction, new Vector2 (1, -1));
-            Rotation += (float)Math.PI / 4;
-            MySprite.Play("diagonal");
+            Rotation += (float) Math.PI / 4;
+            MySprite.Play ("diagonal");
         }
-        MySprite.Show();
+        MySprite.Show ();
 
         // Play Attack's SFX
-        GetNode<AudioStreamPlayer2D>("SFX").Play(0);
+        GetNode<AudioStreamPlayer2D> ("SFX").Play (0);
     }
 
+    public void _OnAttackFinished () {
+        MySprite.Hide ();
+        MySprite.Stop ();
+        GetParent<PC> ().IsAttacking = false;
+        GetNode<CollisionShape2D> ("Hitbox/CollisionShape2D").Disabled = true;
+    }
 }

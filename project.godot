@@ -23,8 +23,8 @@ config/icon="res://icon.png"
 
 Global="*res://Nodes/Background/Global.tscn"
 SmartTiles="*res://Nodes/Map/SmartTiles.tscn"
-Inventory="*res://Nodes/Background/Inventory.tscn"
 Network="*res://Nodes/Background/Network.tscn"
+Inventory="*res://Nodes/Background/Inventory.tscn"
 GUI="*res://Nodes/GUI/GUI.tscn"
 
 [display]

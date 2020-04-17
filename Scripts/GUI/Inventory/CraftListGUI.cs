@@ -3,7 +3,7 @@ using Craft;
 using Godot;
 
 public class CraftListGUI : GUIWindow {
-    private PackedScene packedCraftGUI = (PackedScene) ResourceLoader.Load ("res://Nodes/GUI/Craft.tscn");
+    [Export] private PackedScene packedCraftGUI = (PackedScene) ResourceLoader.Load ("res://Nodes/GUI/Inventory/Craft.tscn");
 
     public override void Maximise () {
         this.Show ();

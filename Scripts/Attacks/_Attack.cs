@@ -10,7 +10,7 @@ public enum AttackType {
 }
 
 public class _Attack : Node2D {
-	[Export] public float DAMAGE = 10;
+	[Export] public float damage = 10;
 	public AttackType TYPE = AttackType.Hand;
 
 	public Area2D MyArea { get { return GetNode<Area2D> ("Hitbox"); } }
@@ -22,7 +22,7 @@ public class _Attack : Node2D {
 
 	public override void _Process (float delta) {
 		foreach (Body attackedBody in MyArea.GetOverlappingBodies ()) {
-			attackedBody.StartImpact ((attackedBody.GlobalPosition - MyUserBody.GlobalPosition).Normalized () * 800, 0.1f, DAMAGE);
+			attackedBody.StartImpact ((attackedBody.GlobalPosition - MyUserBody.GlobalPosition).Normalized () * 800, 0.1f, damage);
 		}
 	}
 }

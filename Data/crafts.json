@@ -14,14 +14,14 @@
         "location": "crafting_table",
         "crafts": [
             {
-                "result": "axe",
+                "result": "iron_axe",
                 "ingredients": [
                     {"item" :"stick", "amount":2},
                     {"item" :"stone", "amount":3}
                 ]
             },
             {
-                "result": "pickaxe",
+                "result": "iron_pickaxe",
                 "ingredients": [
                     {"item" :"stick", "amount":2},
                     {"item" :"wood", "amount":2},
@@ -34,14 +34,14 @@
         "location": "forge",
         "crafts": [
             {
-                "result": "sword",
+                "result": "iron_sword",
                 "ingredients": [
                     {"item" :"ore", "amount":4},
                     {"item" :"stone", "amount":3}
                 ]
             },
             {
-                "result": "hoe",
+                "result": "iron_hoe",
                 "ingredients": [
                     {"item":"stick", "amount":4},
                     {"item":"ore", "amount":3}

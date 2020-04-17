@@ -21,6 +21,7 @@ public class InventoryBag : PanelContainer {
 	public override void _Ready () {
 		SetColumns (4);
 		GameRoot.inventory.Connect ("inventory_change", this, nameof (_on_inventory_change));
+		_on_inventory_change ();
 	}
 
 	private void SetColumns (int value) {

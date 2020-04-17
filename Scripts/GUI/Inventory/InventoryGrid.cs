@@ -6,14 +6,14 @@ public class InventoryGrid : GridContainer {
 	private PackedScene packedInventoryItem = (PackedScene) ResourceLoader.Load ("res://Nodes/GUI/GuiItem/InventoryItem.tscn");
 
 	private List<InventoryItem> items = new List<InventoryItem> ();
-	public void Display (List<ItemSlot> stacks) {
-		if (items.Count > stacks.Count) {
-			for (int i = stacks.Count; i < items.Count; i++) {
+	public void Display (InventorySlot[] stacks) {
+		if (items.Count > stacks.Length) {
+			for (int i = stacks.Length; i < items.Count; i++) {
 				items[i].QueueFree ();
 			}
-			items.RemoveRange (stacks.Count, items.Count - stacks.Count);
-		} else if (items.Count < stacks.Count) {
-			for (int i = items.Count; i < stacks.Count; i++) {
+			items.RemoveRange (stacks.Length, items.Count - stacks.Length);
+		} else if (items.Count < stacks.Length) {
+			for (int i = items.Count; i < stacks.Length; i++) {
 				InventoryItem item = (InventoryItem) packedInventoryItem.Instance ();
 				items.Add (item);
 				AddChild (item);

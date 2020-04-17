@@ -23,10 +23,14 @@ public class Lobby : Control {
 		ipAdress = new_text;
 	}
 
-	void _OnHostPressed () {
-		Network.Host ();
+	void _OnSoloPressed () {
 		this.Hide ();
 		GetNode<Control> ("../SaveMenu").Show ();
+	}
+
+	void _OnHostPressed () {
+		Network.Host ();
+		_OnSoloPressed ();
 	}
 
 	void _OnJoinPressed () {

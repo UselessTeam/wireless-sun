@@ -1,17 +1,16 @@
 using System;
 using Godot;
 
-public class PauseMenu : Control {
+public class PauseMenu : GUIWindow {
     public override void _Ready () {
         if (Network.IsConnectionStarted && !Gameplay.Instance.IsNetworkMaster ()) {
             GetNode<Button> ("PanelContainer/VBoxContainer/Save").Disabled = true;
             GetNode<Button> ("PanelContainer/VBoxContainer/Quit").Text = "Quit";
         }
     }
-    public void _Resume () {
-        this.Hide ();
-        GetTree ().Paused = false;
-    }
+
+    public void _Resume () { Minimise (); }
+
     void _Save () {
         Save.SaveGame ();
     }
@@ -21,5 +20,14 @@ public class PauseMenu : Control {
         _Resume ();
         Network.Instance.DisconnectNetwork ();
         GameRoot.LoadMenuScene ();
+    }
+
+    public override void Maximise () {
+        GetTree ().Paused = true;
+        this.Show ();
+    }
+    public override void Minimise () {
+        this.Hide ();
+        GetTree ().Paused = false;
     }
 }
