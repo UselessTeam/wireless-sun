@@ -20,7 +20,7 @@ namespace MetaTile {
 		public byte otherTileSet;
 		public byte otherX;
 		public byte otherY;
-		
+
 		public Vector2 coord { get { return new Vector2(x,y); } }
 		public Vector2 otherCoord { get { return new Vector2(otherX,otherY); } }
 		public CornerKey(byte tileSet, byte x, byte y) {
@@ -97,7 +97,7 @@ namespace MetaTile {
 				&& (bottom_left != PointType.Void)
 				&& (bottom_right != PointType.Void);
 		}
-		
+
 		public bool NoVoidOnly() {
 			return (top_left != PointType.Void)
 				|| (top_right != PointType.Void)
@@ -292,7 +292,7 @@ namespace MetaTile {
 			currentImage.Create(TILE.HALF_RESOLUTION * SIZE, TILE.HALF_RESOLUTION * SIZE, false, Image.Format.Rgba8);
 			currentImage.Fill(new Color(1f,1f,1f));
 			currentImageTexture = new ImageTexture();
-			currentImageTexture.CreateFromImage(currentImage);
+			currentImageTexture.CreateFromImage(currentImage, 0);
 			currentTile += 1;
 			world_tileset.CreateTile(currentTile);
 			world_tileset.TileSetName(currentTile, "extra");

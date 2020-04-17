@@ -45,5 +45,4 @@ public class Lobby : Control {
 	// 	//
 	// 	Global.LoadGameScene ("");
 	// }
-
 }

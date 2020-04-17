@@ -1,0 +1,59 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Nodes/Bodies/Tree.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Nodes/Map/Map.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scripts/GameHandlers/Gameplay.cs" type="Script" id=3]
+[ext_resource path="res://Nodes/Buildings/Forge.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Nodes/Spawners/ItemSpawner.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Assets/Musics/bornForAdventure.wav" type="AudioStream" id=6]
+[ext_resource path="res://Nodes/Spawners/PrefabSpawner.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Nodes/Buildings/CraftingTable.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Nodes/Buildings/Campfire.tscn" type="PackedScene" id=10]
+
+[node name="ProcMap" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="Audio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+autoplay = true
+
+[node name="Map" parent="." instance=ExtResource( 2 )]
+position = Vector2( 300, 500 )
+
+[node name="ShadowSpawner" parent="." instance=ExtResource( 7 )]
+position = Vector2( 112, 120 )
+SPAWN_DELAY = 2.0
+
+[node name="SpawnPoint" type="Position2D" parent="."]
+position = Vector2( 296, 248 )
+
+[node name="Forest" parent="." instance=ExtResource( 7 )]
+position = Vector2( 204.278, 198.861 )
+SPAWN_DELAY = 1.0
+MAX_COUNT = 7.0
+spawnPrefab = ExtResource( 1 )
+
+[node name="Campfire" parent="." instance=ExtResource( 10 )]
+
+[node name="Forge" parent="." instance=ExtResource( 4 )]
+
+[node name="CraftingTable" parent="." instance=ExtResource( 8 )]
+position = Vector2( 533.394, 347.6 )
+
+[node name="ShroomSpawner" parent="." instance=ExtResource( 5 )]
+position = Vector2( 487.52, 260.745 )
+SPAWN_DELAY = 5.0
+MAX_COUNT = 6.0
+itemName = "mushroom"
+
+[node name="StonSpawner" parent="." instance=ExtResource( 5 )]
+position = Vector2( 168.767, 359.195 )
+SPAWN_DELAY = 3.0
+MAX_COUNT = 6.0
+itemName = "stone"
+
+[node name="OreSpawner" parent="." instance=ExtResource( 5 )]
+position = Vector2( 64.0775, 87.5424 )
+SPAWN_DELAY = 5.0
+MAX_COUNT = 6.0
+itemName = "ore"

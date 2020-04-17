@@ -3,7 +3,6 @@
 [ext_resource path="res://Scripts/Map/Chunk.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Tiles/World/world_tileset.tres" type="TileSet" id=2]
 
-
 [node name="Chunk" type="TileMap"]
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 12, 12 )
