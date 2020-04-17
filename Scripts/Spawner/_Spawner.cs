@@ -17,7 +17,8 @@ public abstract class _Spawner : Node2D {
 	public float Radius {
 		get { return ((CircleShape2D) GetNode<CollisionShape2D> ("Area2D/CollisionShape2D").Shape).Radius; }
 		set {
-			((CircleShape2D) GetNode<CollisionShape2D> ("Area2D/CollisionShape2D").Shape).Radius = value; }
+			((CircleShape2D) GetNode<CollisionShape2D> ("Area2D/CollisionShape2D").Shape).Radius = value;
+		}
 	}
 
 	double timeUntilNext;
@@ -49,11 +50,19 @@ public abstract class _Spawner : Node2D {
 					position = GenerateSpawnPosition (Radius);
 					checkArea.Position = position;
 					numberTries++;
+					if (checkArea != null && checkArea.GetOverlappingAreas ().Count > 0) {
+						// var spawnBody = GetSpawnee ();
+						// spawnBody.Modulate = new Color (1, 0, 0, 0.5f);
+						// spawnBody.Position = position;
+						// AddChild (spawnBody);
+						GD.Print ("Trying spawn at " + checkArea.GlobalPosition + " while player is at " + Gameplay.myPlayer.GlobalPosition);
+						break;
+					}
 					if (numberTries >= MAX_TRIES) {
 						numberTries = 0;
 						break;
 					}
-				} while (checkArea != null && checkArea.GetOverlappingBodies ().Count > 0);
+				} while (checkArea != null && checkArea.GetOverlappingAreas ().Count > 0);
 				if (numberTries > 0) {
 					if (Network.IsConnectionStarted)
 						Rpc ("SpawnOne", spawnID.ToString (), position);

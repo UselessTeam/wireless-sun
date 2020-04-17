@@ -58,15 +58,5 @@
             "x": 0,
             "y": 5
         }
-    },
-    {
-        "type": "lamp",
-        "name": "torch",
-        "damage": 50,
-        "sprite": {
-            "sheet": 0,
-            "x": 0,
-            "y": 5
-        }
     }
 ]

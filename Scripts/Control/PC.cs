@@ -69,7 +69,6 @@ public class PC : _Control {
     public new Godot.Collections.Dictionary<string, object> MakeSave () {
         var saveObject = base.MakeSave ();
         saveObject["HP"] = GetNode<Health> ("Health").HP;
-        saveObject["Damage"] = GetNode<_Attack> ("Attack").damage;
         if (IsMaster)
             saveObject["MyPlayer"] = true;
         return saveObject;
@@ -78,7 +77,6 @@ public class PC : _Control {
     public new void LoadData (Godot.Collections.Dictionary<string, object> saveObject) {
         base.LoadData (saveObject);
         GetNode<Health> ("Health").HP = Convert.ToSingle (saveObject["HP"]);
-        GetNode<_Attack> ("Attack").damage = Convert.ToSingle (saveObject["Damage"]);
         if (saveObject.ContainsKey ("MyPlayer"))
             MyBody.Name = "MyPlayer";
     }

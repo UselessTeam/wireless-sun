@@ -2,12 +2,7 @@ using System;
 using Godot;
 
 public class Lobby : Control {
-
-	public static Lobby Instance { get { return instance; } }
-	static Lobby instance = null;
-
 	public override void _Ready () {
-		instance = this;
 		GetTree ().Connect ("connected_to_server", this, "_OnJoinedAServer");
 	}
 
@@ -23,14 +18,10 @@ public class Lobby : Control {
 		ipAdress = new_text;
 	}
 
-	void _OnSoloPressed () {
-		this.Hide ();
-		GetNode<Control> ("../SaveMenu").Show ();
-	}
-
 	void _OnHostPressed () {
 		Network.Host ();
-		_OnSoloPressed ();
+		this.Hide ();
+		GetNode<Control> ("../SaveMenu").Show ();
 	}
 
 	void _OnJoinPressed () {

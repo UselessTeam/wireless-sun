@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Scripts/Control/PC.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Attributes/FieldOfView.cs" type="Script" id=2]
@@ -61,10 +61,16 @@ animations = [ {
 [sub_resource type="CircleShape2D" id=11]
 radius = 58.5806
 
+[sub_resource type="CircleShape2D" id=12]
+radius = 116.08
+
 [node name="PlayerBody" type="KinematicBody2D"]
 collision_layer = 2
 collision_mask = 5
 script = ExtResource( 7 )
+
+[node name="HumanCharacter" parent="." instance=ExtResource( 4 )]
+position = Vector2( 0, -7.36103 )
 
 [node name="PlayerControl" type="Node2D" parent="."]
 script = ExtResource( 1 )
@@ -98,8 +104,6 @@ visible = false
 position = Vector2( -0.643921, -17.1029 )
 texture = ExtResource( 10 )
 
-[node name="HumanCharacter" parent="." instance=ExtResource( 4 )]
-
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 visible = false
 position = Vector2( -15.0909, -13.7735 )
@@ -116,4 +120,11 @@ script = ExtResource( 2 )
 
 [node name="FOVCollision" type="CollisionShape2D" parent="Picker/FieldOfView"]
 shape = SubResource( 11 )
+
+[node name="NoSpawnZone" type="Area2D" parent="."]
+collision_layer = 1024
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NoSpawnZone"]
+shape = SubResource( 12 )
 [connection signal="animation_finished" from="PlayerControl/Attack/Sprite" to="PlayerControl/Attack" method="_OnAttackFinished"]

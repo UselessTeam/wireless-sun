@@ -50,7 +50,7 @@ public class Body : KinematicBody2D {
 
 	// Call whenever the body is hit for some time
 	public void StartImpact (Vector2 direction, float time, float damage = 0) {
-		if (!isFlicker && IMPACT_FACTOR > 0) {
+		if (!isFlicker) {
 			EmitSignal ("damage_taken", damage);
 			isImpact = true;
 			impactTime = time;

@@ -23,8 +23,8 @@ config/icon="res://icon.png"
 
 Global="*res://Nodes/Background/Global.tscn"
 SmartTiles="*res://Nodes/Map/SmartTiles.tscn"
-Inventory="*res://Nodes/Background/Inventory.tscn"
 Network="*res://Nodes/Background/Network.tscn"
+Inventory="*res://Nodes/Background/Inventory.tscn"
 GUI="*res://Nodes/GUI/GUI.tscn"
 
 [display]
@@ -32,6 +32,7 @@ GUI="*res://Nodes/GUI/GUI.tscn"
 window/size/width=1920
 window/size/height=1080
 window/size/resizable=false
+window/size/fullscreen=true
 window/per_pixel_transparency/allowed=true
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
@@ -145,6 +146,12 @@ pause={
 2d_physics/layer_3="enemy"
 2d_physics/layer_4="item"
 2d_physics/layer_5="minable"
+2d_physics/layer_11="nospawn"
+
+[mono]
+
+debugger_agent/wait_for_debugger=true
+project/auto_update_project=false
 
 [rendering]
 

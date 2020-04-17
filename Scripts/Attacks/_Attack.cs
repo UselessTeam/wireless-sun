@@ -22,7 +22,9 @@ public class _Attack : Node2D {
 
 	public override void _Process (float delta) {
 		foreach (Body attackedBody in MyArea.GetOverlappingBodies ()) {
-			attackedBody.StartImpact ((attackedBody.GlobalPosition - MyUserBody.GlobalPosition).Normalized () * 800, 0.1f, damage);
+			attackedBody.StartImpact ((attackedBody.GlobalPosition - MyUserBody.GlobalPosition).Normalized () * 800, 0.1f, GetDamage ());
 		}
 	}
+
+	public virtual float GetDamage () { return damage; }
 }

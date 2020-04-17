@@ -3,7 +3,10 @@ using Godot;
 
 public class PlayerAttack : _Attack {
 
-    public new float damage { get { return GameRoot.inventory.equipement.GetDamage (); } }
+    public override float GetDamage () {
+        return GameRoot.inventory.equipement.GetDamage ();
+    }
+
     public float range { get { return GameRoot.inventory.equipement.GetRange (); } }
 
     [Export] public float base_distance_to_player = 15;
@@ -17,6 +20,10 @@ public class PlayerAttack : _Attack {
 
     public override void _Ready () {
         base._Ready ();
+    }
+
+    public override void _Process (float delta) {
+        base._Process (delta);
     }
 
     public float OrientedAngle (Vector2 U, Vector2 V) {
