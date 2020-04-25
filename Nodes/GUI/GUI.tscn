@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Nodes/GUI/Inventory/InventoryGUI.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/GUI/GUI.cs" type="Script" id=2]
@@ -6,8 +6,9 @@
 [ext_resource path="res://Scripts/GUI/Inventory/CraftListGUI.cs" type="Script" id=4]
 [ext_resource path="res://Assets/Fonts/montserrat_eb_32.tres" type="DynamicFont" id=5]
 [ext_resource path="res://Assets/Fonts/montserrat_eb_24.tres" type="DynamicFont" id=6]
-[ext_resource path="res://Nodes/GUI/GuiItem/HoverableItem.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Nodes/GUI/GuiItem/EquipementItem.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Nodes/GUI/PauseMenu.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scripts/InventoryManagement/Equipement/WeaponHotbar.cs" type="Script" id=9]
 
 [node name="GUI" type="CanvasLayer"]
 script = ExtResource( 2 )
@@ -28,12 +29,31 @@ __meta__ = {
 margin_right = 40.0
 margin_bottom = 14.0
 
-[node name="EquipedItem" parent="." instance=ExtResource( 7 )]
-visible = false
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_left = 27.981
-margin_top = -70.0
+[node name="WeaponHotbar" type="PanelContainer" parent="."]
+margin_left = 668.67
+margin_top = 1009.22
+margin_right = 782.67
+margin_bottom = 1071.22
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="GridContainer" parent="WeaponHotbar"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 107.0
+margin_bottom = 55.0001
+columns = 2
+
+[node name="RightHand" parent="WeaponHotbar/GridContainer" instance=ExtResource( 7 )]
+margin_right = 48.0
+margin_bottom = 48.0
+
+[node name="LeftHand" parent="WeaponHotbar/GridContainer" instance=ExtResource( 7 )]
+margin_left = 52.0
+margin_right = 100.0
+margin_bottom = 48.0
 
 [node name="DeathScreen" type="Control" parent="."]
 visible = false

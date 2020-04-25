@@ -16,6 +16,7 @@ height = 15.8893
 
 [node name="CraftingTable" type="StaticBody2D"]
 position = Vector2( 272, 312 )
+input_pickable = true
 collision_mask = 0
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -34,5 +35,12 @@ shape = SubResource( 2 )
 position = Vector2( -0.28476, 3.27515 )
 rotation = 1.5708
 shape = SubResource( 3 )
+
+[node name="HoverLight" type="Light2D" parent="."]
+visible = false
+position = Vector2( 48.3754, -16.0787 )
+texture = ExtResource( 1 )
+color = Color( 0.901961, 0.976471, 0.0392157, 1 )
+energy = 1.86
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_Area2D_body_entered"]
 [connection signal="body_exited" from="Area2D" to="Area2D" method="_on_Area2D_body_exited"]

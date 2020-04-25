@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-public abstract class CraftLocation : _Interactable {
+public class CraftLocation : _Interactable {
     [Export] public string craftLocation = "";
     public CraftListGUI craftingGUI { get { return GetNode<GUI> ("/root/GUI").crafting; } }
 

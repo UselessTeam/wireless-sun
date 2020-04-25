@@ -135,6 +135,8 @@ namespace Item {
 			if (this == NULL) return "";
 			return Manager.GetItem (this).name;
 		}
+
+		public bool IsNull () { return this == NULL; }
 	}
 
 	public class ItemData {

@@ -14,7 +14,7 @@ public struct InventorySlot {
 public class Inventory : Node2D {
 	const ushort INVENTORY_SIZE = 24;
 	public InventorySlot[] inventory = new InventorySlot[INVENTORY_SIZE];
-	public EquipementManager equipement = new EquipementManager ();
+	public EquipementManager equipement;
 
 	[Signal] public delegate void inventory_change ();
 	[Signal] public delegate void equipement_change ();
@@ -27,46 +27,80 @@ public class Inventory : Node2D {
 	public void InitializeEmpty () {
 		for (byte i = 0; i < INVENTORY_SIZE; i++)
 			inventory[i] = (new InventorySlot (new EmptySlot (), i));
+		equipement = new EquipementManager ();
 		EmitSignal (nameof (inventory_change));
+		EmitSignal (nameof (equipement_change));
 	}
 
-	public void Add (ItemId item, ushort quantity = 1) {
+	//
+	// Adds the item at the specied position
+	// If the inventory slot cannot fit the items, it will still the maximum number of items that it can fit.
+	// Returns the number of items that wouldn't fit
+	public ushort Add (byte index, ItemId item, ushort quantity = 1) {
+		if (inventory[index].item == item && item.data.stackSize > 1) {
+			ushort newSize = (ushort) Mathf.Min ((inventory[index].slot as ItemStack).size + quantity, item.data.stackSize);
+			quantity -= (ushort) (newSize - (inventory[index].slot as ItemStack).size);
+			(inventory[index].slot as ItemStack).size = newSize;
+		} else if (inventory[index].item == ItemId.NULL) {
+			inventory[index].slot = Item.Builder.MakeSlot (item, (ushort) Mathf.Min (quantity, item.data.stackSize));
+			quantity -= (ushort) Mathf.Min (quantity, item.data.stackSize);
+
+		}
+		EmitSignal (nameof (inventory_change));
+		return quantity;
+	}
+
+	//
+	// Adds the item in the inventory
+	// If the inventory cannot fit the items, it will still the maximum number of items that it can fit.
+	// Returns the number of items that wouldn't fit
+	public ushort Add (ItemId item, ushort quantity = 1) {
 		if (item == ItemId.NULL)
-			return;
-		ItemData data = Item.Manager.GetItem (item);
-		if (data.stackSize > 1)
-			for (byte i = 0; i < INVENTORY_SIZE; i++) {
+			return 0;
+		if (item.data.stackSize > 1)
+			for (byte i = 0; i < INVENTORY_SIZE && quantity > 0; i++) {
 				if (inventory[i].item == item) {
-					ushort newSize = (ushort) Mathf.Min ((inventory[i].slot as ItemStack).size + quantity, data.stackSize);
-					quantity -= (ushort) (newSize - (inventory[i].slot as ItemStack).size);
-					(inventory[i].slot as ItemStack).size = newSize;
-					if (quantity == 0) {
-						EmitSignal (nameof (inventory_change));
-						return;
-					}
+					quantity = Add (i, item, quantity);
 				}
 			}
-		for (byte i = 0; i < INVENTORY_SIZE; i++)
-			if (inventory[i].item == ItemId.NULL) {
-				inventory[i].slot = Item.Builder.MakeSlot (item, (ushort) Mathf.Min (quantity, data.stackSize));
-				quantity -= (ushort) Mathf.Min (quantity, data.stackSize);
-				if (quantity == 0) {
-					EmitSignal (nameof (inventory_change));
-					return;
-				}
-			}
-		GD.Print ("Inventory Overflow, the rest of the items were lost");
+		for (byte i = 0; i < INVENTORY_SIZE && quantity > 0; i++)
+			quantity = Add (i, item, quantity);
+		return quantity;
 	}
 
-	public void Remove (byte index) {
-		inventory[index].slot = Item.Builder.MakeSlot (ItemId.NULL);
+	//
+	// Adds the item at a specified position
+	// If the specified position is not empty, it will throw an error
+	public void AddSlot (byte index, ItemSlot slot) {
+		if (inventory[index].item.IsNull ())
+			GD.PrintErr ("Trying to AddSlot on an occupied inventory slot");
+		else
+			inventory[index].slot = slot;
+	}
+
+	//
+	// Removes a certain amount of item at the specified position
+	// If there is not enough items to be removed, it will simply remove all the items
+	public void Remove (byte index, ushort quantity = 1) {
+		if (quantity == 0)
+			return;
+		if (inventory[index].slot.size > quantity)
+			(inventory[index].slot as ItemStack).size -= quantity;
+		else
+			RemoveSlot (index);
 		EmitSignal (nameof (inventory_change));
 	}
 
-	public void Remove (InventorySlot slot) {
-		Remove (slot.index);
+	//
+	// Removes a certain amount of item at the specified inventory slot
+	// If there is not enough items to be removed, it will simply remove all the items
+	public void Remove (InventorySlot slot, ushort quantity = 1) {
+		Remove (slot.index, quantity);
 	}
 
+	//
+	// Removes the specified items
+	// If there is not enough items to be removed, it will throw an error
 	public void Remove (ItemSlot slot) { Remove (slot.item, slot.size); }
 	public void Remove (ItemId item, ushort quantity = 1) {
 		for (byte i = 0; i < INVENTORY_SIZE; i++) {
@@ -84,6 +118,33 @@ public class Inventory : Node2D {
 			}
 		}
 		GD.PrintErr ("[Inventory] Couldn't remove ", quantity, " of ", item.data);
+	}
+
+	//
+	// Removes all items at the speciefied position
+	public void RemoveSlot (byte index) {
+		inventory[index].slot = Item.Builder.MakeSlot (ItemId.NULL);
+		EmitSignal (nameof (inventory_change));
+	}
+
+	//
+	// Removes all items at the speciefied inventory slot
+	public void RemoveSlot (InventorySlot slot) {
+		Remove (slot.index);
+	}
+
+	public void SwapSlots (byte index1, byte index2) {
+		if (index1 == index2) return;
+		if (inventory[index1].item == inventory[index2].item && inventory[index1].item.data.stackSize > 1) {
+			(inventory[index2].slot as ItemStack).size = Add (index1, inventory[index1].item, inventory[index2].size);
+			if (inventory[index2].slot.size == 0)
+				RemoveSlot (index2);
+		} else {
+			var keep = inventory[index1].slot;
+			inventory[index1].slot = inventory[index2].slot;
+			inventory[index2].slot = keep;
+		}
+		EmitSignal (nameof (inventory_change));
 	}
 
 	public bool Contains (ItemSlot slot) { return Contains (slot.item, slot.size); }
@@ -125,12 +186,12 @@ public class Inventory : Node2D {
 			GD.Print ("You don't have this item :", slot.item);
 			return;
 		} else if (slot.item.category == Item.Manager.GetCategory ("equipement").id) {
-			Remove (slot.index);
+			RemoveSlot (slot);
 			equipement.Equip (slot.slot);
-			EmitSignal (nameof (equipement_change));
 		} else if (slot.item.category == Item.Manager.GetCategory ("food").id) {
-			Remove (slot.item, 1);
-			GD.Print ("Miam, it's delicious!");
+			Remove (slot, 1);
+			Gameplay.myPlayer.GetNode<Health> ("PlayerControl/Health").HP += 10;
+
 		}
 	}
 

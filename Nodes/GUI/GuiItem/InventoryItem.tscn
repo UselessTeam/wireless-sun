@@ -1,7 +1,8 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Nodes/GUI/GuiItem/ItemSpriteHolder.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Scripts/GUI/GuiItem/InventoryItem.cs" type="Script" id=5]
+[ext_resource path="res://Scripts/GUI/GuiItem/MovableItems/InventoryItem.cs" type="Script" id=5]
+
 
 [node name="InventoryItem" type="Control"]
 margin_right = 24.0

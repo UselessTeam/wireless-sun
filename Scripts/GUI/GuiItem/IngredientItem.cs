@@ -6,7 +6,7 @@ public abstract class IngredientItem : HoverableItem {
         GameRoot.inventory.Connect (nameof (Inventory.inventory_change), this, nameof (CheckIngredient));
     }
 
-    public new void Display (Item.ItemSlot slot) {
+    public override void Display (Item.ItemSlot slot) {
         base.Display (slot);
         CheckIngredient ();
     }

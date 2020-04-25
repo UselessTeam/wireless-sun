@@ -5,6 +5,8 @@ using Item;
 public class InventoryGrid : GridContainer {
 	private PackedScene packedInventoryItem = (PackedScene) ResourceLoader.Load ("res://Nodes/GUI/GuiItem/InventoryItem.tscn");
 
+	public override void _Ready () {}
+
 	private List<InventoryItem> items = new List<InventoryItem> ();
 	public void Display (InventorySlot[] stacks) {
 		if (items.Count > stacks.Length) {

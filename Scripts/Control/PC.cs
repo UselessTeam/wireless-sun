@@ -14,7 +14,7 @@ public class PC : _Control {
     }
 
     string[] ActionList = {
-        "action_1" // Attack
+        "left_attack"
     };
 
     public override void _Input (InputEvent _event) {
@@ -39,7 +39,7 @@ public class PC : _Control {
 
     [Puppet]
     public void _Action (string _event) {
-        if (CanMove && _event == ActionList[0]) { // Action : Attack
+        if (CanMove && _event == "left_attack") {
             GetNode<PlayerAttack> ("Attack")._StartAttack ();
             isAttacking = true;
         }

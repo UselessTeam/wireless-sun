@@ -7,7 +7,7 @@ public abstract class _Spawner : Node2D {
 	[Export] public float SPAWN_DELAY = 2; // Time (in seconds) between two spawns
 	[Export] public int RANDOM_TIME_SPREAD = 50; // Random spread of the time between two spawns
 	[Export] public float MAX_COUNT = 10; // Max number of spawned objects exising at the same time
-	[Export] public float MAX_TRIES = 10; // Number of times this node will try to spawn an object 
+	[Export] public float MAX_TRIES = 1; // Number of times this node will try to spawn an object 
 
 	// public double next_spawn_delay;
 
@@ -49,29 +49,22 @@ public abstract class _Spawner : Node2D {
 				do {
 					position = GenerateSpawnPosition (Radius);
 					checkArea.Position = position;
-					numberTries++;
-					if (checkArea != null && checkArea.GetOverlappingAreas ().Count > 0) {
-						// var spawnBody = GetSpawnee ();
-						// spawnBody.Modulate = new Color (1, 0, 0, 0.5f);
-						// spawnBody.Position = position;
-						// AddChild (spawnBody);
-						GD.Print ("Trying spawn at " + checkArea.GlobalPosition + " while player is at " + Gameplay.myPlayer.GlobalPosition);
-						break;
+					// Dead debug code
+					// I keep it just in case
+					//
+					if (GetWorld2d ().DirectSpaceState.IntersectPoint (checkArea.GlobalPosition, 1, null, 1024, true, true).Count == 0) {
+						if (Network.IsConnectionStarted)
+							Rpc ("SpawnOne", spawnID.ToString (), position);
+						else
+							SpawnOne (spawnID.ToString (), position);
+						spawnID++;
 					}
-					if (numberTries >= MAX_TRIES) {
+					if (numberTries > MAX_TRIES) {
 						numberTries = 0;
 						break;
 					}
-				} while (checkArea != null && checkArea.GetOverlappingAreas ().Count > 0);
-				if (numberTries > 0) {
-					if (Network.IsConnectionStarted)
-						Rpc ("SpawnOne", spawnID.ToString (), position);
-					else
-						SpawnOne (spawnID.ToString (), position);
-					spawnID++;
-				} else {
-					GD.Print ("Could not find a good spot to spawn the object");
-				}
+					numberTries++;
+				} while (numberTries < MAX_TRIES);
 			}
 		}
 	}
@@ -95,8 +88,8 @@ public abstract class _Spawner : Node2D {
 	void SpawnOne (string name, Vector2 position) {
 		var spawnBody = GetSpawnee ();
 		spawnBody.Name = name;
-		spawnBody.Position = position;
 		AddChild (spawnBody);
+		spawnBody.Position = position;
 	}
 
 	[Master]

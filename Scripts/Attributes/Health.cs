@@ -22,6 +22,8 @@ public class Health : Node2D {
         get { return _HP; }
         set {
             _HP = value;
+            if (_HP > MAX_HP)
+                _HP = MAX_HP;
             EmitSignal ("hp_changed", _HP);
             if (MyUser.IsTrueMaster)
                 Rset ("_HP", _HP);

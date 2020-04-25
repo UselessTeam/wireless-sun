@@ -3,9 +3,9 @@ using Godot;
 
 public class _GUIItem : Control {
 	protected Item.ItemSlot mySlot;
-	public Item.ItemSlot MySlot { get { return mySlot; } }
+	public Item.ItemSlot MySlot { get { return mySlot; } set { mySlot = value; } }
 
-	public void Display (Item.ItemSlot slot) {
+	public virtual void Display (Item.ItemSlot slot) {
 		mySlot = slot;
 		((Label) GetNode ("Holder/Label")).Text = slot.GetLabel ();
 		if (slot.item == Item.ItemId.NULL)

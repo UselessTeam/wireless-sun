@@ -47,8 +47,8 @@ position = Vector2( 533.394, 347.6 )
 
 [node name="ShroomSpawner" parent="." instance=ExtResource( 5 )]
 position = Vector2( 487.52, 260.745 )
-SPAWN_DELAY = 5.0
-MAX_COUNT = 6.0
+SPAWN_DELAY = 0.2
+MAX_COUNT = 600.0
 itemName = "mushroom"
 
 [node name="StonSpawner" parent="." instance=ExtResource( 5 )]

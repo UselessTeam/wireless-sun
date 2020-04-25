@@ -6,6 +6,8 @@ public class Gameplay : Node2D {
 	static public Gameplay Instance { get { return myInstance; } }
 	static private Gameplay myInstance = null;
 
+	static public Inventory inventory;
+
 	static private Camera2D myCamera;
 	static private Position2D spawnPoint;
 

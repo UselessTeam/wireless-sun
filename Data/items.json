@@ -41,7 +41,7 @@
     },
     {
         "category": "food",
-        "stackSize": 6,
+        "stackSize": 12,
         "items": [{
                 "name": "berry",
                 "sprite": { "sheet": 0, "x": 1, "y": 2 }
