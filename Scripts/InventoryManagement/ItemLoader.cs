@@ -1,74 +1,98 @@
+using System;
 using System.Collections.Generic;
 using Godot;
 using Newtonsoft.Json;
 
 namespace Item {
 	public static class Manager {
-		// private static ItemCategory[] categories;
-		public static List<ItemCategory> categories; // = new List<ItemCategory> ();
+		public static string dataPath = "res://Data/Items";
+		public static Type[] itemCategories = new Type[] { typeof (ItemResource), typeof (EquipementResource), typeof (FoodResource), typeof (WeaponResource) };
 
+		public static List<ItemResource> itemDataList = new List<ItemResource> ();
 		private static Dictionary<string, ItemId> itemNames = new Dictionary<string, ItemId> ();
+
 		public static void Load () {
-			Resource test = GD.Load ("res://Data/Item/Food/berry.tres");
+			foreach (Type category in itemCategories) {
+				string categoryPath;
+				if (category == typeof (ItemResource))
+					categoryPath = dataPath;
+				else
+					categoryPath = dataPath.PlusFile (category.Name.Remove (category.Name.Length - "Resource".Length));
+				// var itemPaths = System.IO.Directory.GetFiles (categoryPath);
+				var categoryDir = new Directory ();
+				if (!categoryDir.DirExists (categoryPath))
+					GD.PrintErr ("The item category directory does not exist: \"" + categoryPath + "\"");
+				categoryDir.Open (categoryPath);
+				categoryDir.ListDirBegin (true, true);
+				string itemPath;
+				do {
+					itemPath = categoryDir.GetNext ();
+					if (itemPath.EndsWith (".tres")) {
+						var loadedResource = (GD.Load (categoryPath.PlusFile (itemPath)) as ItemResource);
+						if (loadedResource == null)
+							GD.PrintErr ("Resource not found : ", categoryPath.PlusFile (itemPath));
+						loadedResource.name = itemPath.Remove (itemPath.Length - ".tres".Length);
+						itemDataList.Add (loadedResource);
+					}
+				} while (itemPath != "");
 
-			Godot.File file = new Godot.File ();
-			file.Open ("res://Data/items.json", Godot.File.ModeFlags.Read);
-			categories = JsonConvert.DeserializeObject<List<ItemCategory>> (file.GetAsText ());
-			byte categoryId = 0;
-			file.Close ();
+			}
+			// Resource test = GD.Load ("res://Data/Items/Food/berry.tres");
 
-			LoadWeapons ();
+			// Godot.File file = new Godot.File ();
+			// file.Open ("res://Data/items.json", Godot.File.ModeFlags.Read);
+			// categories = JsonConvert.DeserializeObject<List<ItemCategory>> (file.GetAsText ());
+			// byte categoryId = 0;
+			// file.Close ();
 
-			foreach (ItemCategory category in categories) {
-				category.id = categoryId;
-				byte itemId = 0;
-				foreach (ItemData item in category.items) {
-					item.id = new ItemId (categoryId, itemId);
-					itemNames[item.name] = item.id;
-					itemId += 1;
-				}
-				categoryId += 1;
+			// LoadWeapons ();
+
+			ushort rawItemId = 0;
+			foreach (ItemResource item in itemDataList) {
+				item.id = new ItemId (rawItemId);
+				itemNames[item.name] = item.id;
+				rawItemId += 1;
 			}
 		}
 
-		public static void LoadWeapons () {
-			var file = new File ();
-			file.Open ("res://Data/weapons.json", File.ModeFlags.Read);
-			var equipements = new ItemCategory ();
-			equipements.name = "equipement";
-			equipements.stackSize = 1;
-			equipements.items = JsonConvert.DeserializeObject<WeaponData[]> (file.GetAsText ()); //new List<ItemData> ();
-			file.Close ();
-			categories.Add (equipements);
-		}
+		// public static void LoadWeapons () {
+		// 	var file = new File ();
+		// 	file.Open ("res://Data/weapons.json", File.ModeFlags.Read);
+		// 	var equipements = new ItemCategory ();
+		// 	equipements.name = "equipement";
+		// 	equipements.stackSize = 1;
+		// 	equipements.items = JsonConvert.DeserializeObject<WeaponResource[]> (file.GetAsText ()); //new List<ItemData> ();
+		// 	file.Close ();
+		// 	categories.Add (equipements);
+		// }
 
-		public static ItemCategory GetCategory (byte categoryId) {
-			return categories[categoryId];
-		}
-		public static ItemCategory GetCategory (string categoryName) {
-			foreach (var category in categories) {
-				if (category.name == categoryName)
-					return category;
-			}
-			GD.Print ("This category does not exist :", categoryName);
-			return null;
-		}
+		// public static ItemCategory GetCategory (byte categoryId) {
+		// 	return categories[categoryId];
+		// }
+		// public static ItemCategory GetCategory (string categoryName) {
+		// 	foreach (var category in categories) {
+		// 		if (category.name == categoryName)
+		// 			return category;
+		// 	}
+		// 	GD.Print ("This category does not exist :", categoryName);
+		// 	return null;
+		// }
 
-		public static ItemData GetItem (ItemId id) {
-			return GetItem<ItemData> (id);
+		public static ItemResource GetItem (ItemId id) {
+			return GetItem<ItemResource> (id);
 		}
-		public static ItemData GetItem (string name) {
-			return GetItem<ItemData> (name);
+		public static ItemResource GetItem (string name) {
+			return GetItem<ItemResource> (name);
 		}
-		public static T GetItem<T> (ItemId id) where T : ItemData {
-			return (T) GetCategory (id.category).items[id.item];
+		public static T GetItem<T> (ItemId id) where T : ItemResource {
+			return (T) itemDataList[id.id];
 		}
-		public static T GetItem<T> (string name) where T : ItemData {
+		public static T GetItem<T> (string name) where T : ItemResource {
 			ItemId id;
 			if (name != null && itemNames.TryGetValue (name.ToLower (), out id))
 				return (T) GetItem<T> (id);
 			GD.PrintErr ("Error: Trying to get a non existing item : " + name);
-			return (T) ItemData.NULL; // TODO: Once Godot is updated (and fixes the GD.Print(null) crash) we can return null here
+			return (T) ItemResource.NULL; // TODO: Once Godot is updated (and fixes the GD.Print(null) crash) we can return null here
 		}
 
 		public static ItemId GetId (string name) {
@@ -85,21 +109,19 @@ namespace Item {
 
 		[JsonProperty ("category")]
 		public string name;
-		public ItemData[] items;
+		public ItemResource[] items;
 		public ushort stackSize;
 	}
 
 	public struct ItemId {
-		public byte category;
-		public byte item;
+		public ushort id;
 
-		public static readonly ItemId NULL = new ItemId (byte.MaxValue, byte.MaxValue);
-		public ItemId (byte category, byte item) {
-			this.category = category;
-			this.item = item;
+		public static readonly ItemId NULL = new ItemId (ushort.MaxValue);
+		public ItemId (ushort id) {
+			this.id = id;
 		}
 
-		public ItemData data { get { return Manager.GetItem (this); } }
+		public ItemResource data { get { return Manager.GetItem (this); } }
 
 		// Overrides
 
@@ -108,13 +130,11 @@ namespace Item {
 				return false;
 			}
 
-			ItemId other = (ItemId) obj;
-
-			return this.category.Equals (other.category) && this.item.Equals (other.item);
+			return id == ((ItemId) obj).id;
 		}
 
 		public override int GetHashCode () {
-			return this.category.GetHashCode () + 65565 * this.item.GetHashCode ();
+			return this.id.GetHashCode ();
 		}
 
 		public static bool operator == (ItemId a, ItemId b) {
@@ -131,30 +151,6 @@ namespace Item {
 		}
 
 		public bool IsNull () { return this == NULL; }
-	}
-
-	public class ItemData : Resource {
-		public ItemId id;
-		public ItemCategory category { get { return Manager.GetCategory (id.category); } }
-
-		public string name = "";
-		public ushort stackSize { get { return category.stackSize; } }
-
-		public Graphics.Sprite sprite;
-
-		public ItemData () {
-			this.id = ItemId.NULL;
-			this.name = null;
-		}
-
-		public override string ToString () {
-			if (this == NULL) {
-				return "NULL ITEM";
-			}
-			return name + " of type " + category + " (id=" + id.ToString () + ")";
-		}
-
-		public static readonly ItemData NULL = new ItemData ();
 	}
 
 	public static class ItemExtensions {

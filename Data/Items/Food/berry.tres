@@ -5,9 +5,9 @@
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 2 )
-region = Rect2( 0, 24, 12, 12 )
+region = Rect2( 12, 24, 12, 12 )
 
 [resource]
 script = ExtResource( 1 )
-name = null
+stackSize = 12
 icon = SubResource( 1 )

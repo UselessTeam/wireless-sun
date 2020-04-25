@@ -188,7 +188,7 @@ public class Inventory : Node2D {
 		} else if (slot.slot is EquipementSlot) {
 			RemoveSlot (slot);
 			equipement.Equip (slot.slot as EquipementSlot);
-		} else if (slot.item.category == Item.Manager.GetCategory ("food").id) {
+		} else if (slot.item.data is FoodResource) {
 			Remove (slot, 1);
 			Gameplay.myPlayer.GetNode<Health> ("PlayerControl/Health").HP += 10;
 

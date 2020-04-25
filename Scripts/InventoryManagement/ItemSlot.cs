@@ -11,7 +11,7 @@ namespace Item {
         public abstract string GetLabel ();
         public abstract override string ToString ();
         public virtual string Serialize () {
-            return JSON.Print (new Dictionary<string, object> () { { "IDcategory", item.category }, { "IDvariant", item.item }, { "Size", size } });
+            return JSON.Print (new Dictionary<string, object> () { { "ID", item.id }, { "Size", size } });
         }
     }
 
@@ -47,10 +47,10 @@ namespace Item {
     }
     public class EquipementSlot : UniqueItem {
         public EquipementSlot (ItemId item) : base (item) {}
-        public EquipementData equipementData { get { return Manager.GetItem<EquipementData> (item); } }
+        public EquipementResource equipementData { get { return Manager.GetItem<EquipementResource> (item); } }
         public override string ToString () {
-            if (equipementData is WeaponData) {
-                var data = (equipementData as WeaponData);
+            if (equipementData is WeaponResource) {
+                var data = (equipementData as WeaponResource);
                 var returnString = item.data.name + "\n";
                 if (data.action != "attack")
                     returnString += "Can block incomming attacks\n";
@@ -76,7 +76,7 @@ namespace Item {
             if (id == ItemId.NULL)
                 return new EmptySlot ();
             var data = Manager.GetItem (id);
-            if (data.category == Manager.GetCategory ("equipement"))
+            if (data is EquipementResource)
                 return new EquipementSlot (id);
             if (data.stackSize == 1)
                 return new UniqueItem (id);
@@ -85,7 +85,7 @@ namespace Item {
 
         public static ItemSlot DeserializeSlot (string serializedData) {
             var slotData = JsonConvert.DeserializeObject<Dictionary<string, object>> (serializedData);
-            return MakeSlot (new ItemId (Convert.ToByte (slotData["IDcategory"]), Convert.ToByte (slotData["IDvariant"])), Convert.ToUInt16 (slotData["Size"]));
+            return MakeSlot (new ItemId (Convert.ToUInt16 (slotData["ID"])), Convert.ToUInt16 (slotData["Size"]));
         }
 
         public static Body MakeBody (string item, ushort quantity = 1) {

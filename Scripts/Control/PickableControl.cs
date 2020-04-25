@@ -13,7 +13,7 @@ public class PickableControl : _Control {
 	public void SetStack (string item, ushort quantity) {
 		this.item = item;
 		this.quantity = quantity;
-		((AtlasTexture) (GetNode<Sprite> ("Sprite")).Texture).Region = Item.Manager.GetItem (Item.Manager.GetId (item)).sprite.GetRect ();
+		GetNode<Sprite> ("Sprite").Texture = Item.Manager.GetId (item).data.icon;
 	}
 
 	public void _OnCollisionWithPlayer (KinematicCollision2D collInfo) {

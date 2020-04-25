@@ -28,7 +28,7 @@ public class EquipementHolder {
     // If the item is succesfully equiped, returns true
     // If the inventory is full, or if the given item cannot be equiped for any other reason, the function does nothing and returns false
     public bool Equip (EquipementSlot item) {
-        var data = (item.item.data as EquipementData);
+        var data = (item.item.data as EquipementResource);
         foreach (var equip in EquipementList) {
             if (equip.Key.ToLower ().Contains (data.location)) {
                 if (data.location == "hand" && EquipementList["LeftHand"].item.IsNull ())
@@ -68,11 +68,11 @@ public class EquipementHolder {
         GameRoot.inventory.EmitSignal ("equipement_change");
     }
 
-    public WeaponData GetAction (bool isLeft) {
+    public WeaponResource GetAction (bool isLeft) {
         string location = (isLeft) ? "LeftHand" : "RightHand";
         if (EquipementList[location].item == ItemId.NULL)
-            return WeaponData.EmptyHand;
-        else return EquipementList[location].item.data as WeaponData;
+            return WeaponResource.EmptyHand;
+        else return EquipementList[location].item.data as WeaponResource;
     }
     // public float GetType () { return Manager.GetItem<EquipementData> (rightHand.item).type; }
 

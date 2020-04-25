@@ -11,7 +11,7 @@ public class _GUIItem : Control {
 		if (slot.item == Item.ItemId.NULL)
 			GetNode<Sprite> ("Holder/Item").Hide ();
 		else {
-			((AtlasTexture) ((Sprite) GetNode ("Holder/Item")).Texture).Region = slot.item.data.sprite.GetRect ();
+			GetNode<Sprite> ("Holder/Item").Texture = slot.item.data.icon;
 			GetNode<Sprite> ("Holder/Item").Show ();
 		}
 		this.Show ();
