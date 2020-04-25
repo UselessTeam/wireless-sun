@@ -60,23 +60,21 @@ public class Gameplay : Node2D {
 		Instance.GetNode<Node> (id.ToString ()).QueueFree ();
 	}
 
-	public override void _Process (float delta) {
-		if (!Network.IsConnectionStarted || IsNetworkMaster ()) {
-			if (Input.IsActionJustPressed ("save"))
-				Save.SaveGame ();
-		}
-		if (myPlayer == null && Input.IsActionPressed ("respawn"))
+	public override void _Input (InputEvent _input) {
+		if (myPlayer == null && _input.IsActionPressed ("respawn"))
 			Respawn ();
-		if (Input.IsActionJustPressed ("pause")) {
+		if (_input.IsActionPressed ("pause")) {
 			// if (!Network.IsConnectionStarted) {
 			GetTree ().Paused = true;
 			GetNode<Control> ("/root/GUI/PauseMenu").Show ();
 			// }
 		}
-		if (Input.IsActionJustPressed ("inventory")) {
+		if (_input.IsActionPressed ("inventory")) {
 			GetNode<GUI> ("/root/GUI").Toggle (GUI.Window.Inventory);
 		}
 	}
+
+	public override void _Process (float delta) {}
 
 	public void _OnPlayerDied () {
 		GetNode<CanvasItem> ("/root/GUI/DeathScreen").Show ();

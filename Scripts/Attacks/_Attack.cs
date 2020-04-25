@@ -10,6 +10,8 @@ public enum AttackType {
 }
 
 public class _Attack : Node2D {
+	[Export] public Item.WeaponData weaponData;
+
 	[Export] public float damage = 10;
 	public AttackType TYPE = AttackType.Hand;
 

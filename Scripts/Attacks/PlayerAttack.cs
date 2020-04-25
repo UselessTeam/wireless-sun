@@ -3,14 +3,7 @@ using Godot;
 
 public class PlayerAttack : _Attack {
 
-    public override float GetDamage () {
-        return GameRoot.inventory.equipement.GetDamage ();
-    }
-
-    public float range { get { return GameRoot.inventory.equipement.GetRange (); } }
-
     [Export] public float base_distance_to_player = 15;
-    [Export] public float distance_to_player { get { return base_distance_to_player * range; } }
 
     double LimitAngle = Math.PI / 8; //Limite a partir de laquelle l'attaque est horizontale
 
@@ -31,14 +24,15 @@ public class PlayerAttack : _Attack {
         return U.AngleTo (V) * alpha / Math.Abs (alpha);
     }
 
-    public void _StartAttack () {
+    public void _StartAttack (Item.WeaponData weaponData) {
+        this.weaponData = weaponData;
         // Enable the attack's collisionBox
-        Scale = new Vector2 (range, range);
+        Scale = new Vector2 (weaponData.range, weaponData.range);
         GetNode<CollisionShape2D> ("Hitbox/CollisionShape2D").Disabled = false;
 
         // Put the attack sprite at the right position and show it
         Vector2 direction = MyUserBody.FacingDirection;
-        Position = distance_to_player * direction;
+        Position = base_distance_to_player * weaponData.range * direction;
         Rotation = direction.Angle ();
         if (Rotation % Math.PI / 2 < LimitAngle && (-Rotation) % Math.PI / 2 < LimitAngle) {
             MySprite.Play ("straight");
@@ -53,6 +47,9 @@ public class PlayerAttack : _Attack {
         GetNode<AudioStreamPlayer2D> ("SFX").Play (0);
     }
 
+    //
+    // The attack ends when the attack animation is finished
+    // The player is then allowed to start a new attack
     public void _OnAttackFinished () {
         MySprite.Hide ();
         MySprite.Stop ();

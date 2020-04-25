@@ -9,7 +9,6 @@ public class EquipementItem : MovableItem {
     public override void _Ready () {
         base._Ready ();
         EmptyEquipementSprite.Texture = emptyEquipementTexture;
-        // this.Connect ("gui_input", this, "_on_EquipementItem_gui_input");
     }
     public override void Display (Item.ItemSlot item) {
         base.Display (item);
@@ -24,17 +23,15 @@ public class EquipementItem : MovableItem {
     }
 
     public override void MoveIn (SelectableItem item) {
-        if (item is InventoryItem) {
-            if (GameRoot.inventory.equipement.EquipAs (item.MySlot, Name))
+        if (item is InventoryItem && item.MySlot is Item.EquipementSlot) {
+            if (GameRoot.inventory.equipement.EquipAs (item.MySlot as Item.EquipementSlot, Name))
                 (item as InventoryItem).RemoveMe ();
-
         }
         if (item is EquipementItem) {
-            if (GameRoot.inventory.equipement.EquipAs (item.MySlot, Name)) {
-                (item as InventoryItem).RemoveMe ();
+            if (GameRoot.inventory.equipement.EquipAs (item.MySlot as Item.EquipementSlot, Name)) {
+                GameRoot.inventory.equipement.Unequip (item.Name);
             }
         }
     }
-    // public void _on_EquipementItem_gui_input (InputEvent _event) {}
 
 }

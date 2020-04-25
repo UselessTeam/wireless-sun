@@ -49,9 +49,23 @@ namespace Item {
         public EquipementSlot (ItemId item) : base (item) {}
         public EquipementData equipementData { get { return Manager.GetItem<EquipementData> (item); } }
         public override string ToString () {
-            return item.data.name + "\n" +
-                equipementData.damage.ToString () + " damage" + "\n" +
-                "x" + equipementData.range.ToString () + " range";
+            if (equipementData is WeaponData) {
+                var data = (equipementData as WeaponData);
+                var returnString = item.data.name + "\n";
+                if (data.action != "attack")
+                    returnString += "Can block incomming attacks\n";
+                if (data.damage > 0)
+                    returnString += data.damage.ToString () + " damage" + "\n";
+                if (data.range != 1)
+                    returnString += "x" + data.range.ToString () + " range" + "\n";
+                foreach (var effect in data.effects)
+                    returnString += "Can cause " + effect + "\n";
+                if (data.armor != 0)
+                    returnString += "+" + data.armor + " armor\n";
+                return returnString;
+            } else
+                return item.data.name + "\n" + equipementData.armor + " armor\n";
+
         }
     }
 

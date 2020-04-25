@@ -1,10 +1,17 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/Menu/Lobby.cs" type="Script" id=1]
-[ext_resource path="res://Assets/Fonts/montserrat_eb_24.tres" type="DynamicFont" id=2]
-[ext_resource path="res://Assets/Fonts/montserrat_eb_42.tres" type="DynamicFont" id=3]
+[ext_resource path="res://Assets/Fonts/Montserrat-ExtraBold.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Scripts/Menu/SaveMenu.cs" type="Script" id=4]
 [ext_resource path="res://Scripts/Menu/BaseMenu.cs" type="Script" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+size = 48
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 36
+font_data = ExtResource( 2 )
 
 [node name="Menu" type="Control"]
 anchor_right = 1.0
@@ -13,229 +20,196 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BaseMenu" type="Control" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 100.0
+margin_top = 50.0
+margin_right = -100.0
+custom_constants/separation = 12
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+margin_right = 1720.0
+margin_bottom = 60.0
+custom_fonts/font = SubResource( 1 )
+text = "Main Menu"
+align = 1
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+margin_top = 72.0
+margin_right = 1720.0
+margin_bottom = 76.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BaseMenu" type="Control" parent="VBoxContainer"]
+margin_top = 88.0
+margin_right = 1720.0
+margin_bottom = 88.0
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="BaseMenu"]
+[node name="SoloButton" type="Button" parent="VBoxContainer/BaseMenu"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 40.0
-margin_top = 40.0
-margin_right = -40.0
-margin_bottom = -40.0
-custom_constants/separation = 12
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="BaseMenu/VBoxContainer"]
-margin_right = 1840.0
-margin_bottom = 52.0
-custom_fonts/font = ExtResource( 3 )
-text = "Main Menu"
-align = 1
-
-[node name="HSeparator" type="HSeparator" parent="BaseMenu/VBoxContainer"]
-margin_top = 64.0
-margin_right = 1840.0
-margin_bottom = 68.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="SoloButton" type="Button" parent="BaseMenu/VBoxContainer"]
-margin_top = 80.0
-margin_right = 1840.0
-margin_bottom = 131.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 2 )
+custom_fonts/font = SubResource( 2 )
 text = "Solo Game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="Multiplayer" type="Button" parent="BaseMenu/VBoxContainer"]
-margin_top = 143.0
-margin_right = 1840.0
-margin_bottom = 194.0
+[node name="Multiplayer" type="Button" parent="VBoxContainer/BaseMenu"]
+anchor_right = 1.0
+margin_top = 63.0
+margin_bottom = 51.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 2 )
+custom_fonts/font = SubResource( 2 )
 text = "Multiplayer Game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="Quit" type="Button" parent="BaseMenu/VBoxContainer"]
-margin_top = 206.0
-margin_right = 1840.0
-margin_bottom = 257.0
+[node name="Quit" type="Button" parent="VBoxContainer/BaseMenu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 126.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 2 )
+custom_fonts/font = SubResource( 2 )
 text = "Quit"
 
-[node name="Lobby" type="Control" parent="."]
+[node name="Lobby" type="Control" parent="VBoxContainer"]
 visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
+margin_top = 100.0
+margin_right = 1720.0
+margin_bottom = 100.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Lobby"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Lobby"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 40.0
-margin_top = 40.0
-margin_right = -40.0
-margin_bottom = -40.0
 custom_constants/separation = 12
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Lobby/VBoxContainer"]
-margin_right = 1840.0
-margin_bottom = 52.0
-custom_fonts/font = ExtResource( 3 )
-text = "Main Menu"
-align = 1
-
-[node name="HSeparator" type="HSeparator" parent="Lobby/VBoxContainer"]
-margin_top = 64.0
-margin_right = 1840.0
-margin_bottom = 68.0
+[node name="NameLabeledField" type="HBoxContainer" parent="VBoxContainer/Lobby/VBoxContainer"]
+margin_right = 1720.0
+margin_bottom = 55.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="NameLabeledField" type="HBoxContainer" parent="Lobby/VBoxContainer"]
-margin_top = 80.0
-margin_right = 1840.0
-margin_bottom = 135.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="Lobby/VBoxContainer/NameLabeledField"]
+[node name="Label" type="Label" parent="VBoxContainer/Lobby/VBoxContainer/NameLabeledField"]
 margin_top = 5.0
-margin_right = 918.0
+margin_right = 858.0
 margin_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 2 )
+custom_fonts/font = SubResource( 2 )
 text = "Name"
 align = 2
 valign = 1
 
-[node name="Field" type="LineEdit" parent="Lobby/VBoxContainer/NameLabeledField"]
-margin_left = 922.0
-margin_right = 1840.0
+[node name="Field" type="LineEdit" parent="VBoxContainer/Lobby/VBoxContainer/NameLabeledField"]
+margin_left = 862.0
+margin_right = 1720.0
 margin_bottom = 55.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 2 )
+custom_fonts/font = SubResource( 2 )
 
-[node name="HostButton" type="Button" parent="Lobby/VBoxContainer"]
-margin_top = 147.0
-margin_right = 1840.0
-margin_bottom = 198.0
+[node name="HostButton" type="Button" parent="VBoxContainer/Lobby/VBoxContainer"]
+margin_top = 67.0
+margin_right = 1720.0
+margin_bottom = 118.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 2 )
+custom_fonts/font = SubResource( 2 )
 text = "Host Game"
 
-[node name="LabeledField" type="HBoxContainer" parent="Lobby/VBoxContainer"]
-margin_top = 210.0
-margin_right = 1840.0
-margin_bottom = 265.0
+[node name="LabeledField" type="HBoxContainer" parent="VBoxContainer/Lobby/VBoxContainer"]
+margin_top = 130.0
+margin_right = 1720.0
+margin_bottom = 185.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Lobby/VBoxContainer/LabeledField"]
+[node name="Label" type="Label" parent="VBoxContainer/Lobby/VBoxContainer/LabeledField"]
 margin_top = 5.0
-margin_right = 918.0
+margin_right = 858.0
 margin_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 2 )
+custom_fonts/font = SubResource( 2 )
 text = "IP"
 align = 2
 valign = 1
 
-[node name="Field" type="LineEdit" parent="Lobby/VBoxContainer/LabeledField"]
-margin_left = 922.0
-margin_right = 1840.0
+[node name="Field" type="LineEdit" parent="VBoxContainer/Lobby/VBoxContainer/LabeledField"]
+margin_left = 862.0
+margin_right = 1720.0
 margin_bottom = 55.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 2 )
+custom_fonts/font = SubResource( 2 )
 
-[node name="JoinButton" type="Button" parent="Lobby/VBoxContainer"]
-margin_top = 277.0
-margin_right = 1840.0
-margin_bottom = 328.0
+[node name="JoinButton" type="Button" parent="VBoxContainer/Lobby/VBoxContainer"]
+margin_top = 197.0
+margin_right = 1720.0
+margin_bottom = 248.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 2 )
+custom_fonts/font = SubResource( 2 )
 text = "Join Game"
 
-[node name="SaveMenu" type="Control" parent="."]
+[node name="SaveMenu" type="Control" parent="VBoxContainer"]
 visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
+margin_top = 100.0
+margin_right = 1720.0
+margin_bottom = 100.0
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SaveMenu"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/SaveMenu"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 40.0
-margin_top = 40.0
-margin_right = -40.0
-margin_bottom = -40.0
 custom_constants/separation = 12
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="SaveMenu/VBoxContainer"]
-margin_right = 1840.0
-margin_bottom = 52.0
-custom_fonts/font = ExtResource( 3 )
-text = "Main Menu"
-align = 1
-
-[node name="HSeparator" type="HSeparator" parent="SaveMenu/VBoxContainer"]
-margin_top = 64.0
-margin_right = 1840.0
-margin_bottom = 68.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="NewGameButton" type="Button" parent="SaveMenu/VBoxContainer"]
-margin_top = 80.0
-margin_right = 1840.0
-margin_bottom = 131.0
+[node name="NewGameButton" type="Button" parent="VBoxContainer/SaveMenu/VBoxContainer"]
+margin_right = 1720.0
+margin_bottom = 51.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 2 )
+custom_fonts/font = SubResource( 2 )
 text = "New Game"
 
-[node name="LoadButton" type="Button" parent="SaveMenu/VBoxContainer"]
-margin_top = 143.0
-margin_right = 1840.0
-margin_bottom = 194.0
+[node name="LoadButton" type="Button" parent="VBoxContainer/SaveMenu/VBoxContainer"]
+margin_top = 63.0
+margin_right = 1720.0
+margin_bottom = 114.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 2 )
+custom_fonts/font = SubResource( 2 )
 text = "Load Previous Game"
-[connection signal="pressed" from="BaseMenu/VBoxContainer/SoloButton" to="BaseMenu" method="_OnSoloPressed"]
-[connection signal="pressed" from="BaseMenu/VBoxContainer/Multiplayer" to="BaseMenu" method="_OnMultiplayerPressed"]
-[connection signal="pressed" from="BaseMenu/VBoxContainer/Multiplayer" to="BaseMenu" method="_OnMultipayerPressed"]
-[connection signal="pressed" from="BaseMenu/VBoxContainer/Quit" to="BaseMenu" method="_OnQuitPressed"]
-[connection signal="text_changed" from="Lobby/VBoxContainer/NameLabeledField/Field" to="Lobby" method="_OnNameChanged"]
-[connection signal="pressed" from="Lobby/VBoxContainer/HostButton" to="Lobby" method="_OnHostPressed"]
-[connection signal="text_changed" from="Lobby/VBoxContainer/LabeledField/Field" to="Lobby" method="_OnIpChanged"]
-[connection signal="button_down" from="Lobby/VBoxContainer/JoinButton" to="Lobby" method="_OnJoinPressed"]
-[connection signal="pressed" from="SaveMenu/VBoxContainer/NewGameButton" to="SaveMenu" method="_OnNewPressed"]
-[connection signal="button_down" from="SaveMenu/VBoxContainer/LoadButton" to="SaveMenu" method="_OnLoadPressed"]
+[connection signal="pressed" from="VBoxContainer/BaseMenu/SoloButton" to="VBoxContainer/BaseMenu" method="_OnSoloPressed"]
+[connection signal="pressed" from="VBoxContainer/BaseMenu/Multiplayer" to="VBoxContainer/BaseMenu" method="_OnMultiplayerPressed"]
+[connection signal="pressed" from="VBoxContainer/BaseMenu/Multiplayer" to="VBoxContainer/BaseMenu" method="_OnMultipayerPressed"]
+[connection signal="pressed" from="VBoxContainer/BaseMenu/Quit" to="VBoxContainer/BaseMenu" method="_OnQuitPressed"]
+[connection signal="text_changed" from="VBoxContainer/Lobby/VBoxContainer/NameLabeledField/Field" to="VBoxContainer/Lobby" method="_OnNameChanged"]
+[connection signal="pressed" from="VBoxContainer/Lobby/VBoxContainer/HostButton" to="VBoxContainer/Lobby" method="_OnHostPressed"]
+[connection signal="text_changed" from="VBoxContainer/Lobby/VBoxContainer/LabeledField/Field" to="VBoxContainer/Lobby" method="_OnIpChanged"]
+[connection signal="button_down" from="VBoxContainer/Lobby/VBoxContainer/JoinButton" to="VBoxContainer/Lobby" method="_OnJoinPressed"]
+[connection signal="pressed" from="VBoxContainer/SaveMenu/VBoxContainer/NewGameButton" to="VBoxContainer/SaveMenu" method="_OnNewPressed"]
+[connection signal="button_down" from="VBoxContainer/SaveMenu/VBoxContainer/LoadButton" to="VBoxContainer/SaveMenu" method="_OnLoadPressed"]

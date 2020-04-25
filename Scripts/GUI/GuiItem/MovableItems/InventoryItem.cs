@@ -23,9 +23,10 @@ public class InventoryItem : MovableItem {
 			GameRoot.inventory.SwapSlots (index, (item as InventoryItem).index);
 		}
 		if (item is EquipementItem) {
-			if (MySlot.item.IsNull ())
+			if (MySlot.item.IsNull ()) {
 				GameRoot.inventory.AddSlot (index, item.MySlot);
-			else GameRoot.inventory.equipement.UnequipAndStore (item.Name);
+				GameRoot.inventory.equipement.Unequip (item.Name);
+			} else GameRoot.inventory.equipement.UnequipAndStore (item.Name);
 		}
 	}
 

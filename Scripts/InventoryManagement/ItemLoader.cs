@@ -5,17 +5,11 @@ using Newtonsoft.Json;
 namespace Item {
 	public static class Manager {
 		// private static ItemCategory[] categories;
-		private static List<ItemCategory> categories; // = new List<ItemCategory> ();
+		public static List<ItemCategory> categories; // = new List<ItemCategory> ();
 
 		private static Dictionary<string, ItemId> itemNames = new Dictionary<string, ItemId> ();
 		public static void Load () {
-			// var saveGame = new File ();
-			// saveGame.Open ("Data/items2.json", File.ModeFlags.Read);
-			// while (saveGame.GetPosition () < saveGame.GetLen ()) {
-			// 	var data = JsonConvert.DeserializeObject<Dictionary<string, object>> (saveGame.GetLine ());
-			// 	if (data.ContainsKey ("category"))
-			// 		categories2.Add (new ItemCategory ());
-			// }
+			Resource test = GD.Load ("res://Data/Item/Food/berry.tres");
 
 			Godot.File file = new Godot.File ();
 			file.Open ("res://Data/items.json", Godot.File.ModeFlags.Read);
@@ -23,7 +17,7 @@ namespace Item {
 			byte categoryId = 0;
 			file.Close ();
 
-			LoadEquipements ();
+			LoadWeapons ();
 
 			foreach (ItemCategory category in categories) {
 				category.id = categoryId;
@@ -37,13 +31,13 @@ namespace Item {
 			}
 		}
 
-		public static void LoadEquipements () {
+		public static void LoadWeapons () {
 			var file = new File ();
-			file.Open ("res://Data/equipement.json", File.ModeFlags.Read);
+			file.Open ("res://Data/weapons.json", File.ModeFlags.Read);
 			var equipements = new ItemCategory ();
 			equipements.name = "equipement";
 			equipements.stackSize = 1;
-			equipements.items = JsonConvert.DeserializeObject<EquipementData[]> (file.GetAsText ()); //new List<ItemData> ();
+			equipements.items = JsonConvert.DeserializeObject<WeaponData[]> (file.GetAsText ()); //new List<ItemData> ();
 			file.Close ();
 			categories.Add (equipements);
 		}
@@ -139,11 +133,11 @@ namespace Item {
 		public bool IsNull () { return this == NULL; }
 	}
 
-	public class ItemData {
+	public class ItemData : Resource {
 		public ItemId id;
 		public ItemCategory category { get { return Manager.GetCategory (id.category); } }
 
-		public string name;
+		public string name = "";
 		public ushort stackSize { get { return category.stackSize; } }
 
 		public Graphics.Sprite sprite;
@@ -161,11 +155,6 @@ namespace Item {
 		}
 
 		public static readonly ItemData NULL = new ItemData ();
-	}
-	public class EquipementData : ItemData {
-		public float damage = 0;
-		public float range = 1;
-		public string type = "none";
 	}
 
 	public static class ItemExtensions {

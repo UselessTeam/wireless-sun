@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/InventoryManagement/Resources/WeaponResource.cs" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+armor = 0.0
+type = "none"
+location = "hand"
+action = "attack"
+damage = 20.0
+range = 0.4
+effects = PoolStringArray(  )

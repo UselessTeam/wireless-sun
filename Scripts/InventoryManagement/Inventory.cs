@@ -14,7 +14,7 @@ public struct InventorySlot {
 public class Inventory : Node2D {
 	const ushort INVENTORY_SIZE = 24;
 	public InventorySlot[] inventory = new InventorySlot[INVENTORY_SIZE];
-	public EquipementManager equipement;
+	public EquipementHolder equipement;
 
 	[Signal] public delegate void inventory_change ();
 	[Signal] public delegate void equipement_change ();
@@ -27,7 +27,7 @@ public class Inventory : Node2D {
 	public void InitializeEmpty () {
 		for (byte i = 0; i < INVENTORY_SIZE; i++)
 			inventory[i] = (new InventorySlot (new EmptySlot (), i));
-		equipement = new EquipementManager ();
+		equipement = new EquipementHolder ();
 		EmitSignal (nameof (inventory_change));
 		EmitSignal (nameof (equipement_change));
 	}
@@ -72,7 +72,7 @@ public class Inventory : Node2D {
 	// Adds the item at a specified position
 	// If the specified position is not empty, it will throw an error
 	public void AddSlot (byte index, ItemSlot slot) {
-		if (inventory[index].item.IsNull ())
+		if (!inventory[index].item.IsNull ())
 			GD.PrintErr ("Trying to AddSlot on an occupied inventory slot");
 		else
 			inventory[index].slot = slot;
@@ -185,9 +185,9 @@ public class Inventory : Node2D {
 		if (slot.index >= INVENTORY_SIZE) {
 			GD.Print ("You don't have this item :", slot.item);
 			return;
-		} else if (slot.item.category == Item.Manager.GetCategory ("equipement").id) {
+		} else if (slot.slot is EquipementSlot) {
 			RemoveSlot (slot);
-			equipement.Equip (slot.slot);
+			equipement.Equip (slot.slot as EquipementSlot);
 		} else if (slot.item.category == Item.Manager.GetCategory ("food").id) {
 			Remove (slot, 1);
 			Gameplay.myPlayer.GetNode<Health> ("PlayerControl/Health").HP += 10;
@@ -207,5 +207,6 @@ public class Inventory : Node2D {
 			inventory[i].slot = Builder.DeserializeSlot (saveObject["Item" + i.ToString ()].ToString ());
 		equipement.Deserialize (saveObject["Equipement"].ToString ());
 		EmitSignal (nameof (inventory_change));
+		EmitSignal (nameof (equipement_change));
 	}
 }

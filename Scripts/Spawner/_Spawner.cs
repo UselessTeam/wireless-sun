@@ -25,8 +25,6 @@ public abstract class _Spawner : Node2D {
 
 	int spawnID = 0;
 
-	Area2D checkArea = null;
-
 	public override void _Ready () {
 		NON_SPAWNEE_CHILDREN = GetChildCount ();
 		if (!IsMaster)
@@ -34,7 +32,6 @@ public abstract class _Spawner : Node2D {
 		if (IsMaster)
 			AddToGroup ("SaveNodes");
 		timeUntilNext = NextSpawnDelay ();
-		checkArea = GetNodeOrNull<Area2D> ("CheckArea");
 	}
 
 	public double NextSpawnDelay () { return SPAWN_DELAY * (1 + General.rng.Next (-RANDOM_TIME_SPREAD, RANDOM_TIME_SPREAD) / 100.0); }
@@ -48,11 +45,7 @@ public abstract class _Spawner : Node2D {
 				ushort numberTries = 0;
 				do {
 					position = GenerateSpawnPosition (Radius);
-					checkArea.Position = position;
-					// Dead debug code
-					// I keep it just in case
-					//
-					if (GetWorld2d ().DirectSpaceState.IntersectPoint (checkArea.GlobalPosition, 1, null, 1024, true, true).Count == 0) {
+					if (GetWorld2d ().DirectSpaceState.IntersectPoint (GlobalPosition + position, 1, null, 1024, true, true).Count == 0) {
 						if (Network.IsConnectionStarted)
 							Rpc ("SpawnOne", spawnID.ToString (), position);
 						else

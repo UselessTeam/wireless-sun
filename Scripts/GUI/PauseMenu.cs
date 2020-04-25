@@ -30,4 +30,16 @@ public class PauseMenu : GUIWindow {
         this.Hide ();
         GetTree ().Paused = false;
     }
+
+    bool canResume = false;
+    public override void _Input (InputEvent _input) {
+        if (Visible)
+            if (_input.IsActionReleased ("pause")) {
+                canResume = true;
+            }
+        if (canResume && _input.IsActionPressed ("pause")) {
+            canResume = false;
+            _Resume ();
+        }
+    }
 }

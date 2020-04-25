@@ -4,7 +4,7 @@ using Godot;
 
 public class MinableControl : _Control {
 	[Export] public string[] items;
-	[Export] public ushort[] quantities;
+	[Export] public int[] quantities;
 	[Export] public float dropRadius = 15.0f;
 
 	// public void AddStack (string item, ushort quantity) { this.items.Add (item); this.quantities.Add (quantity); }
@@ -12,8 +12,7 @@ public class MinableControl : _Control {
 	public new void _OnDied () {
 		for (int i = 0; i < items.Length; i++) {
 			var item = items[i];
-			// var quantity = quantities[i];
-			Body itemBody = Item.Builder.MakeBody (item, 1);
+			Body itemBody = Item.Builder.MakeBody (item, (ushort) quantities[i]);
 			itemBody.Position = MyBody.Position + _Spawner.GenerateSpawnPosition (dropRadius);
 			MyBody.GetParent ().AddChild (itemBody);
 		}

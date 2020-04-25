@@ -8,8 +8,7 @@ public class GUI : Node {
 	public enum Window {
 		Nothing,
 		Inventory,
-		Pause,
-		Option,
+		Pause
 	}
 	public Window current;
 	public override void _Ready () {
@@ -21,6 +20,9 @@ public class GUI : Node {
 		pauseMenu = GetNode<PauseMenu> ("PauseMenu");
 		pauseMenu.Hide ();
 	}
+
+	public void GameplayStart () { GetNode<WeaponHotbar> ("WeaponHotbar").Show (); }
+	public void GameplayEnd () { GetNode<WeaponHotbar> ("WeaponHotbar").Hide (); }
 
 	public GUIWindow GetWindowNode (Window window) {
 		if (window == Window.Inventory) {

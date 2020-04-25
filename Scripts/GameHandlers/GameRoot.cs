@@ -7,6 +7,8 @@ public class GameRoot : Node {
 	private static GameRoot instance;
 	public static GameRoot Instance { get { return instance; } }
 
+	public static GUI _GUI { get { return Instance.GetNode<GUI> ("/root/GUI"); } }
+
 	public static string username = "";
 
 	public override void _Ready () {
@@ -18,13 +20,16 @@ public class GameRoot : Node {
 	public static void LoadGameScene (string saveName) {
 		instance.GetTree ().ChangeScene ("res://Scenes/Beach.tscn"); // We should load the game scene corresponding to saveName
 		Save.CurrentSave = saveName;
+		_GUI.GameplayStart ();
 	}
 
 	public static void LoadMenuScene () {
-		Instance.GetNode<GUI> ("/root/GUI").Toggle (GUI.Window.Nothing);
+		_GUI.Toggle (GUI.Window.Nothing);
 		instance.GetTree ().ChangeScene ("res://Scenes/Menu.tscn");
 		Save.CurrentSave = "";
 		inventory.InitializeEmpty ();
+		_GUI.GameplayEnd ();
+
 	}
 
 	public static void BuildNewWorld (string saveName) {

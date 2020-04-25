@@ -14,7 +14,8 @@ public class PC : _Control {
     }
 
     string[] ActionList = {
-        "left_attack"
+        "left_action",
+        "right_action"
     };
 
     public override void _Input (InputEvent _event) {
@@ -39,9 +40,14 @@ public class PC : _Control {
 
     [Puppet]
     public void _Action (string _event) {
-        if (CanMove && _event == "left_attack") {
-            GetNode<PlayerAttack> ("Attack")._StartAttack ();
-            isAttacking = true;
+        if (CanMove && _event.Contains ("_action")) {
+            var weaponData = GameRoot.inventory.equipement.GetAction (_event == "left_action");
+            if (weaponData.action == "attack") {
+                GetNode<PlayerAttack> ("Attack")._StartAttack (weaponData);
+                isAttacking = true;
+            } else if (weaponData.action == "block") {
+                GD.Print ("Block!");
+            }
         }
     }
 
