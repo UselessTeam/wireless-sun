@@ -19,22 +19,24 @@ namespace Item {
         public EmptySlot () { item = ItemId.NULL; }
         public override string ToString () { return ""; }
         public override string GetLabel () { return ""; }
-
     }
 
     public class ItemStack : ItemSlot {
         public new ushort size;
 
         public ItemStack (string item, ushort size) { this.item = Manager.GetId (item); this.size = size; }
-
         public ItemStack (ItemId item, ushort size) {
             this.item = item;
             this.size = size;
         }
-
         public override string GetLabel () { return size.ToString (); }
         public override string ToString () {
-            return item.data.DisplayName () + " (" + size + ")";
+            var data = item.data;
+            if (data is FoodResource)
+                return data.DisplayName () + " (" + size + ")\n" +
+                    "+ " + (data as FoodResource).hpRecovery + " HP";
+            else //Item Resource
+                return item.data.DisplayName () + " (" + size + ")";
         }
     }
 
@@ -60,12 +62,13 @@ namespace Item {
                     returnString += "Range x" + data.Range.ToString () + "\n";
                 if (data.Cooldown != 1)
                     returnString += "Cooldown " + data.Cooldown.ToString () + "\n";
-                // foreach (var effect in data.effects)
-                //     returnString += "Can cause " + effect + "\n";
+                foreach (AttackEffect effect in Enum.GetValues (typeof (AttackEffect)))
+                    if ((effect & data.Effects) > 0)
+                        returnString += "Can cause " + effect.ToString () + "\n";
                 if (data.armor != 0)
                     returnString += "+" + data.armor + " armor\n";
                 return returnString.Remove (returnString.Length - "\n".Length);
-            } else
+            } else //Equipement Resource
                 return item.data.DisplayName () + "\n" + equipementData.armor + " armor";
 
         }
@@ -77,11 +80,11 @@ namespace Item {
         public static ItemSlot MakeSlot (ItemId id, ushort quantity = 1) {
             if (id == ItemId.NULL)
                 return new EmptySlot ();
-            var data = Manager.GetItem (id);
+            var data = id.data;
             if (data is EquipementResource)
                 return new EquipementSlot (id);
-            if (data.stackSize == 1)
-                return new UniqueItem (id);
+            // if (data.stackSize == 1)
+            //     return new UniqueItem (id);
             return new ItemStack (id, quantity);
         }
 

@@ -154,7 +154,6 @@ pause={
 2d_physics/layer_4="item"
 2d_physics/layer_5="minable"
 2d_physics/layer_11="nospawn"
-2d_physics/layer_15="visual"
 
 [mono]
 

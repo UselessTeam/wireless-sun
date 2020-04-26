@@ -204,8 +204,8 @@ size_flags_horizontal = 3
 custom_fonts/font = SubResource( 2 )
 text = "Load Previous Game"
 [connection signal="pressed" from="VBoxContainer/BaseMenu/SoloButton" to="VBoxContainer/BaseMenu" method="_OnSoloPressed"]
-[connection signal="pressed" from="VBoxContainer/BaseMenu/Multiplayer" to="VBoxContainer/BaseMenu" method="_OnMultipayerPressed"]
 [connection signal="pressed" from="VBoxContainer/BaseMenu/Multiplayer" to="VBoxContainer/BaseMenu" method="_OnMultiplayerPressed"]
+[connection signal="pressed" from="VBoxContainer/BaseMenu/Multiplayer" to="VBoxContainer/BaseMenu" method="_OnMultipayerPressed"]
 [connection signal="pressed" from="VBoxContainer/BaseMenu/Quit" to="VBoxContainer/BaseMenu" method="_OnQuitPressed"]
 [connection signal="text_changed" from="VBoxContainer/Lobby/VBoxContainer/NameLabeledField/Field" to="VBoxContainer/Lobby" method="_OnNameChanged"]
 [connection signal="pressed" from="VBoxContainer/Lobby/VBoxContainer/HostButton" to="VBoxContainer/Lobby" method="_OnHostPressed"]

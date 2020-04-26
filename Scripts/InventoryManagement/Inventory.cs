@@ -182,16 +182,16 @@ public class Inventory : Node2D {
 	public void Use (InventorySlot slot) {
 		if (slot.item == ItemId.NULL)
 			return;
+		var data = slot.item.data;
 		if (slot.index >= INVENTORY_SIZE) {
 			GD.Print ("You don't have this item :", slot.item);
 			return;
-		} else if (slot.slot is EquipementSlot) {
+		} else if (data is EquipementResource) {
 			RemoveSlot (slot);
 			equipement.Equip (slot.slot as EquipementSlot);
-		} else if (slot.item.data is FoodResource) {
+		} else if (data is FoodResource) {
 			Remove (slot, 1);
-			Gameplay.myPlayer.GetNode<Health> ("PlayerControl/Health").HP += 10;
-
+			Gameplay.myPlayer.GetNode<Health> ("PlayerControl/Health").HP += (data as FoodResource).hpRecovery;
 		}
 	}
 
