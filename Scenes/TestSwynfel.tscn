@@ -1,12 +1,16 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Nodes/Pieces/Piece.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Nodes/Bodies/PlayerBody.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Nodes/Buildings/House.tscn" type="PackedScene" id=3]
 
 [node name="Node2D" type="Node2D"]
 
-[node name="PlayerBody" parent="." instance=ExtResource( 2 )]
-position = Vector2( 54.0205, 50.0348 )
-
 [node name="Piece" parent="." instance=ExtResource( 1 )]
 position = Vector2( 129.545, 73.6361 )
+
+[node name="House" parent="." instance=ExtResource( 3 )]
+position = Vector2( 39.7114, 140.818 )
+
+[node name="PlayerBody" parent="." instance=ExtResource( 2 )]
+position = Vector2( 29.4661, 43.0854 )

@@ -1,11 +1,43 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Scripts/House.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Pieces/BuildingComponent.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Tiles/Walls/WallTileset.tres" type="TileSet" id=2]
+[ext_resource path="res://Scripts/Pieces/BuildingWalls.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/Pieces/BuildingRoof.cs" type="Script" id=4]
+[ext_resource path="res://Scripts/Pieces/HideWhenBehind.cs" type="Script" id=5]
 
-[node name="House" type="TileMap"]
+[node name="House" type="Node2D"]
+
+[node name="Building" type="Node2D" parent="."]
+script = ExtResource( 1 )
+
+[node name="Walls" type="TileMap" parent="Building"]
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 12, 12 )
-cell_quadrant_size = 6
+cell_quadrant_size = 12
+cell_custom_transform = Transform2D( 24, 0, 0, 24, 0, 0 )
+collision_mask = 7
 format = 1
-script = ExtResource( 1 )
+script = ExtResource( 3 )
+
+[node name="Display" type="Node2D" parent="."]
+
+[node name="Roof" type="Area2D" parent="Display"]
+collision_layer = 16384
+collision_mask = 2
+script = ExtResource( 5 )
+isObscured = false
+
+[node name="Sprite" type="TileMap" parent="Display/Roof"]
+z_index = 1
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 12, 12 )
+cell_quadrant_size = 12
+cell_custom_transform = Transform2D( 24, 0, 0, 24, 0, 0 )
+collision_use_parent = true
+collision_layer = 0
+collision_mask = 0
+format = 1
+script = ExtResource( 4 )
+
+[node name="Tween" type="Tween" parent="Display/Roof"]

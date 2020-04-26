@@ -1,14 +1,25 @@
 using Godot;
 using System;
 
-public class House : TileMap
+public class BuildingDrawComponent : TileMap
 {
 	private SmartBuildingTiles tiles;
+	private BuildingComponent building;
 	public bool modified = true;
 	public override void _Ready()
 	{
 		tiles = (SmartBuildingTiles)GetNode("/root/SmartTiles/Walls");
+		building = (BuildingComponent)GetNode("../Building");
+		if(building == null) {
+			GD.PrintErr("BuildingDraw has not BuildingComponent");
+		}
 	}
+
+	public static string layout =@"
+XXXXXX
+X    X
+X    X
+XXX XX";
 
 	public bool HasWall(int x, int y) {
 		return (x>=0) && (x<X) && (y>=0) && (y<Y) &&
