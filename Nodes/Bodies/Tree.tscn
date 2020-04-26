@@ -7,7 +7,6 @@
 [ext_resource path="res://Nodes/Spawners/ItemSpawner.tscn" type="PackedScene" id=5]
 
 [node name="Tree" type="KinematicBody2D"]
-position = Vector2( 171.428, 311.344 )
 collision_layer = 17
 collision_mask = 0
 script = ExtResource( 2 )
