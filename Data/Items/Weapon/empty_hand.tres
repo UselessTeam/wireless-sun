@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/InventoryManagement/Resources/WeaponResource.cs" type="Script" id=1]
+[ext_resource path="res://Data/Items/Weapon/Templates/hand.tres" type="Resource" id=2]
+
+[resource]
+script = ExtResource( 1 )
+stackSize = 1
+armor = 0.0
+location = 0
+template = ExtResource( 2 )
+Action = 0
+baseDamage = 100.0
+baseRange = 1.0
+baseCooldown = 1.0

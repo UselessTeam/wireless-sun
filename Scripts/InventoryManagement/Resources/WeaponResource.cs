@@ -11,7 +11,10 @@ public class WeaponResource : EquipementResource {
     public float Damage { get { return baseDamage * ((template == null) ? 1 : template.Damage); } }
     public float Range { get { return baseRange * ((template == null) ? 1 : template.Range); } }
     public float Cooldown { get { return baseCooldown * ((template == null) ? 1 : template.Cooldown); } }
+    public AttackType Types { get { return ((template == null) ? AttackType.None : template.Type); } }
     public AttackEffect Effects { get { return ((template == null) ? AttackEffect.None : template.Effect); } }
+
+    public AttackTemplate ToAttackTemplate () { return new AttackTemplate (Damage, Range, Cooldown, Types, Effects); }
 }
 
 public enum ActionType {

@@ -12,11 +12,11 @@ public abstract class _Interactable : Area2D {
     }
 
     public void _on_Area2D_body_entered (PhysicsBody2D _body) {
-        _body.GetNode<PC> ("PlayerControl")._InteractEntered (this);
+        _body.GetNode<PC> ("Control")._InteractEntered (this);
         playerIsInRange = true;
     }
     public void _on_Area2D_body_exited (PhysicsBody2D _body) {
-        _body.GetNode<PC> ("PlayerControl")._InteractExited (this);
+        _body.GetNode<PC> ("Control")._InteractExited (this);
         playerIsInRange = false;
     }
 

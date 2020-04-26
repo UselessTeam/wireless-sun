@@ -22,6 +22,7 @@ public class EquipementHolder {
         Builder.MakeSlot (ItemId.NULL)
         }
     };
+    public static WeaponResource emptyHand = GD.Load ("res://Data/Items/Weapon/empty_hand.tres") as WeaponResource;
 
     //
     // Tries to equip the given item on an appropriate Equipement slot and to store any previously equiped item in the inventory.
@@ -70,12 +71,11 @@ public class EquipementHolder {
 
     public WeaponResource GetAction (bool isLeft) {
         string location = (isLeft) ? "LeftHand" : "RightHand";
-        // if (EquipementList[location].item == ItemId.NULL)
-        //     return WeaponResource.EmptyHand;
-        // else
-        return EquipementList[location].item.data as WeaponResource;
+        if (EquipementList[location].item == ItemId.NULL)
+            return emptyHand;
+        else
+            return EquipementList[location].item.data as WeaponResource;
     }
-    // public float GetType () { return Manager.GetItem<EquipementData> (rightHand.item).type; }
 
     public string Serialize () {
         var equipementData = new Dictionary<string, object> ();

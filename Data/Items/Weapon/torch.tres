@@ -1,20 +1,11 @@
-[gd_resource type="Resource" load_steps=6 format=2]
+[gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://Scripts/InventoryManagement/Resources/WeaponResource.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Sprites/items.png" type="Texture" id=2]
-[ext_resource path="res://Scripts/InventoryManagement/Resources/AttackTemplate.cs" type="Script" id=3]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 2 )
 region = Rect2( 0, 60, 12, 12 )
-
-[sub_resource type="Resource" id=2]
-script = ExtResource( 3 )
-damage = 1.0
-range = 1.0
-cooldown = 1.0
-type = 0
-effect = 1
 
 [resource]
 script = ExtResource( 1 )
@@ -22,7 +13,6 @@ stackSize = 1
 icon = SubResource( 1 )
 armor = 0.0
 location = 0
-template = SubResource( 2 )
 Action = 0
 baseDamage = 50.0
 baseRange = 1.0

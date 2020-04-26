@@ -95,7 +95,7 @@ namespace Item {
 
         public static Body MakeBody (string item, ushort quantity = 1) {
             var body = ((PackedScene) GD.Load (baseItemPath)).Instance ().GetNode<Body> ("./");
-            body.GetNode<PickableControl> ("./PickableControl").SetStack (item, quantity);
+            body.GetNode<PickableControl> ("./Control").SetStack (item, quantity);
             return body;
         }
     }

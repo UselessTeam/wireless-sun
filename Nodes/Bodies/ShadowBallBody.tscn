@@ -7,10 +7,10 @@
 [ext_resource path="res://Scripts/Attributes/FieldOfView.cs" type="Script" id=5]
 [ext_resource path="res://Nodes/Health.tscn" type="PackedScene" id=6]
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="CircleShape2D" id=7]
 radius = 9.02684
 
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="CircleShape2D" id=8]
 radius = 134.004
 
 [sub_resource type="AtlasTexture" id=3]
@@ -29,7 +29,7 @@ region = Rect2( 64, 0, 32, 32 )
 atlas = ExtResource( 4 )
 region = Rect2( 96, 0, 32, 32 )
 
-[sub_resource type="SpriteFrames" id=7]
+[sub_resource type="SpriteFrames" id=9]
 animations = [ {
 "frames": [ SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ) ],
 "loop": true,
@@ -46,34 +46,37 @@ __meta__ = {
 }
 WALK_SPEED = 30.0
 
-[node name="ShadowBallControl" type="Node2D" parent="."]
+[node name="Control" type="Node2D" parent="."]
 script = ExtResource( 1 )
 FLICKER_TIME = 0.2
 
-[node name="Attack" type="Node2D" parent="ShadowBallControl"]
+[node name="Attack" type="Node2D" parent="Control"]
 script = ExtResource( 3 )
+baseDamage = 70.0
 
-[node name="Hitbox" type="Area2D" parent="ShadowBallControl/Attack"]
+[node name="Hitbox" type="Area2D" parent="Control/Attack"]
 collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ShadowBallControl/Attack/Hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/Attack/Hitbox"]
 position = Vector2( -0.311638, 8.10276 )
-shape = SubResource( 1 )
+shape = SubResource( 7 )
 
-[node name="FieldOfView" type="Area2D" parent="ShadowBallControl"]
+[node name="FieldOfView" type="Area2D" parent="Control"]
 position = Vector2( -1, 0 )
 collision_layer = 0
 collision_mask = 2
 script = ExtResource( 5 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ShadowBallControl/FieldOfView"]
-shape = SubResource( 2 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/FieldOfView"]
+shape = SubResource( 8 )
 
-[node name="Health" parent="ShadowBallControl" instance=ExtResource( 6 )]
+[node name="Health" parent="Control" instance=ExtResource( 6 )]
+MAX_HP = 200.0
 
-[node name="Shadowball" type="AnimatedSprite" parent="."]
-frames = SubResource( 7 )
+[node name="Display" type="AnimatedSprite" parent="."]
+frames = SubResource( 9 )
+frame = 2
 playing = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]

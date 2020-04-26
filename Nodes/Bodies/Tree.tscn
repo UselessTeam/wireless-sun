@@ -12,12 +12,12 @@ collision_mask = 0
 script = ExtResource( 2 )
 IMPACT_FACTOR = 0.0
 
-[node name="TreeControl" type="Node2D" parent="."]
+[node name="Control" type="Node2D" parent="."]
 script = ExtResource( 3 )
 items = PoolStringArray( "wood", "stick" )
 quantities = PoolIntArray( 1, 2 )
 
-[node name="Health" parent="TreeControl" instance=ExtResource( 4 )]
+[node name="Health" parent="Control" instance=ExtResource( 4 )]
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )

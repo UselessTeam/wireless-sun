@@ -14,6 +14,16 @@ public class AttackTemplate : Resource {
     public float Cooldown { get { return cooldown * ((template == null) ? 1 : template.Cooldown); } }
     public AttackType Type { get { return type | ((template == null) ? AttackType.None : template.Type); } }
     public AttackEffect Effect { get { return effect | ((template == null) ? AttackEffect.None : template.Effect); } }
+
+    public AttackTemplate () {}
+
+    public AttackTemplate (float damage, float range, float cooldown, AttackType type, AttackEffect effect) {
+        this.damage = damage;
+        this.range = range;
+        this.cooldown = cooldown;
+        this.type = type;
+        this.effect = effect;
+    }
 }
 
 [Flags] public enum AttackType {

@@ -13,46 +13,46 @@
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 6 )
-region = Rect2( 0, 0, 24, 24 )
+region = Rect2( 0, 24, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 6 )
-region = Rect2( 24, 0, 24, 24 )
+region = Rect2( 24, 24, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 6 )
-region = Rect2( 48, 0, 24, 24 )
+region = Rect2( 48, 24, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 6 )
-region = Rect2( 72, 0, 24, 24 )
+region = Rect2( 72, 24, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 6 )
-region = Rect2( 0, 24, 24, 24 )
+region = Rect2( 0, 0, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 6 )
-region = Rect2( 24, 24, 24, 24 )
+region = Rect2( 24, 0, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 6 )
-region = Rect2( 48, 24, 24, 24 )
+region = Rect2( 48, 0, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=8]
 atlas = ExtResource( 6 )
-region = Rect2( 72, 24, 24, 24 )
+region = Rect2( 72, 0, 24, 24 )
 
 [sub_resource type="SpriteFrames" id=9]
 animations = [ {
 "frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
 "loop": true,
-"name": "straight",
+"name": "diagonal",
 "speed": 20.0
 }, {
 "frames": [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
 "loop": true,
-"name": "diagonal",
+"name": "straight",
 "speed": 20.0
 } ]
 
@@ -69,37 +69,38 @@ collision_layer = 2
 collision_mask = 5
 script = ExtResource( 7 )
 
-[node name="HumanCharacter" parent="." instance=ExtResource( 4 )]
+[node name="Display" parent="." instance=ExtResource( 4 )]
 position = Vector2( 0, -7.36103 )
 
-[node name="PlayerControl" type="Node2D" parent="."]
+[node name="Control" type="Node2D" parent="."]
 script = ExtResource( 1 )
 FLICKER_TIME = 1.5
 
-[node name="Attack" type="Node2D" parent="PlayerControl"]
+[node name="Attack" type="Node2D" parent="Control"]
 script = ExtResource( 5 )
 
-[node name="Sprite" type="AnimatedSprite" parent="PlayerControl/Attack"]
+[node name="Sprite" type="AnimatedSprite" parent="Control/Attack"]
 visible = false
 frames = SubResource( 9 )
 animation = "straight"
 
-[node name="SFX" type="AudioStreamPlayer2D" parent="PlayerControl/Attack"]
+[node name="SFX" type="AudioStreamPlayer2D" parent="Control/Attack"]
 stream = ExtResource( 3 )
 pitch_scale = 1.25
 
-[node name="Hitbox" type="Area2D" parent="PlayerControl/Attack"]
+[node name="Hitbox" type="Area2D" parent="Control/Attack"]
 visible = false
 collision_layer = 0
 collision_mask = 20
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerControl/Attack/Hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/Attack/Hitbox"]
 shape = SubResource( 10 )
 disabled = true
 
-[node name="Health" parent="PlayerControl" instance=ExtResource( 9 )]
+[node name="Health" parent="Control" instance=ExtResource( 9 )]
+MAX_HP = 300.0
 
-[node name="InteractionSprite" type="Sprite" parent="PlayerControl"]
+[node name="InteractionSprite" type="Sprite" parent="Control"]
 visible = false
 position = Vector2( -0.643921, -17.1029 )
 texture = ExtResource( 10 )
@@ -127,4 +128,4 @@ collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NoSpawnZone"]
 shape = SubResource( 12 )
-[connection signal="animation_finished" from="PlayerControl/Attack/Sprite" to="PlayerControl/Attack" method="_OnAttackFinished"]
+[connection signal="animation_finished" from="Control/Attack/Sprite" to="Control/Attack" method="_OnAttackFinished"]
