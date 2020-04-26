@@ -6,8 +6,9 @@
 [ext_resource path="res://Assets/Sprites/TempArt/cuirass.png" type="Texture" id=4]
 [ext_resource path="res://Assets/Sprites/TempArt/boots.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Sprites/TempArt/helm.png" type="Texture" id=6]
-[ext_resource path="res://Scripts/InventoryManagement/Equipement/EquipementUI.cs" type="Script" id=7]
+[ext_resource path="res://Scripts/GUI/Inventory/Equipement/EquipementUI.cs" type="Script" id=7]
 [ext_resource path="res://Scripts/GUI/Inventory/InventoryGrid.cs" type="Script" id=8]
+
 
 [node name="InventoryGUI" type="Control"]
 anchor_right = 1.0

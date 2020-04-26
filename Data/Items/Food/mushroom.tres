@@ -9,4 +9,5 @@ region = Rect2( 0, 24, 12, 12 )
 
 [resource]
 script = ExtResource( 1 )
+stackSize = 12
 icon = SubResource( 1 )

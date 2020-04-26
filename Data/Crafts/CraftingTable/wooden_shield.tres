@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/InventoryManagement/Resources/CraftResource.cs" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+result = "wooden_shield"
+amount = 1
+ingredients = PoolStringArray( "wood", "stick" )
+amounts = PoolIntArray( 4, 2 )

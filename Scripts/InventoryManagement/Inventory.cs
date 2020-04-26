@@ -160,16 +160,16 @@ public class Inventory : Node2D {
 	}
 
 	public void MakeCraft (CraftId craftId) {
-		CraftData craft = Craft.Manager.GetCraft (craftId);
-		foreach (Ingredient ingredient in craft.ingredients) {
-			Remove (ingredient.ToItemSlot ());
+		CraftResource craft = Craft.Manager.GetCraft (craftId);
+		foreach (var ingredient in craft.IngredientsSlot) {
+			Remove (ingredient);
 		};
 		Add (Item.Manager.GetId (craft.result), craft.amount);
 	}
 
 	public bool CanCraft (CraftId craft) {
-		foreach (Ingredient ingredient in Craft.Manager.GetCraft (craft).ingredients) {
-			if (!Contains (ingredient.ToItemSlot ()))
+		foreach (var ingredient in Craft.Manager.GetCraft (craft).IngredientsSlot) {
+			if (!Contains (ingredient))
 				return false;
 		};
 		return true;

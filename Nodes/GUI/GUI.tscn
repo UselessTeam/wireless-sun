@@ -7,7 +7,8 @@
 [ext_resource path="res://Assets/Fonts/Montserrat-ExtraBold.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://Nodes/GUI/GuiItem/EquipementItem.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Nodes/GUI/PauseMenu.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Scripts/InventoryManagement/Equipement/WeaponHotbar.cs" type="Script" id=9]
+[ext_resource path="res://Scripts/GUI/Inventory/Equipement/WeaponHotbar.cs" type="Script" id=9]
+
 
 [sub_resource type="DynamicFont" id=1]
 size = 48

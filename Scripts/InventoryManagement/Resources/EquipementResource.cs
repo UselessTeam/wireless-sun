@@ -3,6 +3,12 @@ using Godot;
 
 public class EquipementResource : ItemResource {
     [Export] public float armor = 0;
-    [Export] public string type = "none";
-    [Export] public string location = "hand";
+    [Export] public EquipementLocation location;
+}
+
+public enum EquipementLocation {
+    Hand,
+    Helmet,
+    Torso,
+    Boots
 }

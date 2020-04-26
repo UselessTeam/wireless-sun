@@ -1,13 +1,19 @@
 [gd_resource type="Resource" load_steps=4 format=2]
 
-[ext_resource path="res://Scripts/InventoryManagement/Resources/ItemResource.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/InventoryManagement/Resources/WeaponResource.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Sprites/items.png" type="Texture" id=2]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 2 )
-region = Rect2( 36, 24, 12, 12 )
+region = Rect2( 36, 36, 12, 12 )
 
 [resource]
 script = ExtResource( 1 )
-stackSize = 12
+stackSize = 1
 icon = SubResource( 1 )
+armor = 0.0
+location = 0
+action = 0
+damage = 60.0
+range = 0.8
+effects = PoolIntArray(  )

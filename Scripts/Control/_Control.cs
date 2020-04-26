@@ -3,8 +3,6 @@ using Godot;
 
 public abstract class _Control : Node2D {
     public override void _Ready () {
-        if (GetPositionInParent () != 0)
-            GD.Print ("Warning! Control is not the first son of the body");
         AddToGroup ("SaveNodes");
         MyBody.Connect ("damage_taken", this, "_OnDamageTaken");
     }

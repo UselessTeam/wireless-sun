@@ -2,8 +2,8 @@ using System;
 using Godot;
 
 public class CraftableItem : SelectableItem {
-	Craft.CraftData craft;
-	public void Display (Craft.CraftData craft) {
+	CraftResource craft;
+	public void Display (CraftResource craft) {
 		base.Display (craft.ToItemSlot ());
 		this.craft = craft;
 

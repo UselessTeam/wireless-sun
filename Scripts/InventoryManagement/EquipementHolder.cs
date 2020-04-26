@@ -30,8 +30,8 @@ public class EquipementHolder {
     public bool Equip (EquipementSlot item) {
         var data = (item.item.data as EquipementResource);
         foreach (var equip in EquipementList) {
-            if (equip.Key.ToLower ().Contains (data.location)) {
-                if (data.location == "hand" && EquipementList["LeftHand"].item.IsNull ())
+            if (equip.Key.Contains (data.location.ToString ())) {
+                if (data.location == EquipementLocation.Hand && EquipementList["LeftHand"].item.IsNull ())
                     return EquipAs (item, "LeftHand");
                 else
                     return EquipAs (item, equip.Key);
@@ -45,7 +45,7 @@ public class EquipementHolder {
     // If the item is succesfully equiped, returns true
     // If the inventory is full, or if the given item cannot be equiped for any other reason, the function does nothing and returns false
     public bool EquipAs (EquipementSlot item, string equipLocation) {
-        if (!equipLocation.ToLower ().Contains (item.equipementData.location))
+        if (!equipLocation.Contains (item.equipementData.location.ToString ()))
             return false;
         if (GameRoot.inventory.Add (EquipementList[equipLocation].item) > 0)
             return false;

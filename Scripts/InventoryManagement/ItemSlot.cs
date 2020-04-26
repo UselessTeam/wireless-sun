@@ -52,7 +52,7 @@ namespace Item {
             if (equipementData is WeaponResource) {
                 var data = (equipementData as WeaponResource);
                 var returnString = item.data.name + "\n";
-                if (data.action != "attack")
+                if (data.action == ActionType.Block)
                     returnString += "Can block incomming attacks\n";
                 if (data.damage > 0)
                     returnString += data.damage.ToString () + " damage" + "\n";

@@ -18,7 +18,6 @@ namespace Item {
 					categoryPath = dataPath;
 				else
 					categoryPath = dataPath.PlusFile (category.Name.Remove (category.Name.Length - "Resource".Length));
-				// var itemPaths = System.IO.Directory.GetFiles (categoryPath);
 				var categoryDir = new Directory ();
 				if (!categoryDir.DirExists (categoryPath))
 					GD.PrintErr ("The item category directory does not exist: \"" + categoryPath + "\"");
@@ -37,15 +36,6 @@ namespace Item {
 				} while (itemPath != "");
 
 			}
-			// Resource test = GD.Load ("res://Data/Items/Food/berry.tres");
-
-			// Godot.File file = new Godot.File ();
-			// file.Open ("res://Data/items.json", Godot.File.ModeFlags.Read);
-			// categories = JsonConvert.DeserializeObject<List<ItemCategory>> (file.GetAsText ());
-			// byte categoryId = 0;
-			// file.Close ();
-
-			// LoadWeapons ();
 
 			ushort rawItemId = 0;
 			foreach (ItemResource item in itemDataList) {
@@ -54,29 +44,6 @@ namespace Item {
 				rawItemId += 1;
 			}
 		}
-
-		// public static void LoadWeapons () {
-		// 	var file = new File ();
-		// 	file.Open ("res://Data/weapons.json", File.ModeFlags.Read);
-		// 	var equipements = new ItemCategory ();
-		// 	equipements.name = "equipement";
-		// 	equipements.stackSize = 1;
-		// 	equipements.items = JsonConvert.DeserializeObject<WeaponResource[]> (file.GetAsText ()); //new List<ItemData> ();
-		// 	file.Close ();
-		// 	categories.Add (equipements);
-		// }
-
-		// public static ItemCategory GetCategory (byte categoryId) {
-		// 	return categories[categoryId];
-		// }
-		// public static ItemCategory GetCategory (string categoryName) {
-		// 	foreach (var category in categories) {
-		// 		if (category.name == categoryName)
-		// 			return category;
-		// 	}
-		// 	GD.Print ("This category does not exist :", categoryName);
-		// 	return null;
-		// }
 
 		public static ItemResource GetItem (ItemId id) {
 			return GetItem<ItemResource> (id);

@@ -4,31 +4,48 @@ using Newtonsoft.Json;
 
 namespace Craft {
     public static class Manager {
-        private static CraftLocation[] locations;
+        public static string dataPath = "res://Data/Crafts";
+
+        private static List<CraftLocation> locations = new List<CraftLocation> ();
         private static Dictionary<string, byte> locationNames = new Dictionary<string, byte> ();
 
         public static void Load () {
-            Godot.File file = new Godot.File ();
-            file.Open ("res://Data/crafts.json", Godot.File.ModeFlags.Read);
-            locations = JsonConvert.DeserializeObject<CraftLocation[]> (file.GetAsText ());
+            var craftsDir = new Directory ();
+            craftsDir.Open (dataPath);
+            craftsDir.ListDirBegin (true, true);
+            string locationName;
+            locationName = craftsDir.GetNext ();
             byte locationId = 0;
-            foreach (CraftLocation location in locations) {
-                location.id = locationId;
+            while (locationName != "") {
+                var locationDir = new Directory ();
+                locationDir.Open (dataPath.PlusFile (locationName));
+                locationDir.ListDirBegin (true, true);
+                locations.Add (new CraftLocation (locationName, locationId));
+                locationNames[locationName.ToLower ()] = locationId;
                 byte craftId = 0;
-                foreach (CraftData craft in location.crafts) {
-                    craft.id = new CraftId (locationId, craftId);
+                string craftName;
+                do {
+                    craftName = locationDir.GetNext ();
+                    if (craftName.EndsWith (".tres")) {
+                        var loadedResource = (GD.Load (dataPath.PlusFile (locationName).PlusFile (craftName)) as CraftResource);
+                        loadedResource.id = new CraftId (locationId, craftId);
+                        loadedResource.result = craftName.Remove (craftName.Length - ".tres".Length);
+                        locations[locationId].crafts.Add (loadedResource);
+                    }
                     craftId += 1;
-                }
-                locationNames[location.name] = location.id;
+                } while (craftName != "");
+                locationDir.ListDirEnd ();
+                locationName = craftsDir.GetNext ();
                 locationId += 1;
             }
+
         }
 
         public static CraftLocation GetLocationById (byte locationId) {
             return locations[locationId];
         }
 
-        public static CraftData GetCraft (CraftId id) {
+        public static CraftResource GetCraft (CraftId id) {
             return GetLocationById (id.location).crafts[id.craft];
         }
 
@@ -36,7 +53,7 @@ namespace Craft {
             byte id;
             if (name != null && locationNames.TryGetValue (name.ToLower (), out id))
                 return GetLocationById (id);
-            GD.PrintErr ("Error: Trying to get a non existing item : " + name);
+            GD.PrintErr ("Error: Trying to get a non existing craft location : " + name);
             return CraftLocation.NULL; // TODO: Once Godot is updated (and fixes the GD.Print(null) crash) we can return null here
         }
     }
@@ -44,16 +61,15 @@ namespace Craft {
     public class CraftLocation {
         public byte id = 0;
 
-        [JsonProperty ("location")] public string name;
-        public CraftData[] crafts;
+        public string name;
+        public List<CraftResource> crafts = new List<CraftResource> ();
 
-        public CraftLocation (byte id, string name) {
+        public CraftLocation (string name, byte id = 0) {
             this.id = id;
             this.name = name;
-            this.crafts = new CraftData[0];
         }
 
-        public static readonly CraftLocation NULL = new CraftLocation (byte.MaxValue, "NULL");
+        public static readonly CraftLocation NULL = new CraftLocation ("NULL", byte.MaxValue);
     }
 
     public struct CraftId {
@@ -66,7 +82,7 @@ namespace Craft {
             this.craft = craft;
         }
 
-        public CraftData data { get { return Manager.GetCraft (this); } }
+        public CraftResource data { get { return Manager.GetCraft (this); } }
 
         // Overrides
 
@@ -89,33 +105,6 @@ namespace Craft {
         public static bool operator != (CraftId a, CraftId b) {
             return !a.Equals (b);
         }
-    }
-
-    public class CraftData {
-        public CraftId id;
-        public CraftLocation location { get { return Manager.GetLocationById (id.location); } }
-
-        public string result;
-        public ushort amount = 1;
-        public Ingredient[] ingredients;
-
-        public CraftData () {
-            this.id = CraftId.NULL;
-            this.result = null;
-        }
-
-        public override string ToString () {
-            if (this == NULL) {
-                return "NULL ITEM";
-            }
-            return result + " is craftable at " + location + " (id=" + id.ToString () + ")";
-        }
-
-        public Item.ItemSlot ToItemSlot () {
-            return Item.Builder.MakeSlot (Item.Manager.GetId (result), amount);
-        }
-
-        public static readonly CraftData NULL = new CraftData ();
     }
 
     public class Ingredient {

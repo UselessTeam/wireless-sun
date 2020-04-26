@@ -9,12 +9,12 @@ public class CraftGUI : PanelContainer {
 
     public GridContainer myGrid { get { return GetNode<GridContainer> ("Grid"); } }
 
-    public void Display (CraftData craft) {
+    public void Display (CraftResource craft) {
 
-        foreach (var ingredient in craft.ingredients) {
+        foreach (var ingredient in craft.IngredientsSlot) {
             var ingredientItem = (IngredientItem) packedIngredientItem.Instance ();
             myGrid.AddChild (ingredientItem);
-            ingredientItem.Display (ingredient.ToItemSlot ());
+            ingredientItem.Display (ingredient);
         }
         var arrow = packedCraftingArrow.Instance ();
         myGrid.AddChild (arrow);
