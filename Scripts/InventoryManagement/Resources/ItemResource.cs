@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using Godot;
 using Item;
 
@@ -9,6 +10,9 @@ public class ItemResource : Resource {
 	[Export] public ushort stackSize = 12;
 	[Export] public Texture icon;
 
+	public static TextInfo myTI = new CultureInfo ("en-US", false).TextInfo;
+	public string DisplayName () { return myTI.ToTitleCase (name.Replace ('_', ' ')); }
+
 	public ItemResource () {
 		this.id = ItemId.NULL;
 		this.name = null;
@@ -18,7 +22,7 @@ public class ItemResource : Resource {
 		if (this == NULL) {
 			return "NULL ITEM";
 		}
-		return name + " (id=" + id.ToString () + ")";
+		return DisplayName () + " (id=" + id.ToString () + ")";
 	}
 
 	public static readonly ItemResource NULL = new ItemResource ();

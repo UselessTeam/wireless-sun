@@ -1,19 +1,10 @@
 using System;
 using Godot;
 
-public enum AttackType {
-	Hand,
-	Sword,
-	Axe,
-	Hoe,
-	Fire
-}
-
 public class _Attack : Node2D {
 	[Export] public WeaponResource weaponData;
 
 	[Export] public float damage = 10;
-	public AttackType TYPE = AttackType.Hand;
 
 	public Area2D MyArea { get { return GetNode<Area2D> ("Hitbox"); } }
 

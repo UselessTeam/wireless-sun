@@ -30,8 +30,10 @@ namespace Item {
 						var loadedResource = (GD.Load (categoryPath.PlusFile (itemPath)) as ItemResource);
 						if (loadedResource == null)
 							GD.PrintErr ("Resource not found : ", categoryPath.PlusFile (itemPath));
-						loadedResource.name = itemPath.Remove (itemPath.Length - ".tres".Length);
-						itemDataList.Add (loadedResource);
+						else {
+							loadedResource.name = itemPath.Remove (itemPath.Length - ".tres".Length);
+							itemDataList.Add (loadedResource);
+						}
 					}
 				} while (itemPath != "");
 
@@ -114,7 +116,7 @@ namespace Item {
 
 		public override string ToString () {
 			if (this == NULL) return "";
-			return Manager.GetItem (this).name;
+			return data.DisplayName ();
 		}
 
 		public bool IsNull () { return this == NULL; }

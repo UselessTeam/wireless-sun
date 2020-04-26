@@ -70,9 +70,10 @@ public class EquipementHolder {
 
     public WeaponResource GetAction (bool isLeft) {
         string location = (isLeft) ? "LeftHand" : "RightHand";
-        if (EquipementList[location].item == ItemId.NULL)
-            return WeaponResource.EmptyHand;
-        else return EquipementList[location].item.data as WeaponResource;
+        // if (EquipementList[location].item == ItemId.NULL)
+        //     return WeaponResource.EmptyHand;
+        // else
+        return EquipementList[location].item.data as WeaponResource;
     }
     // public float GetType () { return Manager.GetItem<EquipementData> (rightHand.item).type; }
 

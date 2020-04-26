@@ -27,12 +27,12 @@ public class PlayerAttack : _Attack {
     public void _StartAttack (WeaponResource weaponData) {
         this.weaponData = weaponData;
         // Enable the attack's collisionBox
-        Scale = new Vector2 (weaponData.range, weaponData.range);
+        Scale = new Vector2 (weaponData.Range, weaponData.Range);
         GetNode<CollisionShape2D> ("Hitbox/CollisionShape2D").Disabled = false;
 
         // Put the attack sprite at the right position and show it
         Vector2 direction = MyUserBody.FacingDirection;
-        Position = base_distance_to_player * weaponData.range * direction;
+        Position = base_distance_to_player * weaponData.Range * direction;
         Rotation = direction.Angle ();
         if (Rotation % Math.PI / 2 < LimitAngle && (-Rotation) % Math.PI / 2 < LimitAngle) {
             MySprite.Play ("straight");

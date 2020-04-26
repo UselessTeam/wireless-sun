@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/InventoryManagement/Resources/AttackTemplate.cs" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+damage = 1.2
+range = 1.0
+cooldown = 1.0
+type = 2
+effect = 0

@@ -34,7 +34,7 @@ namespace Item {
 
         public override string GetLabel () { return size.ToString (); }
         public override string ToString () {
-            return item.data.name + " (" + size + ")";
+            return item.data.DisplayName () + " (" + size + ")";
         }
     }
 
@@ -42,7 +42,7 @@ namespace Item {
         public UniqueItem (ItemId item) { this.item = item; }
         public override string GetLabel () { return ""; }
         public override string ToString () {
-            return item.data.name;
+            return item.data.DisplayName ();
         }
     }
     public class EquipementSlot : UniqueItem {
@@ -51,20 +51,22 @@ namespace Item {
         public override string ToString () {
             if (equipementData is WeaponResource) {
                 var data = (equipementData as WeaponResource);
-                var returnString = item.data.name + "\n";
-                if (data.action == ActionType.Block)
+                var returnString = item.data.DisplayName () + "\n";
+                if (data.Action == ActionType.Block)
                     returnString += "Can block incomming attacks\n";
-                if (data.damage > 0)
-                    returnString += data.damage.ToString () + " damage" + "\n";
-                if (data.range != 1)
-                    returnString += "x" + data.range.ToString () + " range" + "\n";
-                foreach (var effect in data.effects)
-                    returnString += "Can cause " + effect + "\n";
+                if (data.Damage > 0)
+                    returnString += "Damage " + data.Damage.ToString () + "\n";
+                if (data.Range != 1)
+                    returnString += "Range x" + data.Range.ToString () + "\n";
+                if (data.Cooldown != 1)
+                    returnString += "Cooldown " + data.Cooldown.ToString () + "\n";
+                // foreach (var effect in data.effects)
+                //     returnString += "Can cause " + effect + "\n";
                 if (data.armor != 0)
                     returnString += "+" + data.armor + " armor\n";
-                return returnString;
+                return returnString.Remove (returnString.Length - "\n".Length);
             } else
-                return item.data.name + "\n" + equipementData.armor + " armor\n";
+                return item.data.DisplayName () + "\n" + equipementData.armor + " armor";
 
         }
     }

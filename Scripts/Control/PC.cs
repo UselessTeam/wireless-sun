@@ -42,10 +42,10 @@ public class PC : _Control {
     public void _Action (string _event) {
         if (CanMove && _event.Contains ("_action")) {
             var weaponData = GameRoot.inventory.equipement.GetAction (_event == "left_action");
-            if (weaponData.action == ActionType.Attack) {
+            if (weaponData.Action == ActionType.Attack) {
                 GetNode<PlayerAttack> ("Attack")._StartAttack (weaponData);
                 isAttacking = true;
-            } else if (weaponData.action == ActionType.Block) {
+            } else if (weaponData.Action == ActionType.Block) {
                 GD.Print ("Block!");
             }
         }

@@ -4,7 +4,6 @@
 
 [resource]
 script = ExtResource( 1 )
-result = "stone_axe"
 amount = 1
 ingredients = PoolStringArray( "stone", "stick" )
 amounts = PoolIntArray( 3, 2 )
