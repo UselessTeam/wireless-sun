@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/tree1.png-bd18ac18835776a3d831480806124f4c.stex"
+path="res://.import/Tree_exhibit_B.png-6efea3c9e670603efbfa2e1a5302f75e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Paulyn's experiments/tree1.png"
-dest_files=[ "res://.import/tree1.png-bd18ac18835776a3d831480806124f4c.stex" ]
+source_file="res://Assets/Sprites/Paulyn/Tree_exhibit_B.png"
+dest_files=[ "res://.import/Tree_exhibit_B.png-6efea3c9e670603efbfa2e1a5302f75e.stex" ]
 
 [params]
 
