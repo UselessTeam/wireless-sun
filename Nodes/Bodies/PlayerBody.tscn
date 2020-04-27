@@ -1,6 +1,6 @@
 [gd_scene load_steps=24 format=2]
 
-[ext_resource path="res://Scripts/Control/PC.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Control/PlayerControl.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Attributes/FieldOfView.cs" type="Script" id=2]
 [ext_resource path="res://Assets/Musics/hit_sfx.wav" type="AudioStream" id=3]
 [ext_resource path="res://Nodes/Character/HumanCharacter.tscn" type="PackedScene" id=4]
@@ -14,53 +14,53 @@
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 6 )
-region = Rect2( 0, 24, 24, 24 )
+region = Rect2( 0, 0, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 6 )
-region = Rect2( 24, 24, 24, 24 )
+region = Rect2( 24, 0, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 6 )
-region = Rect2( 48, 24, 24, 24 )
+region = Rect2( 48, 0, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 6 )
-region = Rect2( 72, 24, 24, 24 )
+region = Rect2( 72, 0, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 6 )
-region = Rect2( 0, 0, 24, 24 )
+region = Rect2( 0, 24, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 6 )
-region = Rect2( 24, 0, 24, 24 )
+region = Rect2( 24, 24, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 6 )
-region = Rect2( 48, 0, 24, 24 )
+region = Rect2( 48, 24, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=8]
 atlas = ExtResource( 6 )
-region = Rect2( 72, 0, 24, 24 )
+region = Rect2( 72, 24, 24, 24 )
 
 [sub_resource type="SpriteFrames" id=9]
 animations = [ {
 "frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
 "loop": true,
-"name": "diagonal",
+"name": "straight",
 "speed": 20.0
 }, {
 "frames": [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
 "loop": true,
-"name": "straight",
+"name": "diagonal",
 "speed": 20.0
 } ]
 
 [sub_resource type="CircleShape2D" id=10]
 
 [sub_resource type="CircleShape2D" id=11]
-radius = 58.5806
+radius = 14.5517
 
 [sub_resource type="CircleShape2D" id=12]
 radius = 116.08
@@ -69,6 +69,11 @@ radius = 116.08
 collision_layer = 2
 collision_mask = 5
 script = ExtResource( 7 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -0.463287, -10.1924 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 11 )
 
 [node name="Display" parent="." instance=ExtResource( 4 )]
 visible = false
@@ -99,21 +104,16 @@ collision_mask = 20
 shape = SubResource( 10 )
 disabled = true
 
-[node name="Health" parent="Control" instance=ExtResource( 9 )]
-MAX_HP = 300.0
-
 [node name="InteractionSprite" type="Sprite" parent="Control"]
 visible = false
 position = Vector2( -0.643921, -17.1029 )
 texture = ExtResource( 10 )
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-visible = false
-position = Vector2( -15.0909, -13.7735 )
+[node name="Collision" type="CollisionPolygon2D" parent="."]
+position = Vector2( -15.6749, -22.8252 )
 polygon = PoolVector2Array( 11.1692, 18.3211, 17.5905, 18.0832, 17.8283, 24.5046, 10.9313, 24.5046 )
 
 [node name="Picker" type="Node2D" parent="."]
-visible = false
 script = ExtResource( 8 )
 
 [node name="FieldOfView" type="Area2D" parent="Picker"]
@@ -122,17 +122,16 @@ collision_mask = 8
 script = ExtResource( 2 )
 
 [node name="FOVCollision" type="CollisionShape2D" parent="Picker/FieldOfView"]
+position = Vector2( -0.875961, -4.96382 )
 shape = SubResource( 11 )
 
 [node name="NoSpawnZone" type="Area2D" parent="."]
 collision_layer = 1024
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="NoSpawnZone"]
+[node name="Collision" type="CollisionShape2D" parent="NoSpawnZone"]
 shape = SubResource( 12 )
 
-[node name="Sprite" type="Sprite" parent="."]
-position = Vector2( -0.463287, -10.1924 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 11 )
+[node name="Health" parent="." instance=ExtResource( 9 )]
+MAX_HP = 300.0
 [connection signal="animation_finished" from="Control/Attack/Sprite" to="Control/Attack" method="_OnAttackFinished"]

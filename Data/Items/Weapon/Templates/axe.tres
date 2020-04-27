@@ -1,11 +1,12 @@
 [gd_resource type="Resource" load_steps=2 format=2]
 
-[ext_resource path="res://Scripts/InventoryManagement/Resources/AttackTemplate.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Resources/AttackTemplate.cs" type="Script" id=1]
 
 [resource]
 script = ExtResource( 1 )
 damage = 1.5
-range = 0.8
+knockback = 10.0
+range = 0.7
 cooldown = 0.8
 type = 2
 effect = 0

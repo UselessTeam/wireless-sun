@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-public abstract class _Spawner : Node2D {
+public abstract class SpawnerComponent : Node2D {
 	int NON_SPAWNEE_CHILDREN = 1;
 
 	[Export] public float SPAWN_DELAY = 2; // Time (in seconds) between two spawns

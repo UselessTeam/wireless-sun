@@ -1,10 +1,9 @@
 using System;
 using Godot;
 
-public abstract class _Control : Node2D {
+public abstract class ControlComponent : Node2D {
     public override void _Ready () {
         AddToGroup ("SaveNodes");
-        MyBody.Connect ("damage_taken", this, "_OnDamageTaken");
     }
 
     public bool CanMove { get { return GetParent<Body> ().CanMove; } }
@@ -12,8 +11,6 @@ public abstract class _Control : Node2D {
     public bool IsTrueMaster { get { return Network.IsConnectionStarted && IsNetworkMaster (); } }
 
     public Body MyBody { get { return GetParent<Body> (); } }
-
-    public virtual void _OnDamageTaken (float damage) {}
 
     public void _OnDied () {
         MyBody.QueueFree ();

@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-public class ItemSpawner : _Spawner {
+public class ItemSpawner : SpawnerComponent {
     [Export] public string itemName;
 
     override protected Body GetSpawnee () {

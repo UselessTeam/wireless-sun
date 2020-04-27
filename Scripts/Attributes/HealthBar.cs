@@ -7,7 +7,7 @@ public class HealthBar : TextureProgress {
     // private string b = "text";
 
     // Called when the node enters the scene tree for the first time.
-    Health MyHealth { get { return GetParent ().GetParent<Health> (); } }
+    HealthComponent MyHealth { get { return GetParent ().GetParent<HealthComponent> (); } }
     public override void _Ready () {
         MaxValue = MyHealth.MAX_HP;
         Value = MyHealth.MAX_HP;

@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-public class ShadowBallControl : _Control {
+public class ShadowBallControl : ControlComponent {
 	[Export] public float FLICKER_TIME = 3;
 
 	FieldOfView myFOV {
@@ -23,18 +23,14 @@ public class ShadowBallControl : _Control {
 		}
 	}
 
-	public override void _OnDamageTaken (float damage) {
-		MyBody.StartFlicker (FLICKER_TIME);
-	}
-
 	public new Godot.Collections.Dictionary<string, object> MakeSave () {
 		var saveObject = base.MakeSave ();
-		saveObject["HP"] = GetNode<Health> ("Health").HP;
+		saveObject["HP"] = GetNode<HealthComponent> ("../Health").HP;
 		return saveObject;
 	}
 
 	public new void LoadData (Godot.Collections.Dictionary<string, object> saveObject) {
 		base.LoadData (saveObject);
-		GetNode<Health> ("Health").HP = Convert.ToSingle (saveObject["HP"]);
+		GetNode<HealthComponent> ("../Health").HP = Convert.ToSingle (saveObject["HP"]);
 	}
 }

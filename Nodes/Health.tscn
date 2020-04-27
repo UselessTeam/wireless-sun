@@ -3,11 +3,10 @@
 [ext_resource path="res://Assets/Sprites/GUI/lifebar_fill.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Sprites/GUI/lifebar_bg.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/Attributes/HealthBar.cs" type="Script" id=3]
-[ext_resource path="res://Scripts/Attributes/Health.cs" type="Script" id=4]
+[ext_resource path="res://Scripts/Attributes/HealthComponent.cs" type="Script" id=4]
 
 [node name="Health" type="Node2D"]
 script = ExtResource( 4 )
-MAX_HP = 100.0
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( -12.0477, 17.1354 )

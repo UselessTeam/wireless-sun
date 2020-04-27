@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-public class PickableControl : _Control {
+public class PickableControl : ControlComponent {
 	[Export] public string item;
 	[Export] public ushort quantity = 1;
 

@@ -11,7 +11,7 @@ public class FieldOfView : Area2D {
 		Body closestPlayer = null;
 		float maxDist = float.PositiveInfinity;
 		foreach (PhysicsBody2D body in GetOverlappingBodies ()) {
-			float distance = (body.GlobalPosition - GetParent<_Control> ().MyBody.GlobalPosition).LengthSquared ();
+			float distance = (body.GlobalPosition - GetParent<ControlComponent> ().MyBody.GlobalPosition).LengthSquared ();
 			if (distance < maxDist) {
 				closestPlayer = (Body) body;
 				maxDist = distance;

@@ -4,6 +4,7 @@ using Godot;
 public class AttackTemplate : Resource {
     [Export] private AttackTemplate template = null;
     [Export] private float damage = 1;
+    [Export] private float knockback = 1;
     [Export] private float range = 1;
     [Export] private float cooldown = 1;
     [Export] private AttackType type;
@@ -11,6 +12,7 @@ public class AttackTemplate : Resource {
 
     public float Damage { get { return damage * ((template == null) ? 1 : template.Damage); } }
     public float Range { get { return range * ((template == null) ? 1 : template.Range); } }
+    public float Knockback { get { return knockback * ((template == null) ? 1 : template.Knockback); } }
     public float Cooldown { get { return cooldown * ((template == null) ? 1 : template.Cooldown); } }
     public AttackType Type { get { return type | ((template == null) ? AttackType.None : template.Type); } }
     public AttackEffect Effect { get { return effect | ((template == null) ? AttackEffect.None : template.Effect); } }

@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-public class PrefabSpawner : _Spawner {
+public class PrefabSpawner : SpawnerComponent {
 	[Export] public PackedScene spawnPrefab;
 
 	override protected Body GetSpawnee () {

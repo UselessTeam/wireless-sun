@@ -1,11 +1,10 @@
 using System;
 using Godot;
 
-public class PlayerAttack : _Attack {
+public class PlayerAttack : AttackComponent {
 
     [Export] public float base_distance_to_player = 15;
-
-    double LimitAngle = Math.PI / 8; //Limite a partir de laquelle l'attaque est horizontale
+    readonly double LimitAngle = Math.PI / 8; //Limite a partir de laquelle l'attaque est horizontale
 
     public AnimatedSprite MySprite {
         get { return GetNode<AnimatedSprite> ("Sprite"); }
@@ -53,7 +52,7 @@ public class PlayerAttack : _Attack {
     public void _OnAttackFinished () {
         MySprite.Hide ();
         MySprite.Stop ();
-        GetParent<PC> ().IsAttacking = false;
+        GetParent<PlayerControl> ().IsAttacking = false;
         GetNode<CollisionShape2D> ("Hitbox/CollisionShape2D").Disabled = true;
     }
 }

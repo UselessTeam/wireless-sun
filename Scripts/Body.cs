@@ -2,19 +2,16 @@ using System;
 using Godot;
 
 public class Body : KinematicBody2D {
-	[Export] public float IMPACT_FACTOR = 1.0f;
+	[Export] public float IMPACT_FACTOR = 800;
 	[Export] public float WALK_SPEED = 100;
 
 	[Signal] delegate void body_collision (KinematicCollision2D collInfo);
-	[Signal] delegate void damage_taken (float damage);
+	[Signal] delegate void TakeDamage (AttackResource attack, Vector2 direction);
 	KinematicCollision2D collInfo = null;
 
 	public bool isImpact = false;
 	private float impactTime = 0;
 	private Vector2 impactDirection;
-
-	public bool isFlicker = false;
-	private float flickerTime = 0;
 
 	[Puppet] private Vector2 facingDirection = new Vector2 (1, 0);
 	[Master]
@@ -49,28 +46,13 @@ public class Body : KinematicBody2D {
 	}
 
 	// Call whenever the body is hit for some time
-	public void StartImpact (Vector2 direction, float time, float damage = 0) {
-		if (!isFlicker) {
-			EmitSignal ("damage_taken", damage);
-			isImpact = true;
-			impactTime = time;
-			impactDirection = direction * IMPACT_FACTOR;
-		}
-	}
-
-	public void StartFlicker (float time) {
-		isFlicker = true;
-		flickerTime = time;
+	public void StartImpact (Vector2 direction, float time) {
+		isImpact = true;
+		impactTime = time;
+		impactDirection = direction * IMPACT_FACTOR;
 	}
 
 	public override void _PhysicsProcess (float delta) {
-		if (isFlicker) {
-			flickerTime -= delta;
-			if (flickerTime < 0) {
-				flickerTime = 0;
-				isFlicker = false;
-			}
-		}
 		if (!Network.IsConnectionStarted || IsNetworkMaster ()) { //Master Code
 			// Movement in case of impact
 			if (isImpact) {

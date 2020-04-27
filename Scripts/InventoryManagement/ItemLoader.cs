@@ -12,6 +12,7 @@ namespace Item {
 		private static Dictionary<string, ItemId> itemNames = new Dictionary<string, ItemId> ();
 
 		public static void Load () {
+			ushort rawItemId = 0;
 			foreach (Type category in itemCategories) {
 				string categoryPath;
 				if (category == typeof (ItemResource))
@@ -31,20 +32,18 @@ namespace Item {
 						if (loadedResource == null)
 							GD.PrintErr ("Resource not found : ", categoryPath.PlusFile (itemPath));
 						else {
-							loadedResource.name = itemPath.Remove (itemPath.Length - ".tres".Length);
+							var id = new ItemId (rawItemId);
+							var name = itemPath.Remove (itemPath.Length - ".tres".Length);
+							loadedResource._Init (name, id);
+							itemNames[name] = id;
 							itemDataList.Add (loadedResource);
+							rawItemId += 1;
 						}
 					}
 				} while (itemPath != "");
-
 			}
 
-			ushort rawItemId = 0;
-			foreach (ItemResource item in itemDataList) {
-				item.id = new ItemId (rawItemId);
-				itemNames[item.name] = item.id;
-				rawItemId += 1;
-			}
+			foreach (ItemResource item in itemDataList) {}
 		}
 
 		public static ItemResource GetItem (ItemId id) {
@@ -63,7 +62,6 @@ namespace Item {
 			GD.PrintErr ("Error: Trying to get a non existing item : " + name);
 			return (T) ItemResource.NULL; // TODO: Once Godot is updated (and fixes the GD.Print(null) crash) we can return null here
 		}
-
 		public static ItemId GetId (string name) {
 			ItemId id;
 			if (name != null && itemNames.TryGetValue (name.ToLower (), out id))
@@ -75,7 +73,6 @@ namespace Item {
 
 	public class ItemCategory {
 		public byte id = 0;
-
 		[JsonProperty ("category")]
 		public string name;
 		public ItemResource[] items;
@@ -84,41 +81,25 @@ namespace Item {
 
 	public struct ItemId {
 		public ushort id;
-
 		public static readonly ItemId NULL = new ItemId (ushort.MaxValue);
-		public ItemId (ushort id) {
-			this.id = id;
-		}
-
+		public ItemId (ushort id) { this.id = id; }
 		public ItemResource data { get { return Manager.GetItem (this); } }
 
 		// Overrides
-
 		public override bool Equals (object obj) {
-			if (!(obj is ItemId)) {
-				return false;
-			}
-
+			if (!(obj is ItemId)) { return false; }
 			return id == ((ItemId) obj).id;
 		}
-
 		public override int GetHashCode () {
 			return this.id.GetHashCode ();
 		}
-
-		public static bool operator == (ItemId a, ItemId b) {
-			return a.Equals (b);
-		}
-
-		public static bool operator != (ItemId a, ItemId b) {
-			return !a.Equals (b);
-		}
+		public static bool operator == (ItemId a, ItemId b) { return a.Equals (b); }
+		public static bool operator != (ItemId a, ItemId b) { return !a.Equals (b); }
 
 		public override string ToString () {
 			if (this == NULL) return "";
 			return data.DisplayName ();
 		}
-
 		public bool IsNull () { return this == NULL; }
 	}
 

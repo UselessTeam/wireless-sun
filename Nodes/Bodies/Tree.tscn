@@ -22,8 +22,6 @@ script = ExtResource( 3 )
 items = PoolStringArray( "wood", "stick" )
 quantities = PoolIntArray( 1, 2 )
 
-[node name="Health" parent="Control" instance=ExtResource( 4 )]
-
 [node name="Display" type="Node2D" parent="."]
 position = Vector2( -7.43282, -41.2935 )
 __meta__ = {
@@ -55,3 +53,5 @@ polygon = PoolVector2Array( -2.62158, 2.41028, 5.58296, 2.41028, 5.74074, 14.874
 visible = false
 SPAWN_DELAY = 6.0
 MAX_COUNT = 4.0
+
+[node name="Health" parent="." instance=ExtResource( 4 )]

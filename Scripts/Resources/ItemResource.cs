@@ -18,6 +18,8 @@ public class ItemResource : Resource {
 		this.name = null;
 	}
 
+	public virtual void _Init (string name, ItemId id) { this.name = name; this.id = id; }
+
 	public override string ToString () {
 		if (this == NULL) {
 			return "NULL ITEM";

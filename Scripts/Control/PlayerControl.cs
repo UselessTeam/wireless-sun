@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-public class PC : _Control {
+public class PlayerControl : ControlComponent {
     [Export] public float FLICKER_TIME = 3;
 
     bool isAttacking = false;
@@ -42,10 +42,8 @@ public class PC : _Control {
     public void _Action (string _event) {
         if (CanMove && _event.Contains ("_action")) {
             var weaponData = GameRoot.inventory.equipement.GetAction (_event == "left_action");
-            if (weaponData == null)
-                GetNode<PlayerAttack> ("Attack")._StartAttack (null);
             if (weaponData.Action == ActionType.Attack) {
-                GetNode<PlayerAttack> ("Attack")._StartAttack (weaponData.ToAttackRessource ());
+                GetNode<PlayerAttack> ("Attack")._StartAttack (weaponData.AttackData);
                 isAttacking = true;
             } else if (weaponData.Action == ActionType.Block) {
                 GD.Print ("Block!");
@@ -76,7 +74,7 @@ public class PC : _Control {
 
     public new Godot.Collections.Dictionary<string, object> MakeSave () {
         var saveObject = base.MakeSave ();
-        saveObject["HP"] = GetNode<Health> ("Health").HP;
+        saveObject["HP"] = GetNode<HealthComponent> ("../Health").HP;
         if (IsMaster)
             saveObject["MyPlayer"] = true;
         return saveObject;
@@ -84,13 +82,9 @@ public class PC : _Control {
 
     public new void LoadData (Godot.Collections.Dictionary<string, object> saveObject) {
         base.LoadData (saveObject);
-        GetNode<Health> ("Health").HP = Convert.ToSingle (saveObject["HP"]);
+        GetNode<HealthComponent> ("../Health").HP = Convert.ToSingle (saveObject["HP"]);
         if (saveObject.ContainsKey ("MyPlayer"))
             MyBody.Name = "MyPlayer";
-    }
-
-    public override void _OnDamageTaken (float damage) {
-        MyBody.StartFlicker (FLICKER_TIME);
     }
 
     public new void _OnDied () {
