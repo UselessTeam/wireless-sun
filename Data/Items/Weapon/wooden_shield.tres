@@ -1,7 +1,14 @@
-[gd_resource type="Resource" load_steps=3 format=2]
+[gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://Scripts/InventoryManagement/Resources/WeaponResource.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Sprites/TempArt/shield.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/InventoryManagement/Resources/AttackResource.cs" type="Script" id=3]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 3 )
+baseDamage = 0.0
+baseRange = 1.0
+baseCooldown = 1.0
 
 [resource]
 script = ExtResource( 1 )
@@ -9,7 +16,6 @@ stackSize = 1
 icon = ExtResource( 2 )
 armor = 4.0
 location = 0
+attackData = SubResource( 1 )
 Action = 1
-baseDamage = 0.0
-baseRange = 1.0
-baseCooldown = 1.0
+Test = 0

@@ -24,7 +24,7 @@ public class PlayerAttack : _Attack {
         return U.AngleTo (V) * alpha / Math.Abs (alpha);
     }
 
-    public void _StartAttack (AttackTemplate attackData) {
+    public void _StartAttack (AttackResource attackData) {
         this.attackData = attackData;
         // Enable the attack's collisionBox
         Scale = new Vector2 (attackData.Range, attackData.Range);

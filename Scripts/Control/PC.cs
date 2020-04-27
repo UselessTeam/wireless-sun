@@ -45,7 +45,7 @@ public class PC : _Control {
             if (weaponData == null)
                 GetNode<PlayerAttack> ("Attack")._StartAttack (null);
             if (weaponData.Action == ActionType.Attack) {
-                GetNode<PlayerAttack> ("Attack")._StartAttack (weaponData.ToAttackTemplate ());
+                GetNode<PlayerAttack> ("Attack")._StartAttack (weaponData.ToAttackRessource ());
                 isAttacking = true;
             } else if (weaponData.Action == ActionType.Block) {
                 GD.Print ("Block!");

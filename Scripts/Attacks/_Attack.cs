@@ -2,9 +2,8 @@ using System;
 using Godot;
 
 public class _Attack : Node2D {
-	[Export] public AttackTemplate attackData = null;
-
-	[Export] public float baseDamage = 50;
+	public static float defaultDamage = 50;
+	[Export] public AttackResource attackData = null;
 
 	public Area2D MyArea { get { return GetNode<Area2D> ("Hitbox"); } }
 
@@ -19,5 +18,5 @@ public class _Attack : Node2D {
 		}
 	}
 
-	public virtual float GetDamage () { return baseDamage * ((attackData == null) ? 1 : attackData.Damage);; }
+	public virtual float GetDamage () { return ((attackData == null) ? defaultDamage : attackData.Damage);; }
 }
