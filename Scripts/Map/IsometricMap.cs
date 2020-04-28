@@ -4,15 +4,12 @@ using System.Threading;
 using Godot;
 using MetaTile;
 
-public class Map : Node2D {
+public class IsometricMap : Node2D {
 
 	[Export]
 	private OpenSimplexNoise noise; // = new OpenSimplexNoise();
 
-	private SmartWorldTiles tiles;
-
 	public override void _Ready () {
-		tiles = (SmartWorldTiles) GetNode ("/root/SmartTiles/World");
 		generateAsyncStart = new ParameterizedThreadStart (GenerateAsyncObject);
 	}
 
@@ -26,6 +23,7 @@ public class Map : Node2D {
 		return Math.Abs (x1 - x2) + Math.Abs (y1 - y2);
 	}
 	public override void _Process (float delta) {
+		// URGENT TODO: Old code from orthogonal coordinates
 		Vector2 playerPosition = new Vector2 (21, 4); // TODO: Get the player's actual position, so chunks can be generated around him when necessary
 		int X = (int) (playerPosition.x / Chunk.PIXEL_SIZE);
 		int Y = (int) (playerPosition.y / Chunk.PIXEL_SIZE);
@@ -48,56 +46,43 @@ public class Map : Node2D {
 		}
 	}
 
-	private Dictionary < (int, int), Chunk > chunks = new Dictionary < (int, int), Chunk > ();
+	private Dictionary < (int, int), IsometricChunk > chunks = new Dictionary < (int, int), IsometricChunk > ();
 
 	private PackedScene baseChunk = (PackedScene) ResourceLoader.Load ("res://Nodes/Map/Chunk.tscn");
 
 	private void GenerateAsyncObject (object chunk) {
-		Generate ((Chunk) chunk);
+		Generate ((IsometricChunk) chunk);
 	}
 
 	private ParameterizedThreadStart generateAsyncStart; // = new ParameterizedThreadStart(GenerateAsyncObject);
 
-	public Chunk GenerateAsync (int X, int Y) {
+	public IsometricChunk GenerateAsync (int U, int V) {
 		System.Threading.Thread generateAsyncThread = new System.Threading.Thread (generateAsyncStart);
-		Chunk chunk = (Chunk) baseChunk.Instance ();
-		chunk.Setup (tiles, X, Y);
+		IsometricChunk chunk = IsometricChunk.Instance ();
+		chunk.Setup (this, U, V);
 		generateAsyncThread.Start (chunk);
 		return chunk;
 	}
 
-	public Chunk Generate (Chunk chunk) {
-		for (int x = 0; x < Chunk.SIZE + 1; x++) {
-			for (int y = 0; y < Chunk.SIZE + 1; y++) {
-				chunk.SetBiom (x, y, GetBiom (x + chunk.x * Chunk.SIZE, y + chunk.y * Chunk.SIZE));
-			}
-		}
+	public IsometricChunk Generate (IsometricChunk chunk) {
 		CallDeferred ("add_child", chunk);
 		return chunk;
 	}
 
-	// public void Generate (int X, int Y) {
-	//     Chunk chunk = (Chunk) baseChunk.Instance ();
-	//     chunk.Setup (tiles, X, Y);
-	//     Generate (chunk);
-	// }
-
-	// public PointType GetBiomAtPosition (float x, float y) {
-	//     return GetBiom ((int) (x / Chunk.RESOLUTION), (int) (y / Chunk.RESOLUTION));
-	// }
-	public PointType GetBiom (int x, int y) {
-		float main_value = noise.GetNoise2d (x, y);
-		float secondary_value = noise.GetNoise2d (1200 - x, y - 1200);
-		if (main_value + 0.5 * Math.Abs (secondary_value) < -0.15) {
-			return PointType.Sea;
+	public (int, int) GetTileType (int u, int v) {
+		float base_height = noise.GetNoise2d (u, v) + 0.3f;
+		if (base_height < 0f) {
+			return (0, 0);
 		}
-		if (main_value + Math.Abs (secondary_value) < 0.15) {
-			return PointType.Sand;
+		float main_value = noise.GetNoise2d (1200 - u, v - 1200);
+		// float secondary_value = noise.GetNoise2d (1200 - u, v - 1200);
+		if (main_value < 0) {
+			return (2, (int)(4 * base_height + 0.7));;
 		}
-		if (secondary_value < 0.05) {
-			return PointType.Grass;
+		if (base_height + main_value < 0.4f) {
+			return (1, (int)(4 * base_height + 0.5));
 		} else {
-			return PointType.Stone;
+			return (3, (int)(4 * base_height + 0.9));
 		}
 	}
 }

@@ -10,6 +10,10 @@ data_*/
 mono_crash*
 .vscode/*
 
+# Krita-specific ignores
+*.kra
+*.kra~
+
 # Save files
 *.save
 
