@@ -13,6 +13,7 @@ mono_crash*
 # Krita-specific ignores
 *.kra
 *.kra~
+*.png~
 
 # Save files
 *.save
