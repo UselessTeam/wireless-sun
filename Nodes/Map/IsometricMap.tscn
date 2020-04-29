@@ -3,10 +3,9 @@
 [ext_resource path="res://Scripts/Map/IsometricMap.cs" type="Script" id=1]
 
 [sub_resource type="OpenSimplexNoise" id=1]
-period = 24.0
-persistence = 0.7
+period = 16.0
+persistence = 0.75
 
 [node name="IsometricMap" type="Node2D"]
-position = Vector2( 649.474, 1.05264 )
 script = ExtResource( 1 )
 noise = SubResource( 1 )

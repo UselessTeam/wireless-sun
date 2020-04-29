@@ -1,0 +1,68 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Scripts/Pieces/Station.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Interactable/InteractionComponent.cs" type="Script" id=2]
+[ext_resource path="res://Assets/Sprites/Stations/stations.png" type="Texture" id=3]
+[ext_resource path="res://Scripts/Pieces/HideWhenBehind.cs" type="Script" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 49.8258, 47.2717 )
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 31.9369
+
+[sub_resource type="ConvexPolygonShape2D" id=3]
+points = PoolVector2Array( 0, -32, 48, 0, 0, 32, -48, 0 )
+
+[node name="StationTemplate" type="StaticBody2D"]
+input_pickable = true
+collision_mask = 0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Display" type="Node2D" parent="."]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Display"]
+texture = ExtResource( 3 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 96, 96 )
+
+[node name="Top" type="Area2D" parent="Display"]
+collision_layer = 16384
+collision_mask = 2
+script = ExtResource( 4 )
+
+[node name="Area" type="CollisionShape2D" parent="Display/Top"]
+visible = false
+position = Vector2( -1.69688, -2.18606 )
+shape = SubResource( 1 )
+
+[node name="Tween" type="Tween" parent="Display/Top"]
+
+[node name="HoverLight" type="Light2D" parent="Display"]
+visible = false
+texture = ExtResource( 3 )
+offset = Vector2( 144, 48 )
+color = Color( 0.901961, 0.976471, 0.0392157, 1 )
+energy = 1.86
+
+[node name="Interaction" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="InterationShape" type="CollisionShape2D" parent="Interaction"]
+visible = false
+scale = Vector2( 1.5, 1 )
+shape = SubResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 3 )

@@ -24,7 +24,7 @@ public class IsometricMap : Node2D {
 	}
 	public override void _Process (float delta) {
 		// URGENT TODO: Old code from orthogonal coordinates
-		Vector2 playerPosition = new Vector2 (21, 4); // TODO: Get the player's actual position, so chunks can be generated around him when necessary
+		Vector2 playerPosition = new Vector2 (0, 0); // TODO: Get the player's actual position, so chunks can be generated around him when necessary
 		int X = (int) (playerPosition.x / Chunk.PIXEL_SIZE);
 		int Y = (int) (playerPosition.y / Chunk.PIXEL_SIZE);
 		if (X != cachedX || Y != cachedY) {
@@ -70,19 +70,22 @@ public class IsometricMap : Node2D {
 	}
 
 	public (int, int) GetTileType (int u, int v) {
-		float base_height = noise.GetNoise2d (u, v) + 0.3f;
+		float base_height = noise.GetNoise2d (u, v) + 0.7f - 0.001f * (u * u + v * v);
 		if (base_height < 0f) {
 			return (0, 0);
 		}
 		float main_value = noise.GetNoise2d (1200 - u, v - 1200);
 		// float secondary_value = noise.GetNoise2d (1200 - u, v - 1200);
 		if (main_value < 0) {
-			return (2, (int)(4 * base_height + 0.7));;
+			if (base_height - 2 * main_value < 0.5f) {
+				return (1, 0);
+			}
+			return (2, 0);
 		}
 		if (base_height + main_value < 0.4f) {
-			return (1, (int)(4 * base_height + 0.5));
+			return (1, 0);
 		} else {
-			return (3, (int)(4 * base_height + 0.9));
+			return (3, 0);
 		}
 	}
 }

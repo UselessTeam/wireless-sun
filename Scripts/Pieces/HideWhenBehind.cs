@@ -8,7 +8,6 @@ public class HideWhenBehind : Area2D
 	private static Color obscured = new Color(1, 1, 1, 0.3f);
 	private static Color invisible = new Color(1, 1, 1, 0);
 
-	private CanvasItem item;
 	private Tween tween;
 
 	[Export] public bool isObscured = true;
@@ -16,7 +15,6 @@ public class HideWhenBehind : Area2D
 
 	public override void _Ready()
 	{
-		item = (CanvasItem)GetNode("Sprite");
 		tween = (Tween)GetNode("Tween");
 		Connect ("body_entered", this, "_on_body_entered");
 		Connect ("body_exited", this, "_on_body_exited");
@@ -33,14 +31,14 @@ public class HideWhenBehind : Area2D
 	}
 
 	private void HidePart() {
-		tween.InterpolateProperty(item, "modulate",
+		tween.InterpolateProperty(this, "modulate",
 				shown, hidden, time,
 				Tween.TransitionType.Linear, Tween.EaseType.InOut);
 		tween.Start();
 	}
 
 	private void ShowPart() {
-		tween.InterpolateProperty(item, "modulate",
+		tween.InterpolateProperty(this, "modulate",
 				hidden, shown, time,
 				Tween.TransitionType.Linear, Tween.EaseType.InOut);
 		tween.Start();

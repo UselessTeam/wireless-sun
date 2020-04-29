@@ -95,15 +95,15 @@ public class PlayerControl : ControlComponent {
         }
     }
 
-    _Interactable currentInteraction;
+    InteractionComponent currentInteraction;
     Sprite interactionSprite { get { return GetNode<Sprite> ("InteractionSprite"); } }
 
-    public void _InteractEntered (_Interactable interaction) {
+    public void _InteractEntered (InteractionComponent interaction) {
         currentInteraction = interaction;
         interactionSprite.Show ();
     }
 
-    public void _InteractExited (_Interactable interaction) {
+    public void _InteractExited (InteractionComponent interaction) {
         if (interaction == currentInteraction)
             currentInteraction = null;
         interactionSprite.Hide ();
