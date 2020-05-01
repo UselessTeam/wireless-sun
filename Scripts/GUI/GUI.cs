@@ -19,6 +19,8 @@ public class GUI : Node {
 		crafting.Hide ();
 		pauseMenu = GetNode<PauseMenu> ("PauseMenu");
 		pauseMenu.Hide ();
+
+		GameRoot.Instance.Connect (nameof (GameRoot.GameplayStarted), this, nameof (GameplayStart));
 	}
 
 	public void GameplayStart () { GetNode<WeaponHotbar> ("WeaponHotbar").Show (); }

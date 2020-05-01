@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/Menu/Lobby.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Fonts/Montserrat-ExtraBold.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Nodes/GUI/Menu/LoadButton.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/Menu/SaveMenu.cs" type="Script" id=4]
 [ext_resource path="res://Scripts/Menu/BaseMenu.cs" type="Script" id=5]
 
@@ -11,6 +12,16 @@ font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=2]
 size = 36
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 20
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=5]
 font_data = ExtResource( 2 )
 
 [node name="Menu" type="Control"]
@@ -180,8 +191,9 @@ script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+loadButtonPackedScene = ExtResource( 3 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/SaveMenu"]
+[node name="MainSaveMenu" type="VBoxContainer" parent="VBoxContainer/SaveMenu"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_constants/separation = 12
@@ -189,20 +201,66 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="NewGameButton" type="Button" parent="VBoxContainer/SaveMenu/VBoxContainer"]
+[node name="NewGameButton" type="Button" parent="VBoxContainer/SaveMenu/MainSaveMenu"]
 margin_right = 1720.0
 margin_bottom = 51.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 2 )
 text = "New Game"
 
-[node name="LoadButton" type="Button" parent="VBoxContainer/SaveMenu/VBoxContainer"]
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/SaveMenu/MainSaveMenu"]
 margin_top = 63.0
 margin_right = 1720.0
-margin_bottom = 114.0
-size_flags_horizontal = 3
-custom_fonts/font = SubResource( 2 )
-text = "Load Previous Game"
+margin_bottom = 67.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ChooseNewName" type="VBoxContainer" parent="VBoxContainer/SaveMenu"]
+visible = false
+anchor_right = 1.0
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/SaveMenu/ChooseNewName"]
+margin_right = 1760.0
+margin_bottom = 31.0
+custom_fonts/font = SubResource( 3 )
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MakeSave" type="Button" parent="VBoxContainer/SaveMenu/ChooseNewName"]
+margin_top = 35.0
+margin_right = 1760.0
+margin_bottom = 67.0
+custom_fonts/font = SubResource( 4 )
+text = "Create World"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cancel" type="Button" parent="VBoxContainer/SaveMenu/ChooseNewName"]
+margin_top = 71.0
+margin_right = 1760.0
+margin_bottom = 103.0
+custom_fonts/font = SubResource( 4 )
+text = "Cancel"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameError" type="Label" parent="VBoxContainer/SaveMenu/ChooseNewName"]
+modulate = Color( 1, 0.117647, 0, 1 )
+margin_top = 107.0
+margin_right = 1760.0
+margin_bottom = 128.0
+custom_fonts/font = SubResource( 5 )
+align = 1
 [connection signal="pressed" from="VBoxContainer/BaseMenu/SoloButton" to="VBoxContainer/BaseMenu" method="_OnSoloPressed"]
 [connection signal="pressed" from="VBoxContainer/BaseMenu/Multiplayer" to="VBoxContainer/BaseMenu" method="_OnMultiplayerPressed"]
 [connection signal="pressed" from="VBoxContainer/BaseMenu/Multiplayer" to="VBoxContainer/BaseMenu" method="_OnMultipayerPressed"]
@@ -211,5 +269,7 @@ text = "Load Previous Game"
 [connection signal="pressed" from="VBoxContainer/Lobby/VBoxContainer/HostButton" to="VBoxContainer/Lobby" method="_OnHostPressed"]
 [connection signal="text_changed" from="VBoxContainer/Lobby/VBoxContainer/LabeledField/Field" to="VBoxContainer/Lobby" method="_OnIpChanged"]
 [connection signal="button_down" from="VBoxContainer/Lobby/VBoxContainer/JoinButton" to="VBoxContainer/Lobby" method="_OnJoinPressed"]
-[connection signal="pressed" from="VBoxContainer/SaveMenu/VBoxContainer/NewGameButton" to="VBoxContainer/SaveMenu" method="_OnNewPressed"]
-[connection signal="button_down" from="VBoxContainer/SaveMenu/VBoxContainer/LoadButton" to="VBoxContainer/SaveMenu" method="_OnLoadPressed"]
+[connection signal="pressed" from="VBoxContainer/SaveMenu/MainSaveMenu/NewGameButton" to="VBoxContainer/SaveMenu" method="_OnNewPressed"]
+[connection signal="text_changed" from="VBoxContainer/SaveMenu/ChooseNewName/LineEdit" to="VBoxContainer/SaveMenu" method="_OnNewNameEdit"]
+[connection signal="pressed" from="VBoxContainer/SaveMenu/ChooseNewName/MakeSave" to="VBoxContainer/SaveMenu" method="_OnMakeSavePressed"]
+[connection signal="pressed" from="VBoxContainer/SaveMenu/ChooseNewName/Cancel" to="VBoxContainer/SaveMenu" method="_OnCancelPressed"]

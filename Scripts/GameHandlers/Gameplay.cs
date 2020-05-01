@@ -15,10 +15,13 @@ public class Gameplay : Node2D {
 
 	static public Dictionary<string, uint> Layer = new Dictionary<string, uint> ();
 
+	[Signal] public delegate void PlayerRespawn ();
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready () {
 		myInstance = this;
-		GameRoot._OnGameSceneStarted ();
+
+		GameRoot.GameplayStart ();
 
 		myCamera = ((PackedScene) GD.Load ("res://Nodes/Camera2D.tscn")).Instance ().GetNode<Camera2D> ("./");
 		Instance.AddChild (myCamera);
@@ -36,10 +39,8 @@ public class Gameplay : Node2D {
 			Layer[name] = (uint) 1 << i - 1;
 		} // TODO move this to Global
 
-		if (Network.IsConnectionStarted) {
-			SetNetworkMaster (1);
-			Network._OnGameHandlerAwake ();
-		}
+		GameRoot.GameplayReady ();
+
 	}
 
 	public static Body SpawnPlayer (int id, Vector2 position) {
@@ -92,6 +93,7 @@ public class Gameplay : Node2D {
 			cameraHolder.Name = id.ToString ();
 		myPlayer = cameraHolder;
 		AttachCamera (myPlayer);
+		EmitSignal (nameof (PlayerRespawn));
 	}
 
 	public void AttachCamera (Node node) {

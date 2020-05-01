@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Assets/Sprites/Paulyn/Tree_exhibit_B.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Body.cs" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Nodes/Spawners/ItemSpawner.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Assets/Sprites/Paulyn/Tree_exhibit_B_stump.png" type="Texture" id=6]
 [ext_resource path="res://Scripts/Pieces/HideWhenBehind.cs" type="Script" id=7]
+[ext_resource path="res://Data/Armor/tree.tres" type="Resource" id=8]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 49.8258, 47.2717 )
@@ -55,3 +56,5 @@ SPAWN_DELAY = 6.0
 MAX_COUNT = 4.0
 
 [node name="Health" parent="." instance=ExtResource( 4 )]
+MAX_HP = 300.0
+armor = ExtResource( 8 )

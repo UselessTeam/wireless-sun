@@ -11,6 +11,8 @@ public class GameRoot : Node {
 
 	public static string username = "";
 
+	[Signal] public delegate void GameplayStarted ();
+
 	public override void _Ready () {
 		instance = this;
 		Item.Manager.Load ();
@@ -20,7 +22,6 @@ public class GameRoot : Node {
 	public static void LoadGameScene (string saveName) {
 		instance.GetTree ().ChangeScene ("res://Scenes/Beach.tscn"); // We should load the game scene corresponding to saveName
 		Save.CurrentSave = saveName;
-		_GUI.GameplayStart ();
 	}
 
 	public static void LoadMenuScene () {
@@ -36,9 +37,13 @@ public class GameRoot : Node {
 		Save.MakeNewSave (saveName); //Erase any save that has the same name as ours
 	}
 
-	public static void _OnGameSceneStarted () {
+	public static void GameplayStart () {
 		if (Save.CurrentSave != "")
 			Save.LoadGame ();
+	}
+
+	public static void GameplayReady () {
+		Instance.EmitSignal (nameof (GameplayStarted));
 	}
 }
 
@@ -54,7 +59,23 @@ public static class Save {
 	static Directory Directory = new Directory ();
 	static File File = new File ();
 
-	static string SaveLocation (string saveName) {
+	public static List<string> GetSaveList () {
+		var list = new List<string> ();
+		if (!Directory.DirExists (saveLocation))
+			return list;
+		var savesDir = new Directory ();
+		savesDir.Open (saveLocation);
+		savesDir.ListDirBegin (true, true);
+		string itemPath;
+		do {
+			itemPath = savesDir.GetNext ();
+			if (itemPath.EndsWith (".save"))
+				list.Add (itemPath.Remove (itemPath.Length - ".save".Length));
+		} while (itemPath != "");
+		return list;
+	}
+
+	static string SavePath (string saveName) {
 		return saveLocation + "/" + saveName + ".save";
 	}
 
@@ -63,17 +84,20 @@ public static class Save {
 		// Create a the map and save it as a scene 
 		// TODO
 		//Remove any previous save
-		if (File.FileExists (SaveLocation (saveName)))
-			Directory.Remove (SaveLocation (saveName));
+		if (File.FileExists (SavePath (saveName)))
+			Directory.Remove (SavePath (saveName));
 		if (!Directory.DirExists (saveLocation))
 			Directory.MakeDir (saveLocation);
+		var saveGame = new File ();
+		saveGame.Open (SavePath (saveName), File.ModeFlags.Write);
+		saveGame.Close ();
 	}
 
 	// Save and load game
 
 	public static void SaveGame () {
 		var saveGame = new File ();
-		saveGame.Open (SaveLocation (currentSave), File.ModeFlags.Write);
+		saveGame.Open (SavePath (currentSave), File.ModeFlags.Write);
 
 		var saveNodes = GameRoot.Instance.GetTree ().GetNodesInGroup ("SaveNodes");
 		foreach (Node saveNode in saveNodes) {
@@ -86,10 +110,14 @@ public static class Save {
 	}
 	public static void LoadGame () {
 		var saveGame = new File ();
-		if (!saveGame.FileExists (SaveLocation (currentSave))) {
+		if (!saveGame.FileExists (SavePath (currentSave))) {
 			GD.Print ("Loaded empty save");
 			return; // No save to load
 		}
+		saveGame.Open (SavePath (currentSave), File.ModeFlags.Read);
+
+		if (saveGame.GetLen () == 0)
+			return;
 
 		// First we delete all the Controls nodes, in order to make sure the game state is clean
 		var nodes = GameRoot.Instance.GetTree ().GetNodesInGroup ("ReloadOnSave");
@@ -98,8 +126,6 @@ public static class Save {
 
 		// Load the file line by line and process that dictionary to restore the object
 		// it represents.
-		saveGame.Open (SaveLocation (currentSave), File.ModeFlags.Read);
-
 		while (saveGame.GetPosition () < saveGame.GetLen ()) {
 			// Get the saved dictionary from the next line in the save file
 			// var line = saveGame.GetLine ();

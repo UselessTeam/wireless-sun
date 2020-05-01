@@ -59,11 +59,13 @@ public class Network : Node2D {
 		peer.CreateClient ((IP != "") ? IP : DEFAULT_IP, DEFAULT_PORT);
 		Instance.GetTree ().NetworkPeer = peer;
 		IsConnectionStarted = true;
+		GameRoot.Instance.Connect (nameof (GameRoot.GameplayStarted), instance, nameof (_OnGameplayStarted));
 	}
 
-	public static void _OnGameHandlerAwake () {
+	public void _OnGameplayStarted () {
 		for (int i = 1; i < Instance.nConnectedPlayers; i++)
 			Gameplay.SpawnPlayer (Instance.connectedPlayers[i], new Vector2 (0, 0));
+		Gameplay.Instance.SetNetworkMaster (1);
 	}
 
 	public void _OnPlayerConnected (int id) {

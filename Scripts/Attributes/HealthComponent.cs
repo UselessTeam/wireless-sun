@@ -4,7 +4,8 @@ using Godot;
 public class HealthComponent : Node2D {
     // Class that manages HP, HP recovery, Death, ect ...
     [Export][Puppet] public float MAX_HP = 100;
-    [Export][Puppet] public float FLICKER_TIME = 0.2f;
+    [Export][Puppet] public readonly float FLICKER_TIME = 0.2f;
+    [Export] public ArmorResource armor = null;
 
     private float _HP;
     public bool isFlicker = false;
@@ -43,18 +44,23 @@ public class HealthComponent : Node2D {
     public void _OnTakeDamage (AttackResource attackData, Vector2 direction) {
         if (isFlicker)
             return;
-        HP -= attackData.Damage;
+        HP -= (armor == null) ? attackData.Damage : armor.ApplyDamage (attackData.Types, attackData.Damage);
         isFlicker = true;
         float knockbackTime = attackData.Knockback / 1000.0f;
         flickerTimeLeft = FLICKER_TIME + knockbackTime;
         MyUser.MyBody.StartImpact (direction, knockbackTime);
+        GetNode<HealthTween> ("Tween").StartFlicker (GetNode<Node2D> ("../Display"));
+
     }
 
     public override void _Process (float delta) {
         if (isFlicker) {
             flickerTimeLeft -= delta;
-            if (flickerTimeLeft < 0)
+            if (flickerTimeLeft < 0) {
                 isFlicker = false;
+                flickerTimeLeft = 0;
+                GetNode<HealthTween> ("Tween").StopFlicker ();
+            }
         }
     }
 

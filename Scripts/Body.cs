@@ -8,6 +8,8 @@ public class Body : KinematicBody2D {
 	[Signal] delegate void body_collision (KinematicCollision2D collInfo);
 	[Signal] delegate void TakeDamage (AttackResource attack, Vector2 direction);
 	KinematicCollision2D collInfo = null;
+	public bool IsMaster { get { return !Network.IsConnectionStarted || IsNetworkMaster (); } }
+	public bool IsTrueMaster { get { return Network.IsConnectionStarted && IsNetworkMaster (); } }
 
 	public bool isImpact = false;
 	private float impactTime = 0;
@@ -27,12 +29,11 @@ public class Body : KinematicBody2D {
 	}
 
 	[Puppet] private Vector2 nextMovement = new Vector2 (0, 0);
-	[Master]
 	public Vector2 NextMovement {
 		get { return nextMovement; }
 		set {
 			nextMovement = value;
-			if (Network.IsConnectionStarted)
+			if (IsTrueMaster)
 				RsetUnreliable ("nextMovement", nextMovement);
 		}
 	}
@@ -53,24 +54,24 @@ public class Body : KinematicBody2D {
 	}
 
 	public override void _PhysicsProcess (float delta) {
-		if (!Network.IsConnectionStarted || IsNetworkMaster ()) { //Master Code
-			// Movement in case of impact
-			if (isImpact) {
-				impactTime -= delta;
-				collInfo = MoveAndCollide (impactDirection * delta);
-				if (impactTime <= 0) {
-					impactTime = 0;
-					isImpact = false;
-				}
-			} else if (NextMovement != Vector2.Zero) { // Normal Movement
-				collInfo = MoveAndCollide (NextMovement * WALK_SPEED * delta);
-				NextMovement = new Vector2 (0, 0);
+		if (isImpact) { // Movement in case of impact
+			impactTime -= delta;
+			collInfo = MoveAndCollide (impactDirection * delta);
+			if (impactTime <= 0) {
+				impactTime = 0;
+				isImpact = false;
 			}
+		} else if (NextMovement != Vector2.Zero) { // Normal Movement
+			collInfo = MoveAndCollide (NextMovement * WALK_SPEED * delta);
+		}
+		if (IsMaster) {
+			NextMovement = new Vector2 (0, 0);
 			if (collInfo != null)
 				EmitSignal ("body_collision", collInfo);
-			if (Network.IsConnectionStarted)
-				RsetUnreliable ("PuppetPosition", Position);
-		} else { //Puppet Code
+		}
+		if (IsTrueMaster) //Master Code
+			RsetUnreliable ("PuppetPosition", Position);
+		else { //Puppet Code
 			if (PuppetPosition != Vector2.Zero)
 				Position = PuppetPosition;
 		}

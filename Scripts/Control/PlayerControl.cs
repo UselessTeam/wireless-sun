@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Godot;
 
 public class PlayerControl : ControlComponent {
@@ -6,22 +7,29 @@ public class PlayerControl : ControlComponent {
 
     bool isAttacking = false;
     public bool IsAttacking { get { return isAttacking; } set { isAttacking = value; } }
-
     public new bool CanMove { get { return !isAttacking && MyBody.CanMove; } }
 
     public override void _Ready () {
         base._Ready ();
     }
 
-    string[] ActionList = {
-        "left_action",
-        "right_action"
+    [Signal] public delegate void StartCooldown (string action, float time);
+    Godot.Collections.Dictionary<ActionList, float> cooldown = new Godot.Collections.Dictionary<ActionList, float> () { { ActionList.left_action, 0 }, { ActionList.right_action, 0 },
     };
+    Godot.Collections.Dictionary<ActionList, string> actionToPanelName = new Godot.Collections.Dictionary<ActionList, string> () { { ActionList.left_action, "LeftHand" }, { ActionList.right_action, "RightHand" },
+    };
+
+    public enum ActionList {
+        left_action,
+        right_action
+    }
 
     public override void _Input (InputEvent _event) {
         if (IsMaster) {
-            foreach (var act in ActionList) {
-                if (_event.IsActionPressed (act)) {
+            foreach (ActionList act in Enum.GetValues (typeof (ActionList))) {
+                if (_event.IsActionPressed (act.ToString ())) {
+                    if (cooldown[act] > 0)
+                        return;
                     if (Network.IsConnectionStarted) {
                         // If connected to a server, the event will be sent to all puppets
                         this.Rpc ("_Action", act);
@@ -39,15 +47,18 @@ public class PlayerControl : ControlComponent {
     }
 
     [Puppet]
-    public void _Action (string _event) {
-        if (CanMove && _event.Contains ("_action")) {
-            var weaponData = GameRoot.inventory.equipement.GetAction (_event == "left_action");
-            if (weaponData.Action == ActionType.Attack) {
-                GetNode<PlayerAttack> ("Attack")._StartAttack (weaponData.AttackData);
-                isAttacking = true;
-            } else if (weaponData.Action == ActionType.Block) {
-                GD.Print ("Block!");
-            }
+    public void _Action (ActionList _action) {
+        if (CanMove && _action.ToString ().Contains ("_action")) {
+            var weaponData = GameRoot.inventory.equipement.GetAction (_action == ActionList.left_action);
+            // if (weaponData.Action == ActionType.Attack) {
+            GetNode<PlayerAttack> (weaponData.Action.ToString ())._StartAttack (weaponData.Action, weaponData.AttackData);
+            isAttacking = true;
+            // } else if (weaponData.Action == ActionType.Block) {
+            //     GD.Print ("Block!");
+            // }
+            EmitSignal (nameof (StartCooldown), (_action == ActionList.left_action) ? "LeftHand" : "RightHand", weaponData.Cooldown);
+            // cooldownedActions.Add (_action);
+            cooldown[_action] = weaponData.Cooldown;
         }
     }
 
@@ -69,6 +80,11 @@ public class PlayerControl : ControlComponent {
             }
             if (Input.IsActionPressed ("interact") && currentInteraction != null)
                 currentInteraction.Interact ();
+            foreach (var act in cooldown) {
+                if (act.Value < 0)
+                    continue;
+                cooldown[act.Key] -= delta;
+            }
         }
     }
 
