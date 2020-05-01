@@ -23,8 +23,8 @@ public class GUI : Node {
 		GameRoot.Instance.Connect (nameof (GameRoot.GameplayStarted), this, nameof (GameplayStart));
 	}
 
-	public void GameplayStart () { GetNode<WeaponHotbar> ("WeaponHotbar").Show (); }
-	public void GameplayEnd () { GetNode<WeaponHotbar> ("WeaponHotbar").Hide (); }
+	public void GameplayStart () { GetNode<Control> ("ShowOnGameplay").Show (); }
+	public void GameplayEnd () { GetNode<Control> ("ShowOnGameplay").Hide (); }
 
 	public GUIWindow GetWindowNode (Window window) {
 		if (window == Window.Inventory) {

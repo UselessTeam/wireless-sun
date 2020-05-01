@@ -71,7 +71,7 @@ public class Gameplay : Node2D {
 			// }
 		}
 		if (_input.IsActionPressed ("inventory")) {
-			GetNode<GUI> ("/root/GUI").Toggle (GUI.Window.Inventory);
+			GameRoot._GUI.Toggle (GUI.Window.Inventory);
 		}
 	}
 

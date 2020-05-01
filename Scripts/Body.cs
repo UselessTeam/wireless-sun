@@ -5,6 +5,8 @@ public class Body : KinematicBody2D {
 	[Export] public float IMPACT_FACTOR = 800;
 	[Export] public float WALK_SPEED = 100;
 
+	public static Vector2 IsometricMultiplier = new Vector2 (1.5f, 1);
+
 	[Signal] delegate void body_collision (KinematicCollision2D collInfo);
 	[Signal] delegate void TakeDamage (AttackResource attack, Vector2 direction);
 	KinematicCollision2D collInfo = null;
@@ -56,13 +58,13 @@ public class Body : KinematicBody2D {
 	public override void _PhysicsProcess (float delta) {
 		if (isImpact) { // Movement in case of impact
 			impactTime -= delta;
-			collInfo = MoveAndCollide (impactDirection * delta);
+			collInfo = MoveAndCollide (impactDirection * IsometricMultiplier * delta);
 			if (impactTime <= 0) {
 				impactTime = 0;
 				isImpact = false;
 			}
 		} else if (NextMovement != Vector2.Zero) { // Normal Movement
-			collInfo = MoveAndCollide (NextMovement * WALK_SPEED * delta);
+			collInfo = MoveAndCollide (NextMovement * IsometricMultiplier * WALK_SPEED * delta);
 		}
 		if (IsMaster) {
 			NextMovement = new Vector2 (0, 0);
