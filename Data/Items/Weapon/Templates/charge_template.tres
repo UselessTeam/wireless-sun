@@ -3,10 +3,11 @@
 [ext_resource path="res://Scripts/Resources/AttackTemplate.cs" type="Script" id=1]
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource( 1 )
-damage = 1.5
-knockback = 1.7
-range = 0.7
-cooldown = 0.8
-type = 2
+damage = 3.0
+knockback = 100.0
+range = 10.0
+cooldown = 1.5
+type = 0
 effect = 0

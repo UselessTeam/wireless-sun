@@ -30,6 +30,7 @@ public class WeaponResource : EquipementResource {
 }
 
 public enum ActionType {
-    Attack,
+    MultiAttack,
+    ChargeAttack,
     Block
 }

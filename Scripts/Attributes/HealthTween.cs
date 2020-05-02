@@ -16,7 +16,5 @@ public class HealthTween : Tween {
     public void StopFlicker () {
         RemoveAll ();
         currentNode.Modulate += new Color (0, 0, 0, 1);
-        // modulate.a;
-        // currentNode.Modulate. = new Color (1, 1, 1, 1);
     }
 }

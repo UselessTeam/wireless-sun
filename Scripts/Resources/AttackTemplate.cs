@@ -19,8 +19,9 @@ public class AttackTemplate : Resource {
 
     public AttackTemplate () {}
 
-    public AttackTemplate (float damage, float range, float cooldown, AttackType type, AttackEffect effect) {
+    public AttackTemplate (float damage = 1, float knockback = 1, float range = 1, float cooldown = 1, AttackType type = AttackType.None, AttackEffect effect = AttackEffect.None) {
         this.damage = damage;
+        this.knockback = knockback;
         this.range = range;
         this.cooldown = cooldown;
         this.type = type;

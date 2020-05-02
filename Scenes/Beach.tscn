@@ -58,4 +58,4 @@ craftLocation = "forge"
 
 [node name="CraftingTable" parent="." instance=ExtResource( 4 )]
 position = Vector2( 288, -16 )
-craftLocation = "CraftingTable"
+craftLocation = "crafting_table"

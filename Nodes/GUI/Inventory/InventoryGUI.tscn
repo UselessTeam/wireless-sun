@@ -10,8 +10,6 @@
 [ext_resource path="res://Scripts/GUI/Inventory/InventoryGrid.cs" type="Script" id=8]
 
 [node name="InventoryGUI" type="Control"]
-anchor_right = 1.0
-anchor_bottom = 1.0
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -27,9 +25,10 @@ __meta__ = {
 }
 
 [node name="InventoryBag" type="PanelContainer" parent="."]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_bottom = 14.0
+margin_left = 1888.35
+margin_top = 14.2159
+margin_right = 1902.35
+margin_bottom = 28.2159
 grow_horizontal = 0
 script = ExtResource( 1 )
 __meta__ = {
@@ -48,10 +47,10 @@ columns = 4
 script = ExtResource( 8 )
 
 [node name="EquipementUI" type="PanelContainer" parent="."]
-margin_left = 1639.31
-margin_top = 34.1782
-margin_right = 1701.31
-margin_bottom = 200.178
+margin_left = 1626.39
+margin_top = 32.8858
+margin_right = 1688.39
+margin_bottom = 198.886
 script = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false

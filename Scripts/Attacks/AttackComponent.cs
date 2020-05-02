@@ -9,8 +9,6 @@ public class AttackComponent : Node2D {
 	public ControlComponent MyUser { get { return GetParent<ControlComponent> (); } }
 	public Body MyUserBody { get { return MyUser.MyBody; } }
 
-	public override void _Ready () {}
-
 	public override void _Process (float delta) {
 		foreach (Body attackedBody in MyArea.GetOverlappingBodies ()) {
 			attackedBody.EmitSignal ("TakeDamage", attackData, (attackedBody.GlobalPosition - MyUserBody.GlobalPosition).Normalized ());

@@ -12,13 +12,13 @@
 [ext_resource path="res://Scripts/GUI/ShowHide.cs" type="Script" id=10]
 [ext_resource path="res://Scripts/GUI/GameplayElements/InventoryIcon.cs" type="Script" id=11]
 
-[sub_resource type="Theme" id=3]
+[sub_resource type="Theme" id=1]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=2]
 size = 48
 font_data = ExtResource( 5 )
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=3]
 size = 36
 font_data = ExtResource( 5 )
 
@@ -26,11 +26,6 @@ font_data = ExtResource( 5 )
 script = ExtResource( 2 )
 
 [node name="ShowOnGameplay" type="Control" parent="."]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_right = 40.0
-margin_bottom = 40.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -97,7 +92,9 @@ margin_bottom = 21.0
 text = "Inventory (F)"
 
 [node name="Inventory" parent="." instance=ExtResource( 1 )]
-theme = SubResource( 3 )
+anchor_right = 0.0
+anchor_bottom = 0.0
+theme = SubResource( 1 )
 
 [node name="Crafting" type="VBoxContainer" parent="."]
 margin_left = 14.3197
@@ -152,7 +149,7 @@ __meta__ = {
 [node name="Label" type="Label" parent="DeathScreen/CenterContainer/VBoxContainer"]
 margin_right = 369.0
 margin_bottom = 60.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 text = "You are dead"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -162,7 +159,7 @@ __meta__ = {
 margin_top = 64.0
 margin_right = 369.0
 margin_bottom = 109.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 3 )
 text = "Press R to respawn"
 __meta__ = {
 "_edit_use_anchors_": false

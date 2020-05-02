@@ -20,5 +20,5 @@ icon = ExtResource( 2 )
 armor = 4.0
 location = 0
 attackData = SubResource( 1 )
-Action = 1
+Action = 2
 Test = 0

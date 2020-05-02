@@ -35,6 +35,18 @@ public class AttackResource : Resource {
         effects |= template.Effect;
     }
 
+    public static AttackResource operator * (AttackResource resource, AttackTemplate template) {
+        if (template == null)
+            return resource;
+        var returnVal = new AttackResource (resource.Damage * template.Damage,
+            resource.Knockback * template.Knockback,
+            resource.Range * template.Range,
+            resource.Cooldown * template.Cooldown);
+        returnVal.types = resource.types | template.Type;
+        returnVal.effects = resource.effects | template.Effect;
+        return returnVal;
+    }
+
     // public AttackResource (float damage, float range, float cooldown, AttackType type, AttackEffect effect) {
     //     this.Damage = damage;
     //     this.Range = range;

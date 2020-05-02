@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/Pieces/Station.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Interactable/InteractionComponent.cs" type="Script" id=2]
 [ext_resource path="res://Assets/Sprites/Stations/stations.png" type="Texture" id=3]
 [ext_resource path="res://Scripts/Pieces/HideWhenBehind.cs" type="Script" id=4]
+[ext_resource path="res://Assets/Sprites/GUI/gui_panel_light.png" type="Texture" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 49.8258, 47.2717 )
@@ -46,10 +47,10 @@ shape = SubResource( 1 )
 
 [node name="HoverLight" type="Light2D" parent="Display"]
 visible = false
-texture = ExtResource( 3 )
-offset = Vector2( 144, 48 )
-color = Color( 0.901961, 0.976471, 0.0392157, 1 )
-energy = 1.86
+position = Vector2( 0.922073, -2.76621 )
+scale = Vector2( 3.21888, 2.21225 )
+texture = ExtResource( 5 )
+color = Color( 0.933333, 0.952941, 0.313726, 1 )
 
 [node name="Interaction" type="Area2D" parent="."]
 collision_layer = 0
@@ -65,4 +66,5 @@ scale = Vector2( 1.5, 1 )
 shape = SubResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource( 3 )
