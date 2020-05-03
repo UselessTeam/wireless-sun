@@ -26,14 +26,12 @@ public class PlayerControl : ControlComponent {
             }
         }
     }
-
     public bool IsBlocking { get { return (currentlyPerformed == null) ? false : currentlyPerformed.Action == ActionType.Block; } }
-
     public ActionList repeatAction = ActionList.none;
     public ActionList nextAction = ActionList.none;
 
     public new bool CanMove { get { return (!IsAttacking || currentlyPerformed.Action == ActionType.Block) && MyBody.CanMove; } }
-    public bool CanDoAction () { return CanMove && !isCharging; }
+    public bool CanDoAction () { return !IsAttacking && MyBody.CanMove && !isCharging; }
     public bool CanDoAction (ActionList action) { return CanDoAction () && cooldown[action] <= 0; }
 
     public PlayerAttack_Attack myAttack;
@@ -49,16 +47,17 @@ public class PlayerControl : ControlComponent {
     [Signal] public delegate void StartCharge (string action, float charge);
     [Signal] public delegate void StopCharge ();
     Godot.Collections.Dictionary<ActionList, float> cooldown =
-        new Godot.Collections.Dictionary<ActionList, float> () { { ActionList.left_action, 0 }, { ActionList.right_action, 0 },
+        new Godot.Collections.Dictionary<ActionList, float> () { { ActionList.left_action, 0 }, { ActionList.right_action, 0 }, { ActionList.dash, 0 },
         };
     Godot.Collections.Dictionary<ActionList, string> actionToPanelName =
-        new Godot.Collections.Dictionary<ActionList, string> () { { ActionList.left_action, "LeftHand" }, { ActionList.right_action, "RightHand" },
+        new Godot.Collections.Dictionary<ActionList, string> () { { ActionList.left_action, "LeftHand" }, { ActionList.right_action, "RightHand" }, { ActionList.right_action, "Dash" },
         };
 
     public enum ActionList {
         none = -1,
         left_action,
-        right_action
+        right_action,
+        dash,
     }
 
     public override void _Input (InputEvent _event) {
@@ -91,7 +90,7 @@ public class PlayerControl : ControlComponent {
     }
 
     void InitCooldown (ActionList action, float value) {
-        EmitSignal (nameof (StartCooldown), (action == ActionList.left_action) ? "LeftHand" : "RightHand", value);
+        EmitSignal (nameof (StartCooldown), actionToPanelName[action], value);
         cooldown[action] = value;
     }
 
@@ -119,6 +118,8 @@ public class PlayerControl : ControlComponent {
             } else if (weaponData.Action == ActionType.Block) {
                 LaunchAttack (weaponData, _action);
             }
+        } else if (_action == ActionList.dash) {
+            MyBody.StartImpact (MyBody.FacingDirection, 0.2f);
         }
     }
 
