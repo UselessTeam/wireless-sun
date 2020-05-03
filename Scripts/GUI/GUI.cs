@@ -19,6 +19,7 @@ public class GUI : Node {
 		crafting.Hide ();
 		pauseMenu = GetNode<PauseMenu> ("PauseMenu");
 		pauseMenu.Hide ();
+		GetNode<Control> ("ShowOnGameplay").Hide ();
 
 		GameRoot.Instance.Connect (nameof (GameRoot.GameplayStarted), this, nameof (GameplayStart));
 	}

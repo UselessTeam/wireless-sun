@@ -8,7 +8,7 @@
 [ext_resource path="res://Assets/Sprites/attack.png" type="Texture" id=6]
 [ext_resource path="res://Scripts/Body.cs" type="Script" id=7]
 [ext_resource path="res://Scripts/InventoryManagement/Picker.cs" type="Script" id=8]
-[ext_resource path="res://Nodes/Health.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Nodes/Components/Health.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Assets/Sprites/interact.png" type="Texture" id=10]
 [ext_resource path="res://Assets/Sprites/Paulyn's experiments/Sprite_exhibit_B.png" type="Texture" id=11]
 [ext_resource path="res://Assets/Sprites/TempArt/shield.png" type="Texture" id=12]
@@ -18,46 +18,46 @@
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 6 )
-region = Rect2( 0, 0, 24, 24 )
+region = Rect2( 0, 24, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 6 )
-region = Rect2( 24, 0, 24, 24 )
+region = Rect2( 24, 24, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 6 )
-region = Rect2( 48, 0, 24, 24 )
+region = Rect2( 48, 24, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 6 )
-region = Rect2( 72, 0, 24, 24 )
+region = Rect2( 72, 24, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 6 )
-region = Rect2( 0, 24, 24, 24 )
+region = Rect2( 0, 0, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 6 )
-region = Rect2( 24, 24, 24, 24 )
+region = Rect2( 24, 0, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 6 )
-region = Rect2( 48, 24, 24, 24 )
+region = Rect2( 48, 0, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=8]
 atlas = ExtResource( 6 )
-region = Rect2( 72, 24, 24, 24 )
+region = Rect2( 72, 0, 24, 24 )
 
 [sub_resource type="SpriteFrames" id=9]
 animations = [ {
 "frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
 "loop": true,
-"name": "straight",
+"name": "diagonal",
 "speed": 20.0
 }, {
 "frames": [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
 "loop": true,
-"name": "diagonal",
+"name": "straight",
 "speed": 20.0
 } ]
 
@@ -193,3 +193,5 @@ shape = SubResource( 14 )
 position = Vector2( -11.2256, 8.83324 )
 MAX_HP = 300.0
 FLICKER_TIME = 1.0
+
+[node name="Movement" type="Node2D" parent="."]

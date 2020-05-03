@@ -25,10 +25,16 @@ position = Vector2( 24, 24 )
 scale = Vector2( 1.02048, 0.903582 )
 
 [node name="Mask" type="Sprite" parent="."]
-modulate = Color( 0, 0, 0, 0.639216 )
+visible = false
+modulate = Color( 0, 0, 0, 0.505882 )
 position = Vector2( 24, 24 )
-scale = Vector2( 2, 1e-05 )
+scale = Vector2( 2, 2 )
 texture = ExtResource( 4 )
 
 [node name="Tween" type="Tween" parent="Mask"]
 script = ExtResource( 5 )
+
+[node name="CooldownBar" type="Sprite" parent="Mask"]
+modulate = Color( 0, 0, 0, 0.898039 )
+scale = Vector2( 1, 0.5 )
+texture = ExtResource( 4 )

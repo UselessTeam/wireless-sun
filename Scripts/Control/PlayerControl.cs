@@ -4,7 +4,7 @@ using Godot;
 
 public class PlayerControl : ControlComponent {
     [Export] public float FLICKER_TIME = 3;
-    // [Export] public float BUFFER_TIME = 0.5f;
+    [Export] public float BUFFER_TIME = 0.4f;
     [Export] public float CHARGE_TIME = 1;
     [Export] public float CHARGE_SPEED_MULTIPLIER = 0.5f;
     public AttackTemplate CHARGE_TEMPLATE = new AttackTemplate (3, 1.5f, 2, 1.5f);
@@ -29,6 +29,8 @@ public class PlayerControl : ControlComponent {
     public bool IsBlocking { get { return (currentlyPerformed == null) ? false : currentlyPerformed.Action == ActionType.Block; } }
     public ActionList repeatAction = ActionList.none;
     public ActionList nextAction = ActionList.none;
+    public ActionList bufferedNextAction = ActionList.none;
+    public float bufferTimeLeft = 0;
 
     public new bool CanMove { get { return (!IsAttacking || currentlyPerformed.Action == ActionType.Block) && MyBody.CanMove; } }
     public bool CanDoAction () { return !IsAttacking && MyBody.CanMove && !isCharging; }
@@ -50,7 +52,7 @@ public class PlayerControl : ControlComponent {
         new Godot.Collections.Dictionary<ActionList, float> () { { ActionList.left_action, 0 }, { ActionList.right_action, 0 }, { ActionList.dash, 0 },
         };
     Godot.Collections.Dictionary<ActionList, string> actionToPanelName =
-        new Godot.Collections.Dictionary<ActionList, string> () { { ActionList.left_action, "LeftHand" }, { ActionList.right_action, "RightHand" }, { ActionList.right_action, "Dash" },
+        new Godot.Collections.Dictionary<ActionList, string> () { { ActionList.left_action, "LeftHand" }, { ActionList.right_action, "RightHand" }, { ActionList.dash, "Dash" },
         };
 
     public enum ActionList {
@@ -94,13 +96,28 @@ public class PlayerControl : ControlComponent {
         cooldown[action] = value;
     }
 
-    void CooldownFinished (ActionList action) {
-        if (repeatAction == action && CanDoAction (action)) {
-            _StartAction (action);
+    void StartNextAction () {
+        if (nextAction != ActionList.none && CanDoAction (nextAction)) {
+            _StartAction (nextAction);
+            nextAction = ActionList.none;
+        } else if (bufferedNextAction != ActionList.none && CanDoAction (bufferedNextAction)) {
+            _StartAction (bufferedNextAction);
+            bufferedNextAction = ActionList.none;
+        } else if (repeatAction != ActionList.none && CanDoAction (repeatAction)) {
+            _StartAction (repeatAction);
         }
+    }
+
+    void StartNextAction (ActionList action) {
         if (nextAction == action && CanDoAction (action)) {
             _StartAction (action);
             nextAction = ActionList.none;
+        } else if (bufferedNextAction == action && CanDoAction (bufferedNextAction)) {
+            _StartAction (bufferedNextAction);
+            _ActionReleased (bufferedNextAction);
+            bufferedNextAction = ActionList.none;
+        } else if (repeatAction == action && CanDoAction (action)) {
+            _StartAction (action);
         }
     }
 
@@ -125,8 +142,12 @@ public class PlayerControl : ControlComponent {
 
     [PuppetSync]
     public void _ActionReleased (ActionList _action) {
-        if (_action == nextAction)
+        if (_action == nextAction) {
+            bufferedNextAction = nextAction;
             nextAction = ActionList.none;
+            bufferTimeLeft = BUFFER_TIME;
+            return;
+        }
         if (_action.ToString ().Contains ("_action")) {
             var weaponData = GameRoot.inventory.equipement.GetAction (_action == ActionList.left_action);
             if (weaponData.Action == ActionType.MultiAttack) {
@@ -150,10 +171,7 @@ public class PlayerControl : ControlComponent {
 
     public void _AttackFinished () {
         currentlyPerformed = null;
-        if (nextAction != ActionList.none && CanDoAction (nextAction)) {
-            _StartAction (nextAction);
-            nextAction = ActionList.none;
-        }
+        StartNextAction ();
     }
 
     public override void _Process (float delta) {
@@ -182,7 +200,11 @@ public class PlayerControl : ControlComponent {
                 if (act.Value <= 0)
                     continue;
                 cooldown[act.Key] -= delta;
-                if (cooldown[act.Key] <= 0) CooldownFinished (act.Key);
+                if (cooldown[act.Key] <= 0) StartNextAction (act.Key);
+            }
+            if (bufferTimeLeft > 0) {
+                bufferTimeLeft -= delta;
+                if (bufferTimeLeft <= 0) bufferedNextAction = ActionList.none;
             }
         }
         if (isCharging) chargedTime += delta;
