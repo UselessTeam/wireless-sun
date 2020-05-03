@@ -93,10 +93,10 @@ namespace Item {
             return MakeSlot (new ItemId (Convert.ToUInt16 (slotData["ID"])), Convert.ToUInt16 (slotData["Size"]));
         }
 
-        public static Body MakeBody (string item, ushort quantity = 1) {
-            var body = ((PackedScene) GD.Load (baseItemPath)).Instance ().GetNode<Body> ("./");
-            body.GetNode<PickableControl> ("./Control").SetStack (item, quantity);
-            return body;
+        public static IPiece MakePiece (string item, ushort quantity = 1) {
+            var piece = ((PackedScene) GD.Load (baseItemPath)).Instance ().GetNode<KinematicPiece> ("./");
+            piece.GetNode<PickableControl> ("./Control").SetStack (item, quantity);
+            return piece;
         }
     }
 

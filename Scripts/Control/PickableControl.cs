@@ -7,7 +7,7 @@ public class PickableControl : ControlComponent {
 
 	public override void _Ready () {
 		base._Ready ();
-		MyBody.Connect ("body_collision", this, "_OnCollisionWithPlayer");
+		GetNode<MovementComponent> ("../Movement").Connect (nameof (MovementComponent.BodyCollision), this, "_OnCollisionWithPlayer");
 	}
 
 	public void SetStack (string item, ushort quantity) {
@@ -27,7 +27,7 @@ public class PickableControl : ControlComponent {
 
 	[PuppetSync] public void Gather () {
 		GameRoot.inventory.Add (Item.Manager.GetId (item), quantity);
-		GetParent<Body> ().QueueFree ();
+		GetParent<KinematicPiece> ().QueueFree ();
 	}
 
 	public new Godot.Collections.Dictionary<string, object> MakeSave () {

@@ -11,7 +11,7 @@ public class HealthBar : TextureProgress {
     public override void _Ready () {
         MaxValue = MyHealth.MAX_HP;
         Value = MyHealth.MAX_HP;
-        MyHealth.Connect ("hp_changed", this, "OnHpChanged");
+        MyHealth.Connect (nameof (HealthComponent.HpChanged), this, "OnHpChanged");
     }
 
     void OnHpChanged (float _HP) { Value = _HP; }

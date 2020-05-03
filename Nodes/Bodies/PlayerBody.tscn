@@ -1,12 +1,12 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://Scripts/Control/PlayerControl.cs" type="Script" id=1]
-[ext_resource path="res://Scripts/Attributes/FieldOfView.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/Components/FieldOfView.cs" type="Script" id=2]
 [ext_resource path="res://Assets/Musics/hit_sfx.wav" type="AudioStream" id=3]
 [ext_resource path="res://Nodes/Character/HumanCharacter.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scripts/Attacks/PlayerAttack_Attack.cs" type="Script" id=5]
 [ext_resource path="res://Assets/Sprites/attack.png" type="Texture" id=6]
-[ext_resource path="res://Scripts/Body.cs" type="Script" id=7]
+[ext_resource path="res://Scripts/KinematicPiece.cs" type="Script" id=7]
 [ext_resource path="res://Scripts/InventoryManagement/Picker.cs" type="Script" id=8]
 [ext_resource path="res://Nodes/Components/Health.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Assets/Sprites/interact.png" type="Texture" id=10]
@@ -14,7 +14,8 @@
 [ext_resource path="res://Assets/Sprites/TempArt/shield.png" type="Texture" id=12]
 [ext_resource path="res://Assets/Sprites/GUI/lifebar_fill.png" type="Texture" id=13]
 [ext_resource path="res://Scripts/Attacks/PlayerAttack_Block.cs" type="Script" id=14]
-[ext_resource path="res://Scripts/Attributes/ChargeBar.cs" type="Script" id=15]
+[ext_resource path="res://Scripts/Components/ChargeBar.cs" type="Script" id=15]
+[ext_resource path="res://Nodes/Components/Movement.tscn" type="PackedScene" id=16]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 6 )
@@ -85,6 +86,8 @@ radius = 116.08
 collision_layer = 2
 collision_mask = 5
 script = ExtResource( 7 )
+
+[node name="Movement" parent="." instance=ExtResource( 16 )]
 
 [node name="Display" type="Sprite" parent="."]
 position = Vector2( -0.463287, -10.1924 )
@@ -193,5 +196,3 @@ shape = SubResource( 14 )
 position = Vector2( -11.2256, 8.83324 )
 MAX_HP = 300.0
 FLICKER_TIME = 1.0
-
-[node name="Movement" type="Node2D" parent="."]

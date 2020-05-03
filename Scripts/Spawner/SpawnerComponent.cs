@@ -75,20 +75,20 @@ public abstract class SpawnerComponent : Node2D {
 
 	}
 
-	abstract protected Body GetSpawnee ();
+	abstract protected IPiece GetSpawnee ();
 
 	[PuppetSync]
 	void SpawnOne (string name, Vector2 position) {
-		var spawnBody = GetSpawnee ();
-		spawnBody.Name = name;
-		AddChild (spawnBody);
-		spawnBody.Position = position;
+		var spawnPiece = (Node2D) GetSpawnee ();
+		spawnPiece.Name = name;
+		AddChild (spawnPiece);
+		spawnPiece.Position = position;
 	}
 
 	[Master]
 	void SendAllSpawnees (int id) {
 		for (int i = 0; i < GetNumberSpawnees (); i++) {
-			var spawnee = (Body) GetChild (i + NON_SPAWNEE_CHILDREN);
+			var spawnee = (KinematicPiece) GetChild (i + NON_SPAWNEE_CHILDREN);
 			var name = spawnee.Name;
 			GD.Print ("Spawning ", name);
 			var position = spawnee.Position;

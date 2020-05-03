@@ -12,9 +12,9 @@ public class MinableControl : ControlComponent {
 	public new void _OnDied () {
 		for (int i = 0; i < items.Length; i++) {
 			var item = items[i];
-			Body itemBody = Item.Builder.MakeBody (item, (ushort) quantities[i]);
-			itemBody.Position = MyBody.Position + SpawnerComponent.GenerateSpawnPosition (dropRadius);
-			MyBody.GetParent ().AddChild (itemBody);
+			var itemPiece = (Node2D) Item.Builder.MakePiece (item, (ushort) quantities[i]);
+			itemPiece.Position = MyPiece.Position + SpawnerComponent.GenerateSpawnPosition (dropRadius);
+			MyPiece.GetParent ().AddChild (itemPiece);
 		}
 		base._OnDied ();
 	}

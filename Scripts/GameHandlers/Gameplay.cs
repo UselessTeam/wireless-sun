@@ -11,7 +11,7 @@ public class Gameplay : Node2D {
 	static private Camera2D myCamera;
 	static private Position2D spawnPoint;
 
-	static public Body myPlayer;
+	static public KinematicPiece myPlayer;
 
 	static public Dictionary<string, uint> Layer = new Dictionary<string, uint> ();
 
@@ -29,7 +29,9 @@ public class Gameplay : Node2D {
 		// Spawn player at the designated spawnpoint
 		spawnPoint = GetNode<Position2D> ("SpawnPoint");
 
-		Respawn (GetNodeOrNull<Body> ("MyPlayer"));
+		GD.Print ("Gameple spawn");
+
+		Respawn (GetNodeOrNull<KinematicPiece> ("MyPlayer"));
 
 		// Building Layer List
 		for (int i = 1; i <= 20; i += 1) {
@@ -38,16 +40,14 @@ public class Gameplay : Node2D {
 				name = "layer" + i;
 			Layer[name] = (uint) 1 << i - 1;
 		} // TODO move this to Global
-
 		GameRoot.GameplayReady ();
-
 	}
 
-	public static Body SpawnPlayer (int id, Vector2 position) {
+	public static KinematicPiece SpawnPlayer (int id, Vector2 position) {
 		if (Instance == null)
 			return null;;
 		GD.Print ("New player entering : " + id);
-		var newPlayer = ((PackedScene) GD.Load ("res://Nodes/Bodies/PlayerBody.tscn")).Instance ().GetNode<Body> ("./");
+		var newPlayer = ((PackedScene) GD.Load ("res://Nodes/Bodies/PlayerBody.tscn")).Instance ().GetNode<KinematicPiece> ("./");
 		newPlayer.Name = id.ToString ();
 		newPlayer.SetNetworkMaster (id);
 		newPlayer.Position = position;
@@ -84,7 +84,7 @@ public class Gameplay : Node2D {
 		myPlayer = null;
 	}
 
-	public void Respawn (Body cameraHolder = null) {
+	public void Respawn (KinematicPiece cameraHolder = null) {
 		GetNode<CanvasItem> ("/root/GUI/DeathScreen").Hide ();
 		int id = (Network.IsConnectionStarted) ? GetTree ().GetNetworkUniqueId () : 1;
 		if (cameraHolder == null)

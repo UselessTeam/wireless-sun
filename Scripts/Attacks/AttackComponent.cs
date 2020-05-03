@@ -7,11 +7,13 @@ public class AttackComponent : Node2D {
 	public Area2D MyArea { get { return GetNode<Area2D> ("Hitbox"); } }
 
 	public ControlComponent MyUser { get { return GetParent<ControlComponent> (); } }
-	public Body MyUserBody { get { return MyUser.MyBody; } }
+	public MovementComponent MyUserMovement { get { return MyUser.MyMovement; } }
 
 	public override void _Process (float delta) {
-		foreach (Body attackedBody in MyArea.GetOverlappingBodies ()) {
-			attackedBody.EmitSignal ("TakeDamage", attackData, (attackedBody.GlobalPosition - MyUserBody.GlobalPosition).Normalized ());
+		foreach (Node2D attackedPiece in MyArea.GetOverlappingBodies ()) {
+			var health = attackedPiece.GetNodeOrNull<HealthComponent> ("Health");
+			if (health != null)
+				health.TakeDamage (attackData, (attackedPiece.GlobalPosition - MyUserMovement.GlobalPosition).Normalized ());
 		}
 	}
 

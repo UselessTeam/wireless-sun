@@ -6,14 +6,15 @@ public abstract class ControlComponent : Node2D {
         AddToGroup ("SaveNodes");
     }
 
-    public bool CanMove { get { return GetParent<Body> ().CanMove; } }
+    public bool CanMove { get { return MyMovement.CanMove; } }
     public bool IsMaster { get { return !Network.IsConnectionStarted || IsNetworkMaster (); } }
     public bool IsTrueMaster { get { return Network.IsConnectionStarted && IsNetworkMaster (); } }
 
-    public Body MyBody { get { return GetParent<Body> (); } }
+    public MovementComponent MyMovement { get { return GetNodeOrNull<MovementComponent> ("../Movement"); } }
+    public KinematicPiece MyPiece { get { return GetParent<KinematicPiece> (); } }
 
     public void _OnDied () {
-        MyBody.QueueFree ();
+        MyPiece.QueueFree ();
     }
 
     // Save and load data of the object in a file
@@ -21,19 +22,19 @@ public abstract class ControlComponent : Node2D {
         var saveObject = new Godot.Collections.Dictionary<string, object> () {
                 {
                 "Filename",
-                MyBody.Filename
-                }, { "Name", MyBody.Name }, {
+                MyPiece.Filename
+                }, { "Name", MyPiece.Name }, {
                 "Parent",
-                MyBody.GetParent ().GetPath ()
+                MyPiece.GetParent ().GetPath ()
                 }, { "ControlPosition", GetPositionInParent () }, {
                 "PositionX",
-                MyBody.Position.x
-                }, { "PositionY", MyBody.Position.y }
+                MyPiece.Position.x
+                }, { "PositionY", MyPiece.Position.y }
             };
         return saveObject;
     }
 
     public void LoadData (Godot.Collections.Dictionary<string, object> saveObject) {
-        MyBody.Position = new Vector2 (Convert.ToSingle (saveObject["PositionX"]), Convert.ToSingle (saveObject["PositionY"]));
+        MyPiece.Position = new Vector2 (Convert.ToSingle (saveObject["PositionX"]), Convert.ToSingle (saveObject["PositionY"]));
     }
 }

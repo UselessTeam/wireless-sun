@@ -16,9 +16,9 @@ public class ShadowBallControl : ControlComponent {
 		if (IsMaster) {
 			var direction = new Vector2 (0, 0);
 			if (CanSeePlayer && CanMove) {
-				var playerBody = myFOV.GetClosestPlayer ();
-				direction = (playerBody.GlobalPosition - MyBody.GlobalPosition).Normalized ();
-				MyBody.NextMovement = direction;
+				var playerPiece = myFOV.GetClosestPlayer ();
+				direction = (playerPiece.GlobalPosition - MyPiece.GlobalPosition).Normalized ();
+				MyMovement.NextMovement = direction;
 			}
 		}
 	}

@@ -4,7 +4,7 @@ using Godot;
 public class PrefabSpawner : SpawnerComponent {
 	[Export] public PackedScene spawnPrefab;
 
-	override protected Body GetSpawnee () {
-		return spawnPrefab.Instance ().GetNode<Body> ("./");
+	override protected IPiece GetSpawnee () {
+		return spawnPrefab.Instance ().GetNode<KinematicPiece> ("./");
 	}
 }

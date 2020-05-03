@@ -13,7 +13,7 @@ public abstract class PlayerAttack_Base : AttackComponent {
     public override void _Process (float delta) { base._Process (delta); }
 
     public void PositionSelf () {
-        Vector2 direction = MyUserBody.FacingDirection;
+        Vector2 direction = MyUserMovement.FacingDirection;
         Position = base_distance_to_player * attackData.Range * direction;
         Rotation = direction.Angle ();
     }

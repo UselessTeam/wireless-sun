@@ -32,8 +32,8 @@ public class PlayerControl : ControlComponent {
     public ActionList bufferedNextAction = ActionList.none;
     public float bufferTimeLeft = 0;
 
-    public new bool CanMove { get { return (!IsAttacking || currentlyPerformed.Action == ActionType.Block) && MyBody.CanMove; } }
-    public bool CanDoAction () { return !IsAttacking && MyBody.CanMove && !isCharging; }
+    public new bool CanMove { get { return (!IsAttacking || currentlyPerformed.Action == ActionType.Block) && MyMovement.CanMove; } }
+    public bool CanDoAction () { return !IsAttacking && MyMovement.CanMove && !isCharging; }
     public bool CanDoAction (ActionList action) { return CanDoAction () && cooldown[action] <= 0; }
 
     public PlayerAttack_Attack myAttack;
@@ -86,7 +86,7 @@ public class PlayerControl : ControlComponent {
                 }
             }
             if (_event is InputEventMouseMotion eventMouseMotion) {
-                MyBody.FacingDirection = GetGlobalMousePosition () - MyBody.GlobalPosition;
+                MyMovement.FacingDirection = GetGlobalMousePosition () - MyMovement.GlobalPosition;
             }
         }
     }
@@ -136,7 +136,7 @@ public class PlayerControl : ControlComponent {
                 LaunchAttack (weaponData, _action);
             }
         } else if (_action == ActionList.dash) {
-            MyBody.StartImpact (MyBody.FacingDirection, 0.2f);
+            MyMovement.StartImpact (MyMovement.FacingDirection, 0.2f);
         }
     }
 
@@ -191,7 +191,7 @@ public class PlayerControl : ControlComponent {
                     inputMovement *= CHARGE_SPEED_MULTIPLIER;
                 if (IsBlocking)
                     inputMovement *= BLOCK_SPEED_MULTIPLIER;
-                MyBody.NextMovement = inputMovement;
+                MyMovement.NextMovement = inputMovement;
                 inputMovement = new Vector2 (0, 0);
             }
             if (Input.IsActionPressed ("interact") && currentInteraction != null)
@@ -222,7 +222,8 @@ public class PlayerControl : ControlComponent {
         base.LoadData (saveObject);
         GetNode<HealthComponent> ("../Health").HP = Convert.ToSingle (saveObject["HP"]);
         if (saveObject.ContainsKey ("MyPlayer"))
-            MyBody.Name = "MyPlayer";
+            MyPiece.Name = "MyPlayer";
+        GD.Print ("Piece ready");
     }
 
     public new void _OnDied () {
