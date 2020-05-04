@@ -56,8 +56,8 @@ public static class Save {
 		set { currentSave = value; }
 	}
 
-	static Directory Directory = new Directory ();
-	static File File = new File ();
+	static Godot.Directory Directory = new Directory ();
+	static Godot.File File = new Godot.File ();
 
 	public static List<string> GetSaveList () {
 		var list = new List<string> ();

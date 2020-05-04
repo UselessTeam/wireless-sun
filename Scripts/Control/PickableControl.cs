@@ -7,7 +7,7 @@ public class PickableControl : ControlComponent {
 	[Export] public string item;
 	[Export] public ushort quantity = 1;
 
-	PlayerControl gatheringPlayer = null;
+	bool gathered = false;
 
 	public override void _Ready () {
 		base._Ready ();
@@ -20,20 +20,24 @@ public class PickableControl : ControlComponent {
 	}
 
 	public void Gather (ControlComponent gatheringPlayer) {
+		if (gathered)
+			return;
+		gathered = true;
 		Tween tween = GetNode<Tween> ("Tween");
 		tween.InterpolateProperty (MyPiece, "global_position", MyPiece.GlobalPosition, gatheringPlayer.GlobalPosition, GATHERING_TIME);
 		if (gatheringPlayer.IsMaster) {
-			tween.InterpolateCallback (this, GATHERING_TIME, nameof (AddToInventory));
-			if (IsTrueMaster)
-				tween.InterpolateCallback (this, GATHERING_TIME, nameof (Rpc), nameof (_OnDied));
-			else
-				tween.InterpolateCallback (this, GATHERING_TIME, nameof (_OnDied));
+			tween.InterpolateCallback (this, GATHERING_TIME, nameof (AddToInventoryAndQueueFree));
 		}
 		tween.Start ();
 	}
 
-	public void AddToInventory () {
+	public void AddToInventoryAndQueueFree () {
 		GameRoot.inventory.Add (Item.Manager.GetId (item), quantity);
+
+		if (IsTrueMaster)
+			Rpc (nameof (_OnDied));
+		else
+			_OnDied ();
 	}
 
 	public new Godot.Collections.Dictionary<string, object> MakeSave () {
