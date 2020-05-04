@@ -1,26 +1,23 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Scripts/KinematicPiece.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Control/PickableControl.cs" type="Script" id=2]
-[ext_resource path="res://Nodes/Components/Movement.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scripts/Pieces/BodilessPiece.cs" type="Script" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 6.19216
 
-[node name="Item" type="KinematicBody2D" groups=[
-"Persistent",
-]]
+[node name="Area2D" type="Area2D"]
 collision_layer = 8
-collision_mask = 2
-script = ExtResource( 1 )
-
-[node name="Movement" parent="." instance=ExtResource( 3 )]
+collision_mask = 0
+script = ExtResource( 4 )
 
 [node name="Control" type="Node2D" parent="."]
 script = ExtResource( 2 )
 item = "Berry"
 
 [node name="Sprite" type="Sprite" parent="Control"]
+
+[node name="Tween" type="Tween" parent="Control"]
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )

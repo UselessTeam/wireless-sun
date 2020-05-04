@@ -4,6 +4,7 @@ using Godot;
 
 public class PlayerControl : ControlComponent {
     [Export] public float FLICKER_TIME = 3;
+    [Export] public float ROLL_TIME = 0.15f;
     [Export] public float BUFFER_TIME = 0.4f;
     [Export] public float CHARGE_TIME = 1;
     [Export] public float CHARGE_SPEED_MULTIPLIER = 0.5f;
@@ -42,6 +43,7 @@ public class PlayerControl : ControlComponent {
     public override void _Ready () {
         myAttack = GetNode<PlayerAttack_Attack> ("Attack");
         myBlock = GetNode<PlayerAttack_Block> ("Block");
+        MyMovement.Connect (nameof (MovementComponent.EndImpact), this, nameof (StartNextAction));
         base._Ready ();
     }
 
@@ -136,8 +138,21 @@ public class PlayerControl : ControlComponent {
                 LaunchAttack (weaponData, _action);
             }
         } else if (_action == ActionList.dash) {
-            MyMovement.StartImpact (MyMovement.FacingDirection, 0.2f);
+            MyMovement.StartImpact (InputHelper.InputDirection (), ROLL_TIME);
+            GetParent<KinematicPiece> ().SetCollisionLayerBit (1, false); // Disappear from existence
+            GetParent<KinematicPiece> ().SetCollisionMaskBit (2, false); // Ignore enemies 
+            Timer flickerTimer = new Timer ();
+            flickerTimer.Connect ("timeout", this, nameof (StopRollInvulne));
+            flickerTimer.Name = "Timer";
+            AddChild (flickerTimer);
+            flickerTimer.Start (ROLL_TIME);
+            GetNode<HealthComponent> ("../Health").MakeInvulnerable (ROLL_TIME);
         }
+    }
+    public void StopRollInvulne () { // Collision back to normal
+        GetParent<KinematicPiece> ().SetCollisionLayerBit (1, true);
+        GetParent<KinematicPiece> ().SetCollisionMaskBit (2, true);
+        GetNode ("Timer").QueueFree ();
     }
 
     [PuppetSync]
@@ -146,7 +161,6 @@ public class PlayerControl : ControlComponent {
             bufferedNextAction = nextAction;
             nextAction = ActionList.none;
             bufferTimeLeft = BUFFER_TIME;
-            return;
         }
         if (_action.ToString ().Contains ("_action")) {
             var weaponData = GameRoot.inventory.equipement.GetAction (_action == ActionList.left_action);
@@ -176,15 +190,7 @@ public class PlayerControl : ControlComponent {
 
     public override void _Process (float delta) {
         if (IsMaster && CanMove) { // Master Code
-            Vector2 inputMovement = new Vector2 (0, 0);
-            if (Input.IsActionPressed ("ui_up"))
-                inputMovement.y = -1;
-            if (Input.IsActionPressed ("ui_down"))
-                inputMovement.y = 1;
-            if (Input.IsActionPressed ("ui_left"))
-                inputMovement.x = -1;
-            if (Input.IsActionPressed ("ui_right"))
-                inputMovement.x = 1;
+            Vector2 inputMovement = InputHelper.InputDirection ();
             if (inputMovement != Vector2.Zero) {
                 inputMovement = inputMovement.Normalized ();
                 if (IsCharging)
@@ -248,4 +254,19 @@ public class PlayerControl : ControlComponent {
         interactionSprite.Hide ();
     }
 
+}
+
+public static class InputHelper {
+    public static Vector2 InputDirection () {
+        Vector2 inputDirection = new Vector2 (0, 0);
+        if (Input.IsActionPressed ("ui_up"))
+            inputDirection.y = -1;
+        if (Input.IsActionPressed ("ui_down"))
+            inputDirection.y = 1;
+        if (Input.IsActionPressed ("ui_left"))
+            inputDirection.x = -1;
+        if (Input.IsActionPressed ("ui_right"))
+            inputDirection.x = 1;
+        return inputDirection.Normalized ();
+    }
 }

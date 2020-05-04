@@ -1,10 +1,12 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Scripts/Pieces/BuildingComponent.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/BuildingElements/BuildingComponent.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Tiles/Walls/WallTileset.tres" type="TileSet" id=2]
-[ext_resource path="res://Scripts/Pieces/BuildingWalls.cs" type="Script" id=3]
-[ext_resource path="res://Scripts/Pieces/BuildingRoof.cs" type="Script" id=4]
-[ext_resource path="res://Scripts/Pieces/HideWhenBehind.cs" type="Script" id=5]
+[ext_resource path="res://Scripts/BuildingElements/BuildingWalls.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/BuildingElements/BuildingRoof.cs" type="Script" id=4]
+[ext_resource path="res://Scripts/BuildingElements/HideWhenBehind.cs" type="Script" id=5]
+
+
 
 [node name="House" type="Node2D"]
 

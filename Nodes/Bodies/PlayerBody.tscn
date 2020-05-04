@@ -6,7 +6,7 @@
 [ext_resource path="res://Nodes/Character/HumanCharacter.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scripts/Attacks/PlayerAttack_Attack.cs" type="Script" id=5]
 [ext_resource path="res://Assets/Sprites/attack.png" type="Texture" id=6]
-[ext_resource path="res://Scripts/KinematicPiece.cs" type="Script" id=7]
+[ext_resource path="res://Scripts/Pieces/KinematicPiece.cs" type="Script" id=7]
 [ext_resource path="res://Scripts/InventoryManagement/Picker.cs" type="Script" id=8]
 [ext_resource path="res://Nodes/Components/Health.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Assets/Sprites/interact.png" type="Texture" id=10]
@@ -83,6 +83,7 @@ radius = 14.5517
 radius = 116.08
 
 [node name="PlayerBody" type="KinematicBody2D"]
+position = Vector2( 0.994404, -3.18209 )
 collision_layer = 2
 collision_mask = 5
 script = ExtResource( 7 )

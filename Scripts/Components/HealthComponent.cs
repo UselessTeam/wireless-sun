@@ -8,8 +8,8 @@ public class HealthComponent : Node2D {
     [Export] public ArmorResource armor = null;
 
     private float _HP;
-    public bool isFlicker = false;
-    private float flickerTimeLeft = 0;
+    public bool isInvulnerable = false;
+    private float invlunerabilityTimeLeft = 0;
 
     [Signal] public delegate void HpChanged (float HP);
     [Signal] public delegate void Died ();
@@ -18,7 +18,7 @@ public class HealthComponent : Node2D {
         _HP = MAX_HP;
         Connect (nameof (Died), MyUser, nameof (ControlComponent._OnDied));
         if (MyUser == null)
-            GD.PrintErr ("Error in Node \"" + GetParent<KinematicPiece> ().Name + "\" : Health component requires a Control component");
+            GD.PrintErr ("Error in Node \"" + GetParent<Node2D> ().Name + "\" : Health component requires a Control component");
     }
 
     public ControlComponent MyUser { get { return GetNodeOrNull<ControlComponent> ("../Control"); } }
@@ -40,26 +40,30 @@ public class HealthComponent : Node2D {
         }
     }
 
+    public void MakeInvulnerable (float time) {
+        isInvulnerable = true;
+        invlunerabilityTimeLeft = Mathf.Max (time, invlunerabilityTimeLeft);
+    }
+
     public void TakeDamage (AttackResource attackData, Vector2 direction) {
-        if (isFlicker)
+        if (isInvulnerable)
             return;
         HP -= (armor == null) ? attackData.Damage : armor.ApplyDamage (attackData.Types, attackData.Damage);
-        isFlicker = true;
         float knockbackTime = attackData.Knockback / 1000.0f;
-        flickerTimeLeft = FLICKER_TIME + knockbackTime;
+        float realFlickerTime = FLICKER_TIME + knockbackTime;
+        MakeInvulnerable (realFlickerTime);
         if (MyUser.MyMovement != null)
             MyUser.MyMovement.StartImpact (direction, knockbackTime);
-        GetNode<HealthTween> ("Tween").StartFlicker (GetNode<Node2D> ("../Display"));
+        GetNode<HealthTween> ("Tween").StartFlicker (GetNode<Node2D> ("../Display"), realFlickerTime);
 
     }
 
     public override void _Process (float delta) {
-        if (isFlicker) {
-            flickerTimeLeft -= delta;
-            if (flickerTimeLeft < 0) {
-                isFlicker = false;
-                flickerTimeLeft = 0;
-                GetNode<HealthTween> ("Tween").StopFlicker ();
+        if (isInvulnerable) {
+            invlunerabilityTimeLeft -= delta;
+            if (invlunerabilityTimeLeft < 0) {
+                isInvulnerable = false;
+                invlunerabilityTimeLeft = 0;
             }
         }
     }

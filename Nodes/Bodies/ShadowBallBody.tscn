@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scripts/Control/ShadowBallControl.cs" type="Script" id=1]
-[ext_resource path="res://Scripts/KinematicPiece.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/Pieces/KinematicPiece.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/Attacks/AttackComponent.cs" type="Script" id=3]
 [ext_resource path="res://Assets/Sprites/mob_shadowball.png" type="Texture" id=4]
 [ext_resource path="res://Scripts/Components/FieldOfView.cs" type="Script" id=5]
@@ -61,7 +61,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Control/Attack/Hitbox"]
-position = Vector2( -0.311638, 8.10276 )
+position = Vector2( -0.863712, -7.17138 )
 shape = SubResource( 1 )
 
 [node name="FieldOfView" type="Area2D" parent="Control"]
@@ -71,14 +71,17 @@ collision_mask = 2
 script = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Control/FieldOfView"]
+position = Vector2( 1.10415, -7.177 )
 shape = SubResource( 2 )
 
 [node name="Display" type="AnimatedSprite" parent="."]
+position = Vector2( 0.184025, -12.1457 )
 frames = SubResource( 7 )
-frame = 1
+frame = 2
 playing = true
 
 [node name="Collision" type="CollisionPolygon2D" parent="."]
+position = Vector2( 0.736099, -13.986 )
 polygon = PoolVector2Array( -4.43527, 12.784, 3.22487, 12.784, 4.03802, 4.26392, -5.62297, 4.26392 )
 
 [node name="Health" parent="." instance=ExtResource( 6 )]

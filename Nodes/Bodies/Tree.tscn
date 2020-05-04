@@ -1,24 +1,21 @@
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Assets/Sprites/Paulyn/Tree_exhibit_B.png" type="Texture" id=1]
-[ext_resource path="res://Scripts/KinematicPiece.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/Pieces/StaticPiece.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/Control/MinableControl.cs" type="Script" id=3]
 [ext_resource path="res://Nodes/Components/Health.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Nodes/Spawners/ItemSpawner.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Assets/Sprites/Paulyn/Tree_exhibit_B_stump.png" type="Texture" id=6]
-[ext_resource path="res://Scripts/Pieces/HideWhenBehind.cs" type="Script" id=7]
+[ext_resource path="res://Scripts/BuildingElements/HideWhenBehind.cs" type="Script" id=7]
 [ext_resource path="res://Data/Armor/tree.tres" type="Resource" id=8]
-
-
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 49.8258, 47.2717 )
 
-[node name="Tree" type="KinematicBody2D"]
+[node name="Tree" type="StaticBody2D"]
 collision_layer = 17
 collision_mask = 0
 script = ExtResource( 2 )
-IMPACT_FACTOR = 0.0
 
 [node name="Control" type="Node2D" parent="."]
 script = ExtResource( 3 )
@@ -26,7 +23,7 @@ items = PoolStringArray( "wood", "stick" )
 quantities = PoolIntArray( 1, 2 )
 
 [node name="Display" type="Node2D" parent="."]
-position = Vector2( -7.43282, -41.2935 )
+position = Vector2( -8.07989, -52.9407 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -49,7 +46,7 @@ shape = SubResource( 1 )
 [node name="Tween" type="Tween" parent="Display/Top"]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-position = Vector2( -1.70793, 1.29123 )
+position = Vector2( -1.3844, -14.8855 )
 polygon = PoolVector2Array( -2.62158, 2.41028, 5.58296, 2.41028, 5.74074, 14.8748, -2.30602, 14.2437 )
 
 [node name="ItemSpawner" parent="." instance=ExtResource( 5 )]
@@ -58,5 +55,6 @@ SPAWN_DELAY = 6.0
 MAX_COUNT = 4.0
 
 [node name="Health" parent="." instance=ExtResource( 4 )]
+position = Vector2( -9.70602, 6.7942 )
 MAX_HP = 300.0
 armor = ExtResource( 8 )

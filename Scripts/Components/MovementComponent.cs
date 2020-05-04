@@ -9,11 +9,11 @@ public class MovementComponent : Node2D {
     public bool IsMaster { get { return !Network.IsConnectionStarted || IsNetworkMaster (); } }
     public bool IsTrueMaster { get { return Network.IsConnectionStarted && IsNetworkMaster (); } }
 
-    public KinematicBody2D MyBody { get { return GetParent<KinematicBody2D> (); } }
-    public IPiece MyPiece { get { return GetParent<IPiece> (); } }
+    public KinematicPiece MyBody;
 
     KinematicCollision2D collInfo = null;
     [Signal] public delegate void BodyCollision (KinematicCollision2D collInfo);
+    [Signal] public delegate void EndImpact ();
 
     public bool isImpact = false;
     private float impactTime = 0;
@@ -46,6 +46,8 @@ public class MovementComponent : Node2D {
 
     public bool CanMove { get { return !isImpact; } }
 
+    public override void _Ready () { MyBody = GetParent<KinematicPiece> (); }
+
     // Call whenever the piece is hit
     public void StartImpact (Vector2 direction, float time) {
         isImpact = true;
@@ -57,12 +59,15 @@ public class MovementComponent : Node2D {
         if (isImpact) { // Movement in case of impact
             impactTime -= delta;
             collInfo = MyBody.MoveAndCollide (impactDirection * IsometricMultiplier * delta);
+            MyBody.SetZAxis ();
             if (impactTime <= 0) {
                 impactTime = 0;
                 isImpact = false;
+                EmitSignal (nameof (EndImpact));
             }
         } else if (NextMovement != Vector2.Zero) { // Normal Movement
             collInfo = MyBody.MoveAndCollide (NextMovement * IsometricMultiplier * WALK_SPEED * delta);
+            MyBody.SetZAxis ();
         }
         if (IsMaster) {
             NextMovement = new Vector2 (0, 0);

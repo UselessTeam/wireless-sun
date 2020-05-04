@@ -88,7 +88,7 @@ public abstract class SpawnerComponent : Node2D {
 	[Master]
 	void SendAllSpawnees (int id) {
 		for (int i = 0; i < GetNumberSpawnees (); i++) {
-			var spawnee = (KinematicPiece) GetChild (i + NON_SPAWNEE_CHILDREN);
+			var spawnee = GetChild<Node2D> (i + NON_SPAWNEE_CHILDREN);
 			var name = spawnee.Name;
 			GD.Print ("Spawning ", name);
 			var position = spawnee.Position;

@@ -11,9 +11,9 @@ public abstract class ControlComponent : Node2D {
     public bool IsTrueMaster { get { return Network.IsConnectionStarted && IsNetworkMaster (); } }
 
     public MovementComponent MyMovement { get { return GetNodeOrNull<MovementComponent> ("../Movement"); } }
-    public KinematicPiece MyPiece { get { return GetParent<KinematicPiece> (); } }
+    public Node2D MyPiece { get { return GetParent<Node2D> (); } }
 
-    public void _OnDied () {
+    [PuppetSync] public void _OnDied () {
         MyPiece.QueueFree ();
     }
 

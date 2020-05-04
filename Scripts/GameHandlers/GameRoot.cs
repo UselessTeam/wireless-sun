@@ -130,7 +130,7 @@ public static class Save {
 			// Get the saved dictionary from the next line in the save file
 			// var line = saveGame.GetLine ();
 			// dynamic nodeData = (JSON.Parse (line).Result); //Godot.Collections.Dictionary<string, object>
-			var nodeData = JsonConvert.DeserializeObject<Dictionary<string, object>> (saveGame.GetLine ());
+			var nodeData = JsonConvert.DeserializeObject<Godot.Collections.Dictionary<string, object>> (saveGame.GetLine ());
 			if (nodeData == null) GD.Print ("null");
 			// Firstly, we need to check if we need to create the object 
 			Node loadNode;
@@ -142,11 +142,14 @@ public static class Save {
 				loadNode = GameRoot.Instance.GetNode (nodeData["Path"].ToString ());
 			}
 			// // Call the node's load function
-			if (!loadNode.HasMethod ("LoadData")) {
+			if (loadNode.HasMethod ("LoadData")) {
+				loadNode.Call ("LoadData", nodeData);
+			} else if (loadNode is IPiece) {
+				(loadNode as IPiece).LoadData (nodeData);
+			} else {
 				GD.Print ("persistent node " + loadNode.Name + " is missing a Load function, skipped");
-				continue;
+
 			}
-			loadNode.Call ("LoadData", nodeData);
 		}
 		saveGame.Close ();
 		GD.Print ("Loaded save : " + currentSave);

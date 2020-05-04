@@ -2,12 +2,15 @@ using System;
 using Godot;
 
 public class PickableControl : ControlComponent {
+	public static float GATHERING_TIME = 0.1f;
+
 	[Export] public string item;
 	[Export] public ushort quantity = 1;
 
+	PlayerControl gatheringPlayer = null;
+
 	public override void _Ready () {
 		base._Ready ();
-		GetNode<MovementComponent> ("../Movement").Connect (nameof (MovementComponent.BodyCollision), this, "_OnCollisionWithPlayer");
 	}
 
 	public void SetStack (string item, ushort quantity) {
@@ -16,18 +19,21 @@ public class PickableControl : ControlComponent {
 		GetNode<Sprite> ("Sprite").Texture = Item.Manager.GetId (item).data.icon;
 	}
 
-	public void _OnCollisionWithPlayer (KinematicCollision2D collInfo) {
-		if (IsMaster) {
-			if (Network.IsConnectionStarted)
-				Rpc ("Gather");
+	public void Gather (ControlComponent gatheringPlayer) {
+		Tween tween = GetNode<Tween> ("Tween");
+		tween.InterpolateProperty (MyPiece, "global_position", MyPiece.GlobalPosition, gatheringPlayer.GlobalPosition, GATHERING_TIME);
+		if (gatheringPlayer.IsMaster) {
+			tween.InterpolateCallback (this, GATHERING_TIME, nameof (AddToInventory));
+			if (IsTrueMaster)
+				tween.InterpolateCallback (this, GATHERING_TIME, nameof (Rpc), nameof (_OnDied));
 			else
-				Gather ();
+				tween.InterpolateCallback (this, GATHERING_TIME, nameof (_OnDied));
 		}
+		tween.Start ();
 	}
 
-	[PuppetSync] public void Gather () {
+	public void AddToInventory () {
 		GameRoot.inventory.Add (Item.Manager.GetId (item), quantity);
-		GetParent<KinematicPiece> ().QueueFree ();
 	}
 
 	public new Godot.Collections.Dictionary<string, object> MakeSave () {

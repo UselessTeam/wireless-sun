@@ -94,8 +94,8 @@ namespace Item {
         }
 
         public static IPiece MakePiece (string item, ushort quantity = 1) {
-            var piece = ((PackedScene) GD.Load (baseItemPath)).Instance ().GetNode<KinematicPiece> ("./");
-            piece.GetNode<PickableControl> ("./Control").SetStack (item, quantity);
+            var piece = ((PackedScene) GD.Load (baseItemPath)).Instance ().GetNode<IPiece> ("./");
+            (piece as Node2D).GetNode<PickableControl> ("./Control").SetStack (item, quantity);
             return piece;
         }
     }

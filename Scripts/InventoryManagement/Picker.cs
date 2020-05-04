@@ -8,13 +8,9 @@ public class Picker : Node2D {
 
     public override void _Process (float delta) {
         if (Network.IsServer)
-            foreach (Node2D item in MyFOV.GetOverlappingBodies ()) {
-                MovementComponent itemPiece = item.GetNode<MovementComponent> ("Movement");
-                itemPiece.NextMovement = (GetParent<KinematicPiece> ().GlobalPosition - itemPiece.GlobalPosition).Normalized ();
+            foreach (Node2D item in MyFOV.GetOverlappingAreas ()) {
+                item.GetNode<PickableControl> ("Control").Gather (GetNode<ControlComponent> ("../Control"));
             }
     }
 
-    public void AddToInventory () {
-        //TODO
-    }
 }
