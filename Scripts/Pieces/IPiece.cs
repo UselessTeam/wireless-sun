@@ -4,9 +4,10 @@ using Godot;
 public interface IPiece {}
 
 public static class PieceExtensions {
-    public static void Ready (this IPiece piece) {
+    public static void PieceReady (this IPiece piece) {
         if ((piece as Node2D).GetNodeOrNull ("Control") != null)
             (piece as Node2D).AddToGroup ("ReloadOnSave");
+        piece.SetZAxis ();
     }
     public static void LoadData (this IPiece piece, Godot.Collections.Dictionary<string, object> saveObject) {
         if ((piece as Node2D).GetNodeOrNull ("Control") != null)

@@ -79,10 +79,11 @@ public abstract class SpawnerComponent : Node2D {
 
 	[PuppetSync]
 	void SpawnOne (string name, Vector2 position) {
-		var spawnPiece = (Node2D) GetSpawnee ();
-		spawnPiece.Name = name;
-		AddChild (spawnPiece);
-		spawnPiece.Position = position;
+		var spawnNode = (Node2D) GetSpawnee ();
+		spawnNode.Name = name;
+		AddChild (spawnNode);
+		spawnNode.Position = position;
+		(spawnNode as IPiece).SetZAxis ();
 	}
 
 	[Master]

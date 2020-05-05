@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/ecran titre.ogg-84588278df1e846468ee8c526ab2c696.oggstr"
+
+[deps]
+
+source_file="res://Assets/Musics/ecran titre.ogg"
+dest_files=[ "res://.import/ecran titre.ogg-84588278df1e846468ee8c526ab2c696.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

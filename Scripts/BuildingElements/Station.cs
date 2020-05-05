@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Godot;
 
-public class Station : StaticBody2D {
+public class Station : StaticBody2D, IPiece {
 
 	[Export] public string craftLocation = "";
 	private static Dictionary<string, int> CRAFT_SPRITE_POSITION = new Dictionary<string, int> {
@@ -16,6 +16,7 @@ public class Station : StaticBody2D {
 	private bool isGuiDisplayed = false;
 
 	public override void _Ready () {
+		this.PieceReady ();
 		Node interaction = GetNode ("Interaction");
 		interaction.Connect ("interaction", this, "_on_interaction");
 		interaction.Connect ("leave_interaction", this, "_on_leave_interaction");

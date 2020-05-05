@@ -50,7 +50,6 @@ position = Vector2( -1.3844, -14.8855 )
 polygon = PoolVector2Array( -2.62158, 2.41028, 5.58296, 2.41028, 5.74074, 14.8748, -2.30602, 14.2437 )
 
 [node name="ItemSpawner" parent="." instance=ExtResource( 5 )]
-visible = false
 SPAWN_DELAY = 6.0
 MAX_COUNT = 4.0
 

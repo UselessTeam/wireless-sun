@@ -211,9 +211,9 @@ __meta__ = {
 
 [node name="SaveMenu" type="Control" parent="VBoxContainer"]
 visible = false
-margin_top = 88.0
+margin_top = 100.0
 margin_right = 1720.0
-margin_bottom = 88.0
+margin_bottom = 100.0
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -233,6 +233,7 @@ margin_right = 1720.0
 margin_bottom = 51.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 2 )
+custom_constants/hseparation = 0
 text = "New Game"
 
 [node name="Back" type="Button" parent="VBoxContainer/SaveMenu/MainSaveMenu"]
@@ -258,6 +259,7 @@ visible = false
 anchor_right = 1.0
 margin_right = 40.0
 margin_bottom = 40.0
+custom_constants/separation = 12
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -274,7 +276,7 @@ __meta__ = {
 [node name="MakeSave" type="Button" parent="VBoxContainer/SaveMenu/ChooseNewName"]
 margin_top = 35.0
 margin_right = 1760.0
-margin_bottom = 67.0
+margin_bottom = 86.0
 custom_fonts/font = SubResource( 4 )
 text = "Create World"
 __meta__ = {
@@ -282,9 +284,9 @@ __meta__ = {
 }
 
 [node name="Back" type="Button" parent="VBoxContainer/SaveMenu/ChooseNewName"]
-margin_top = 71.0
+margin_top = 90.0
 margin_right = 1760.0
-margin_bottom = 103.0
+margin_bottom = 141.0
 custom_fonts/font = SubResource( 4 )
 text = "Back"
 __meta__ = {
@@ -293,15 +295,16 @@ __meta__ = {
 
 [node name="NameError" type="Label" parent="VBoxContainer/SaveMenu/ChooseNewName"]
 modulate = Color( 1, 0.117647, 0, 1 )
-margin_top = 107.0
+margin_top = 145.0
 margin_right = 1760.0
-margin_bottom = 128.0
+margin_bottom = 166.0
 custom_fonts/font = SubResource( 5 )
 align = 1
 
 [node name="OpenedSave" type="VBoxContainer" parent="VBoxContainer/SaveMenu"]
 visible = false
 anchor_right = 1.0
+custom_constants/separation = 12
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -314,29 +317,29 @@ custom_fonts/font = SubResource( 2 )
 text = "Play"
 
 [node name="Back" type="Button" parent="VBoxContainer/SaveMenu/OpenedSave"]
-margin_top = 55.0
+margin_top = 63.0
 margin_right = 1720.0
-margin_bottom = 106.0
+margin_bottom = 114.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 2 )
 text = "Back"
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer/SaveMenu/OpenedSave"]
-margin_top = 110.0
+margin_top = 126.0
 margin_right = 1720.0
-margin_bottom = 114.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+margin_bottom = 130.0
 
 [node name="DeleteSave" type="Button" parent="VBoxContainer/SaveMenu/OpenedSave"]
 modulate = Color( 1, 0.545098, 0.545098, 1 )
-margin_top = 118.0
+margin_top = 142.0
 margin_right = 1720.0
-margin_bottom = 169.0
+margin_bottom = 193.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 2 )
 text = "Delete Save"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="PopupCheck" parent="." instance=ExtResource( 6 )]
 visible = false

@@ -11,4 +11,4 @@ region = Rect2( 12, 24, 12, 12 )
 script = ExtResource( 1 )
 stackSize = 12
 icon = SubResource( 1 )
-hpRecovery = 8.0
+hpRecovery = 15.0
