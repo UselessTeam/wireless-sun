@@ -1,10 +1,18 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scripts/Menu/Lobby.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Fonts/Montserrat-ExtraBold.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Nodes/GUI/Menu/LoadButton.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/Menu/SaveMenu.cs" type="Script" id=4]
 [ext_resource path="res://Scripts/Menu/BaseMenu.cs" type="Script" id=5]
+[ext_resource path="res://Nodes/GUI/PopupCheck.tscn" type="PackedScene" id=6]
+
+[sub_resource type="DynamicFont" id=6]
+size = 24
+font_data = ExtResource( 2 )
+
+[sub_resource type="Theme" id=7]
+default_font = SubResource( 6 )
 
 [sub_resource type="DynamicFont" id=1]
 size = 48
@@ -14,11 +22,11 @@ font_data = ExtResource( 2 )
 size = 36
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=4]
+size = 36
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=4]
-size = 20
+[sub_resource type="DynamicFont" id=3]
 font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=5]
@@ -27,6 +35,7 @@ font_data = ExtResource( 2 )
 [node name="Menu" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = SubResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -97,9 +106,9 @@ text = "Quit"
 
 [node name="Lobby" type="Control" parent="VBoxContainer"]
 visible = false
-margin_top = 100.0
+margin_top = 88.0
 margin_right = 1720.0
-margin_bottom = 100.0
+margin_bottom = 88.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -113,9 +122,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="NameLabeledField" type="HBoxContainer" parent="VBoxContainer/Lobby/VBoxContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/Lobby/VBoxContainer"]
+self_modulate = Color( 1, 0.172549, 0.172549, 1 )
 margin_right = 1720.0
-margin_bottom = 55.0
+margin_bottom = 31.0
+text = "Warning, multiplayer is not playable yet!"
+align = 1
+
+[node name="NameLabeledField" type="HBoxContainer" parent="VBoxContainer/Lobby/VBoxContainer"]
+margin_top = 43.0
+margin_right = 1720.0
+margin_bottom = 98.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -140,17 +157,17 @@ size_flags_horizontal = 3
 custom_fonts/font = SubResource( 2 )
 
 [node name="HostButton" type="Button" parent="VBoxContainer/Lobby/VBoxContainer"]
-margin_top = 67.0
+margin_top = 110.0
 margin_right = 1720.0
-margin_bottom = 118.0
+margin_bottom = 161.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 2 )
 text = "Host Game"
 
 [node name="LabeledField" type="HBoxContainer" parent="VBoxContainer/Lobby/VBoxContainer"]
-margin_top = 130.0
+margin_top = 173.0
 margin_right = 1720.0
-margin_bottom = 185.0
+margin_bottom = 228.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -175,18 +192,28 @@ size_flags_horizontal = 3
 custom_fonts/font = SubResource( 2 )
 
 [node name="JoinButton" type="Button" parent="VBoxContainer/Lobby/VBoxContainer"]
-margin_top = 197.0
+margin_top = 240.0
 margin_right = 1720.0
-margin_bottom = 248.0
+margin_bottom = 291.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 2 )
 text = "Join Game"
 
+[node name="Back" type="Button" parent="VBoxContainer/Lobby/VBoxContainer"]
+margin_top = 303.0
+margin_right = 1720.0
+margin_bottom = 354.0
+custom_fonts/font = SubResource( 4 )
+text = "Back"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="SaveMenu" type="Control" parent="VBoxContainer"]
 visible = false
-margin_top = 100.0
+margin_top = 88.0
 margin_right = 1720.0
-margin_bottom = 100.0
+margin_bottom = 88.0
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -208,10 +235,20 @@ size_flags_horizontal = 3
 custom_fonts/font = SubResource( 2 )
 text = "New Game"
 
-[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/SaveMenu/MainSaveMenu"]
+[node name="Back" type="Button" parent="VBoxContainer/SaveMenu/MainSaveMenu"]
 margin_top = 63.0
 margin_right = 1720.0
-margin_bottom = 67.0
+margin_bottom = 114.0
+custom_fonts/font = SubResource( 4 )
+text = "Back"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/SaveMenu/MainSaveMenu"]
+margin_top = 126.0
+margin_right = 1720.0
+margin_bottom = 130.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -244,12 +281,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Cancel" type="Button" parent="VBoxContainer/SaveMenu/ChooseNewName"]
+[node name="Back" type="Button" parent="VBoxContainer/SaveMenu/ChooseNewName"]
 margin_top = 71.0
 margin_right = 1760.0
 margin_bottom = 103.0
 custom_fonts/font = SubResource( 4 )
-text = "Cancel"
+text = "Back"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -261,6 +298,48 @@ margin_right = 1760.0
 margin_bottom = 128.0
 custom_fonts/font = SubResource( 5 )
 align = 1
+
+[node name="OpenedSave" type="VBoxContainer" parent="VBoxContainer/SaveMenu"]
+visible = false
+anchor_right = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Play" type="Button" parent="VBoxContainer/SaveMenu/OpenedSave"]
+margin_right = 1720.0
+margin_bottom = 51.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 2 )
+text = "Play"
+
+[node name="Back" type="Button" parent="VBoxContainer/SaveMenu/OpenedSave"]
+margin_top = 55.0
+margin_right = 1720.0
+margin_bottom = 106.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 2 )
+text = "Back"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/SaveMenu/OpenedSave"]
+margin_top = 110.0
+margin_right = 1720.0
+margin_bottom = 114.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DeleteSave" type="Button" parent="VBoxContainer/SaveMenu/OpenedSave"]
+modulate = Color( 1, 0.545098, 0.545098, 1 )
+margin_top = 118.0
+margin_right = 1720.0
+margin_bottom = 169.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 2 )
+text = "Delete Save"
+
+[node name="PopupCheck" parent="." instance=ExtResource( 6 )]
+visible = false
 [connection signal="pressed" from="VBoxContainer/BaseMenu/SoloButton" to="VBoxContainer/BaseMenu" method="_OnSoloPressed"]
 [connection signal="pressed" from="VBoxContainer/BaseMenu/Multiplayer" to="VBoxContainer/BaseMenu" method="_OnMultiplayerPressed"]
 [connection signal="pressed" from="VBoxContainer/BaseMenu/Quit" to="VBoxContainer/BaseMenu" method="_OnQuitPressed"]
@@ -268,7 +347,12 @@ align = 1
 [connection signal="pressed" from="VBoxContainer/Lobby/VBoxContainer/HostButton" to="VBoxContainer/Lobby" method="_OnHostPressed"]
 [connection signal="text_changed" from="VBoxContainer/Lobby/VBoxContainer/LabeledField/Field" to="VBoxContainer/Lobby" method="_OnIpChanged"]
 [connection signal="button_down" from="VBoxContainer/Lobby/VBoxContainer/JoinButton" to="VBoxContainer/Lobby" method="_OnJoinPressed"]
+[connection signal="pressed" from="VBoxContainer/Lobby/VBoxContainer/Back" to="VBoxContainer/Lobby" method="_OnBackPressed"]
 [connection signal="pressed" from="VBoxContainer/SaveMenu/MainSaveMenu/NewGameButton" to="VBoxContainer/SaveMenu" method="_OnNewPressed"]
+[connection signal="pressed" from="VBoxContainer/SaveMenu/MainSaveMenu/Back" to="VBoxContainer/SaveMenu" method="_OnBackPressed"]
 [connection signal="text_changed" from="VBoxContainer/SaveMenu/ChooseNewName/LineEdit" to="VBoxContainer/SaveMenu" method="_OnNewNameEdit"]
 [connection signal="pressed" from="VBoxContainer/SaveMenu/ChooseNewName/MakeSave" to="VBoxContainer/SaveMenu" method="_OnMakeSavePressed"]
-[connection signal="pressed" from="VBoxContainer/SaveMenu/ChooseNewName/Cancel" to="VBoxContainer/SaveMenu" method="_OnCancelPressed"]
+[connection signal="pressed" from="VBoxContainer/SaveMenu/ChooseNewName/Back" to="VBoxContainer/SaveMenu" method="_OnBackToSaveMenuPressed"]
+[connection signal="pressed" from="VBoxContainer/SaveMenu/OpenedSave/Play" to="VBoxContainer/SaveMenu" method="_OnPlayPressed"]
+[connection signal="pressed" from="VBoxContainer/SaveMenu/OpenedSave/Back" to="VBoxContainer/SaveMenu" method="_OnBackToSaveMenuPressed"]
+[connection signal="pressed" from="VBoxContainer/SaveMenu/OpenedSave/DeleteSave" to="VBoxContainer/SaveMenu" method="_OnDeletePressed"]

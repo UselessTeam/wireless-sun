@@ -32,6 +32,10 @@ public class Lobby : Control {
 		GameRoot.LoadGameScene ("");
 	}
 
+	void _OnBackPressed () {
+		this.Hide ();
+		GetNode<Control> ("../BaseMenu").Show ();
+	}
 	// void _StartGame () {
 	// 	//
 	// 	Global.LoadGameScene ("");

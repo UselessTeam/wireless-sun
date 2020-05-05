@@ -229,7 +229,6 @@ public class PlayerControl : ControlComponent {
         GetNode<HealthComponent> ("../Health").HP = Convert.ToSingle (saveObject["HP"]);
         if (saveObject.ContainsKey ("MyPlayer"))
             MyPiece.Name = "MyPlayer";
-        GD.Print ("Piece ready");
     }
 
     public new void _OnDied () {

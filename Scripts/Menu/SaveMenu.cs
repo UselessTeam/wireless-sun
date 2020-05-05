@@ -9,18 +9,23 @@ public class SaveMenu : Control {
 
 	public Control MainSaveMenu;
 	public Control ChooseNewName { get { return GetNode<Control> ("ChooseNewName"); } }
+	public Control OpenedSave { get { return GetNode<Control> ("OpenedSave"); } }
 
 	public string newName;
+	public string currentSave;
+
+	int initialChildCount = 0;
 
 	public override void _Ready () {
 		instance = this;
 		MainSaveMenu = GetNode<Control> ("MainSaveMenu");
-		Connect ("draw", this, nameof (_OnDraw));
+		Connect ("draw", this, nameof (UpdateSaveList));
+		initialChildCount = GetChildCount ();
 	}
 
-	public void _OnDraw () {
+	public void UpdateSaveList () {
 		ChooseNewName.GetNode<Label> ("NameError").Text = "";
-		for (int i = 2; i < MainSaveMenu.GetChildCount (); i++) {
+		for (int i = initialChildCount; i < MainSaveMenu.GetChildCount (); i++) {
 			MainSaveMenu.GetChild (i).QueueFree ();
 		}
 		foreach (var save in Save.GetSaveList ()) {
@@ -32,13 +37,35 @@ public class SaveMenu : Control {
 		}
 	}
 
-	public void _OnLoadPressed (string name) {
-		GameRoot.LoadGameScene (name);
-	}
-
 	void _OnNewPressed () {
 		MainSaveMenu.Hide ();
 		ChooseNewName.Show ();
+	}
+	void _OnBackPressed () {
+		this.Hide ();
+		GetNode<Control> ("../BaseMenu").Show ();
+	}
+	public void _OnLoadPressed (string name) {
+		currentSave = name;
+		MainSaveMenu.Hide ();
+		OpenedSave.Show ();
+	}
+
+	public void _OnPlayPressed () {
+		GameRoot.LoadGameScene (currentSave);
+	}
+	void _OnBackToSaveMenuPressed () {
+		ChooseNewName.Hide ();
+		OpenedSave.Hide ();
+		MainSaveMenu.Show ();
+		currentSave = "";
+	}
+	void _OnDeletePressed () { GetNode<PopupCheck> ("/root/Menu/PopupCheck").StartPopupCheck (this, nameof (_OnDeleteConfirmed)); }
+
+	void _OnDeleteConfirmed () {
+		Save.DeleteSave (currentSave);
+		_OnBackToSaveMenuPressed ();
+		UpdateSaveList ();
 	}
 
 	void _OnNewNameEdit (string line) {
@@ -54,12 +81,8 @@ public class SaveMenu : Control {
 			GameRoot.BuildNewWorld (newName);
 			ChooseNewName.Hide ();
 			MainSaveMenu.Show ();
-			_OnDraw ();
+			UpdateSaveList ();
 		}
-	}
-	void _OnCancelPressed () {
-		ChooseNewName.Hide ();
-		MainSaveMenu.Show ();
 	}
 	bool NameIsNew () {
 		foreach (var save in Save.GetSaveList ()) {

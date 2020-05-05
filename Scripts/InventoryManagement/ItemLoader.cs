@@ -19,14 +19,12 @@ namespace Item {
 					categoryPath = dataPath;
 				else
 					categoryPath = dataPath.PlusFile (category.Name.Remove (category.Name.Length - "Resource".Length));
-				var categoryDir = new Directory ();
-				if (!categoryDir.DirExists (categoryPath))
-					GD.PrintErr ("The item category directory does not exist: \"" + categoryPath + "\"");
+				Godot.Directory categoryDir = new Godot.Directory ();
+				// if (!categoryDir.DirExists (categoryPath))
+				// 	GD.PrintErr ("The item category directory does not exist: \"" + categoryPath + "\"");
 				categoryDir.Open (categoryPath);
 				categoryDir.ListDirBegin (true, true);
-				string itemPath;
-				do {
-					itemPath = categoryDir.GetNext ();
+				for (string itemPath = categoryDir.GetNext (); itemPath != ""; itemPath = categoryDir.GetNext ()) {
 					if (itemPath.EndsWith (".tres")) {
 						var loadedResource = (GD.Load (categoryPath.PlusFile (itemPath)) as ItemResource);
 						if (loadedResource == null)
@@ -40,7 +38,7 @@ namespace Item {
 							rawItemId += 1;
 						}
 					}
-				} while (itemPath != "");
+				}
 			}
 
 			foreach (ItemResource item in itemDataList) {}

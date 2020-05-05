@@ -1,5 +1,6 @@
-using System.Collections.Generic;
+// using System.Collections.Generic;
 using Godot;
+using Godot.Collections;
 using Newtonsoft.Json;
 
 public class GameRoot : Node {
@@ -49,19 +50,19 @@ public class GameRoot : Node {
 
 public static class Save {
 
-	public static string saveLocation = "res://save";
+	public static string saveLocation = "user://save";
 	static string currentSave = "";
 	static public string CurrentSave {
 		get { return currentSave; }
 		set { currentSave = value; }
 	}
 
-	static Godot.Directory Directory = new Directory ();
-	static Godot.File File = new Godot.File ();
+	static Godot.Directory dir = new Directory ();
+	static Godot.File file = new Godot.File ();
 
-	public static List<string> GetSaveList () {
-		var list = new List<string> ();
-		if (!Directory.DirExists (saveLocation))
+	public static Array<string> GetSaveList () {
+		var list = new Array<string> ();
+		if (!dir.DirExists (saveLocation))
 			return list;
 		var savesDir = new Directory ();
 		savesDir.Open (saveLocation);
@@ -82,41 +83,46 @@ public static class Save {
 	// Scene changing
 	public static void MakeNewSave (string saveName) {
 		// Create a the map and save it as a scene 
-		// TODO
-		//Remove any previous save
-		if (File.FileExists (SavePath (saveName)))
-			Directory.Remove (SavePath (saveName));
-		if (!Directory.DirExists (saveLocation))
-			Directory.MakeDir (saveLocation);
-		var saveGame = new File ();
-		saveGame.Open (SavePath (saveName), File.ModeFlags.Write);
-		saveGame.Close ();
+		if (dir.FileExists (SavePath (saveName)))
+			GD.PrintErr ("Save already exists");
+		if (!dir.DirExists (saveLocation)) {
+			GD.Print ("Creating save folder");
+			dir.Open ("user://");
+			dir.MakeDir (saveLocation);
+			GD.Print ("It is created : ", dir.DirExists (saveLocation));
+		}
+		file.Open (SavePath (saveName), File.ModeFlags.Write);
+		file.Close ();
+	}
+
+	public static void DeleteSave (string saveName) {
+		if (dir.FileExists (SavePath (saveName)))
+			dir.Remove (SavePath (saveName));
+		else
+			GD.PrintErr ("Trying to delete non existing save : ", saveName);
 	}
 
 	// Save and load game
-
 	public static void SaveGame () {
-		var saveGame = new File ();
-		saveGame.Open (SavePath (currentSave), File.ModeFlags.Write);
+		file.Open (SavePath (currentSave), File.ModeFlags.Write);
 
 		var saveNodes = GameRoot.Instance.GetTree ().GetNodesInGroup ("SaveNodes");
 		foreach (Node saveNode in saveNodes) {
 			// if (saveNode.GetParent ().Filename.Empty ()) { GD.Print ("control node " + saveNode.Name + " is not an instanced scene, skipped"); continue; }
-			saveGame.StoreLine (JSON.Print (saveNode.Call ("MakeSave")));
+			file.StoreLine (JSON.Print (saveNode.Call ("MakeSave")));
 		}
-		saveGame.Close ();
+		file.Close ();
 		GD.Print ("Saved game : " + currentSave);
 
 	}
 	public static void LoadGame () {
-		var saveGame = new File ();
-		if (!saveGame.FileExists (SavePath (currentSave))) {
+		if (!file.FileExists (SavePath (currentSave))) {
 			GD.Print ("Loaded empty save");
 			return; // No save to load
 		}
-		saveGame.Open (SavePath (currentSave), File.ModeFlags.Read);
+		file.Open (SavePath (currentSave), File.ModeFlags.Read);
 
-		if (saveGame.GetLen () == 0)
+		if (file.GetLen () == 0)
 			return;
 
 		// First we delete all the Controls nodes, in order to make sure the game state is clean
@@ -126,11 +132,11 @@ public static class Save {
 
 		// Load the file line by line and process that dictionary to restore the object
 		// it represents.
-		while (saveGame.GetPosition () < saveGame.GetLen ()) {
+		while (file.GetPosition () < file.GetLen ()) {
 			// Get the saved dictionary from the next line in the save file
 			// var line = saveGame.GetLine ();
 			// dynamic nodeData = (JSON.Parse (line).Result); //Godot.Collections.Dictionary<string, object>
-			var nodeData = JsonConvert.DeserializeObject<Godot.Collections.Dictionary<string, object>> (saveGame.GetLine ());
+			var nodeData = JsonConvert.DeserializeObject<Godot.Collections.Dictionary<string, object>> (file.GetLine ());
 			if (nodeData == null) GD.Print ("null");
 			// Firstly, we need to check if we need to create the object 
 			Node loadNode;
@@ -151,7 +157,7 @@ public static class Save {
 
 			}
 		}
-		saveGame.Close ();
+		file.Close ();
 		GD.Print ("Loaded save : " + currentSave);
 	}
 }
