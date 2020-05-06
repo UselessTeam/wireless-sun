@@ -7,35 +7,35 @@
 [ext_resource path="res://Scripts/Menu/BaseMenu.cs" type="Script" id=5]
 [ext_resource path="res://Nodes/GUI/PopupCheck.tscn" type="PackedScene" id=6]
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=1]
 size = 24
 font_data = ExtResource( 2 )
 
-[sub_resource type="Theme" id=7]
-default_font = SubResource( 6 )
+[sub_resource type="Theme" id=2]
+default_font = SubResource( 1 )
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=3]
 size = 48
-font_data = ExtResource( 2 )
-
-[sub_resource type="DynamicFont" id=2]
-size = 36
 font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=4]
 size = 36
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=5]
+size = 36
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="DynamicFont" id=6]
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=7]
 font_data = ExtResource( 2 )
 
 [node name="Menu" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = SubResource( 7 )
+theme = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -54,7 +54,7 @@ __meta__ = {
 [node name="Label" type="Label" parent="VBoxContainer"]
 margin_right = 1720.0
 margin_bottom = 60.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 3 )
 text = "Main Menu"
 align = 1
 
@@ -79,7 +79,7 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 4 )
 text = "Solo Game"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -90,7 +90,7 @@ anchor_right = 1.0
 margin_top = 63.0
 margin_bottom = 51.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 4 )
 text = "Multiplayer Game"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -101,7 +101,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 126.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 4 )
 text = "Quit"
 
 [node name="Lobby" type="Control" parent="VBoxContainer"]
@@ -144,7 +144,7 @@ margin_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 4 )
 text = "Name"
 align = 2
 valign = 1
@@ -154,14 +154,14 @@ margin_left = 862.0
 margin_right = 1720.0
 margin_bottom = 55.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 4 )
 
 [node name="HostButton" type="Button" parent="VBoxContainer/Lobby/VBoxContainer"]
 margin_top = 110.0
 margin_right = 1720.0
 margin_bottom = 161.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 4 )
 text = "Host Game"
 
 [node name="LabeledField" type="HBoxContainer" parent="VBoxContainer/Lobby/VBoxContainer"]
@@ -179,7 +179,7 @@ margin_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 4 )
 text = "IP"
 align = 2
 valign = 1
@@ -189,21 +189,21 @@ margin_left = 862.0
 margin_right = 1720.0
 margin_bottom = 55.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 4 )
 
 [node name="JoinButton" type="Button" parent="VBoxContainer/Lobby/VBoxContainer"]
 margin_top = 240.0
 margin_right = 1720.0
 margin_bottom = 291.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 4 )
 text = "Join Game"
 
 [node name="Back" type="Button" parent="VBoxContainer/Lobby/VBoxContainer"]
 margin_top = 303.0
 margin_right = 1720.0
 margin_bottom = 354.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 text = "Back"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -232,7 +232,7 @@ __meta__ = {
 margin_right = 1720.0
 margin_bottom = 51.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 4 )
 custom_constants/hseparation = 0
 text = "New Game"
 
@@ -240,7 +240,7 @@ text = "New Game"
 margin_top = 63.0
 margin_right = 1720.0
 margin_bottom = 114.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 text = "Back"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -267,7 +267,7 @@ __meta__ = {
 [node name="LineEdit" type="LineEdit" parent="VBoxContainer/SaveMenu/ChooseNewName"]
 margin_right = 1760.0
 margin_bottom = 31.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 6 )
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -277,7 +277,7 @@ __meta__ = {
 margin_top = 35.0
 margin_right = 1760.0
 margin_bottom = 86.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 text = "Create World"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -287,7 +287,7 @@ __meta__ = {
 margin_top = 90.0
 margin_right = 1760.0
 margin_bottom = 141.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 text = "Back"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -298,7 +298,7 @@ modulate = Color( 1, 0.117647, 0, 1 )
 margin_top = 145.0
 margin_right = 1760.0
 margin_bottom = 166.0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 7 )
 align = 1
 
 [node name="OpenedSave" type="VBoxContainer" parent="VBoxContainer/SaveMenu"]
@@ -313,7 +313,7 @@ __meta__ = {
 margin_right = 1720.0
 margin_bottom = 51.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 4 )
 text = "Play"
 
 [node name="Back" type="Button" parent="VBoxContainer/SaveMenu/OpenedSave"]
@@ -321,7 +321,7 @@ margin_top = 63.0
 margin_right = 1720.0
 margin_bottom = 114.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 4 )
 text = "Back"
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer/SaveMenu/OpenedSave"]
@@ -335,7 +335,7 @@ margin_top = 142.0
 margin_right = 1720.0
 margin_bottom = 193.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 4 )
 text = "Delete Save"
 __meta__ = {
 "_edit_use_anchors_": false

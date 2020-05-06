@@ -13,6 +13,12 @@ public class IsometricMap : Node2D {
 		generateAsyncStart = new ParameterizedThreadStart (GenerateAsyncObject);
 	}
 
+	private Dictionary < (int, int), IsometricChunk > chunks = new Dictionary < (int, int), IsometricChunk > ();
+
+	private PackedScene baseChunk = (PackedScene) ResourceLoader.Load ("res://Nodes/Map/Chunk.tscn");
+
+	// # Automatically generate Map around player
+
 	private int? cachedX = null;
 	private int? cachedY = null;
 
@@ -46,10 +52,6 @@ public class IsometricMap : Node2D {
 		}
 	}
 
-	private Dictionary < (int, int), IsometricChunk > chunks = new Dictionary < (int, int), IsometricChunk > ();
-
-	private PackedScene baseChunk = (PackedScene) ResourceLoader.Load ("res://Nodes/Map/Chunk.tscn");
-
 	private void GenerateAsyncObject (object chunk) {
 		Generate ((IsometricChunk) chunk);
 	}
@@ -69,20 +71,32 @@ public class IsometricMap : Node2D {
 		return chunk;
 	}
 
+	// # Usefull public functions
+
+	public struct Flavor {
+		public float altitude;
+		public float vegetation;
+	}
+
+	public Flavor GetCoordFlavor (float u, float v) {
+		Flavor flavor = new Flavor ();
+		flavor.altitude = noise.GetNoise2d (u, v) + 0.7f - 0.001f * (u * u + v * v);
+		flavor.vegetation = -noise.GetNoise2d (1200 - u, v - 1200);
+		return flavor;
+	}
+
 	public (int, int) GetTileType (int u, int v) {
-		float base_height = noise.GetNoise2d (u, v) + 0.7f - 0.001f * (u * u + v * v);
-		if (base_height < 0f) {
+		Flavor flavor = GetCoordFlavor (u, v);
+		if (flavor.altitude < 0f) {
 			return (0, 0);
 		}
-		float main_value = noise.GetNoise2d (1200 - u, v - 1200);
-		// float secondary_value = noise.GetNoise2d (1200 - u, v - 1200);
-		if (main_value < 0) {
-			if (base_height - 2 * main_value < 0.5f) {
+		if (flavor.vegetation > 0) {
+			if (flavor.altitude + 2 * flavor.vegetation < 0.5f) {
 				return (1, 0);
 			}
 			return (2, 0);
 		}
-		if (base_height + main_value < 0.4f) {
+		if (flavor.altitude - flavor.vegetation < 0.4f) {
 			return (1, 0);
 		} else {
 			return (3, 0);
