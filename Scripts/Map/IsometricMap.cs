@@ -75,31 +75,41 @@ public class IsometricMap : Node2D {
 
 	public struct Flavor {
 		public float altitude;
+		public float heavyness;
+		public float muddyness;
 		public float vegetation;
 	}
 
 	public Flavor GetCoordFlavor (float u, float v) {
 		Flavor flavor = new Flavor ();
 		flavor.altitude = noise.GetNoise2d (u, v) + 0.7f - 0.001f * (u * u + v * v);
-		flavor.vegetation = -noise.GetNoise2d (1200 - u, v - 1200);
+		flavor.heavyness = noise.GetNoise2d (0.8f * u + 780f, 0.8f * v + 1000f) + 0.3f * flavor.altitude;
+		flavor.muddyness = noise.GetNoise2d (u + 600f, v - 2000f) + 0.3f * flavor.heavyness;
+		flavor.vegetation = 0.5f * flavor.muddyness + noise.GetNoise2d (1200f - u, v - 1200f);
 		return flavor;
 	}
 
-	public (int, int) GetTileType (int u, int v) {
+	public (TileType, int) GetTileType (int u, int v) {
 		Flavor flavor = GetCoordFlavor (u, v);
 		if (flavor.altitude < 0f) {
-			return (0, 0);
+			return (TileType.SEA, 0);
 		}
-		if (flavor.vegetation > 0) {
-			if (flavor.altitude + 2 * flavor.vegetation < 0.5f) {
-				return (1, 0);
+		if (flavor.altitude + flavor.heavyness < 0.2f) {
+			return (TileType.SAND, 0);
+		}
+		if (flavor.muddyness < 0f) {
+			if (flavor.heavyness < 0f) {
+				return (TileType.SAND, 0);
+			} else {
+				return (TileType.STONE, 0);
 			}
-			return (2, 0);
-		}
-		if (flavor.altitude - flavor.vegetation < 0.4f) {
-			return (1, 0);
 		} else {
-			return (3, 0);
+			if (flavor.vegetation > -0.1f) {
+				return (TileType.GRASS, 0);
+			} else {
+				return (TileType.DIRT, 0);
+			}
+
 		}
 	}
 }

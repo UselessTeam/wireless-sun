@@ -1,6 +1,16 @@
 using System;
 using Godot;
 
+public enum TileType {
+	NONE = 0,
+	SEA = 1,
+	SAND = 2,
+	DIRT = 3,
+	GRASS = 4,
+	STONE = 5,
+	BRICK = 6,
+	ROOF = 7,
+}
 public class Tile : Node2D {
 	public static Vector2 TransposeCoord(float u, float v, float w) {
 		return new Vector2 ((u - v) * HALF_WIDTH, (u + v) * HALF_HEIGHT - w * DEPTH);
@@ -38,7 +48,7 @@ public class Tile : Node2D {
 		}
 	}
 
-	public int typeId { get; private set; }
+	public TileType typeId { get; private set; }
 
 	public int u { get; private set; }
 	public int v { get; private set; }
@@ -52,8 +62,8 @@ public class Tile : Node2D {
 		this.sprite.ZIndex = (u + v);
 	}
 
-	public void SetType (int typeId) {
+	public void SetType (TileType typeId) {
 		this.typeId = typeId;
-		this.sprite.RegionRect = new Rect2 (typeId * SPRITE_WIDTH, 0, SPRITE_WIDTH, SPRITE_HEIGHT);
+		this.sprite.RegionRect = new Rect2 ((int)typeId * SPRITE_WIDTH, 0, SPRITE_WIDTH, SPRITE_HEIGHT);
 	}
 }
