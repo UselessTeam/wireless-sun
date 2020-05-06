@@ -11,22 +11,28 @@ public enum TileType {
 	BRICK = 6,
 	ROOF = 7,
 }
-public class Tile : Node2D {
-	public static Vector2 TransposeCoord(float u, float v, float w) {
-		return new Vector2 ((u - v) * HALF_WIDTH, (u + v) * HALF_HEIGHT - w * DEPTH);
-	}
+public class Tile : CollisionShape2D {
 	public static Vector2 TransposeCoord(float u, float v) {
-		return TransposeCoord(u, v, 0);
+		return new Vector2 ((u - v) * HALF_WIDTH, (u + v) * HALF_HEIGHT);
 	}
 	public static Vector2 TransposePosition(float x, float y) {
 		float _x = x/WIDTH;
 		float _y = y/HEIGHT;
 		return new Vector2 (_x + _y, _y - _x);
 	}
+	public static int TransposeDepth(float y) {
+		return Mathf.FloorToInt(y / HALF_HEIGHT);
+	}
 
 	public static PackedScene template = (PackedScene) ResourceLoader.Load ("res://Nodes/Map/Tile.tscn");
 	public static Tile Instance () {
 		return (Tile) template.Instance ();
+	}
+	public static Tile Instance (int u, int v, int w, TileType t) {
+		Tile tile = (Tile) template.Instance ();
+		tile.SetCoord(u, v, w);
+		tile.SetType(t);
+		return tile;
 	}
 
 	public const int HALF_WIDTH = 24;
@@ -58,7 +64,8 @@ public class Tile : Node2D {
 		this.u = u;
 		this.v = v;
 		this.w = w;
-		this.Position = TransposeCoord(u, v, w);
+		this.Position = TransposeCoord(u, v);
+		this.sprite.Position = new Vector2(0, -w * DEPTH);
 		this.sprite.ZIndex = (u + v);
 	}
 

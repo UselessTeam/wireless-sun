@@ -82,8 +82,7 @@ __meta__ = {
 position = Vector2( 407.014, 289.718 )
 
 [node name="House" parent="." instance=ExtResource( 3 )]
-visible = false
-position = Vector2( 172.307, 383.91 )
+position = Vector2( 215.601, 316.061 )
 
 [node name="PlayerBody" parent="." instance=ExtResource( 2 )]
 position = Vector2( 239.409, 256.712 )

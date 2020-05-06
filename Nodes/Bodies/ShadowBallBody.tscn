@@ -77,7 +77,6 @@ shape = SubResource( 2 )
 [node name="Display" type="AnimatedSprite" parent="."]
 position = Vector2( 0.184025, -12.1457 )
 frames = SubResource( 7 )
-frame = 2
 playing = true
 
 [node name="Collision" type="CollisionPolygon2D" parent="."]

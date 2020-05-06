@@ -31,7 +31,6 @@ GUI="*res://Nodes/GUI/GUI.tscn"
 
 window/size/width=1920
 window/size/height=1080
-window/size/fullscreen=true
 window/per_pixel_transparency/allowed=true
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"

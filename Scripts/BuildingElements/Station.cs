@@ -13,6 +13,9 @@ public class Station : StaticBody2D, IPiece {
 	};
 	public CraftListGUI craftingGUI { get { return GetNode<GUI> ("/root/GUI").crafting; } }
 
+	public int GetZOffset() {
+		return 1;
+	}
 	private bool isGuiDisplayed = false;
 
 	public override void _Ready () {

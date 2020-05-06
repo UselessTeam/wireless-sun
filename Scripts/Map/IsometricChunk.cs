@@ -37,15 +37,11 @@ public class IsometricChunk : Node2D {
 			this.ZIndex = (U + V) * SIZE;
 			for (int v = 0; v < SIZE; v++) {
 				for (int u = 0; u < SIZE; u++) {
-					Tile tile = Tile.Instance();
+					var (t, w) = (TileType.NONE, 0);
 					if(map != null) {
-						var (t, w) = map.GetTileType(u + U * SIZE, v + V * SIZE);
-						tile.SetCoord(u, v, w);
-						tile.SetType(t);
-					} else {
-						tile.SetCoord(u, v, 0);
+						(t, w) = map.GetTileType(u + U * SIZE, v + V * SIZE);
 					}
-					AddChild(tile);
+					AddChild(Tile.Instance(u, v, w, t));
 				}
 			}
 		}

@@ -1,13 +1,13 @@
 using System;
 using Godot;
 
-public class KinematicPiece : KinematicBody2D, IPiece {
+public class MetaPiece : Node2D, IPiece {
 	public override void _Ready () {
 		this.PieceReady ();
 	}
-		
+	
 	[Export]
-	public int zOffset = 1;
+	public int zOffset = 0;
 	public int GetZOffset() {
 		return zOffset;
 	}

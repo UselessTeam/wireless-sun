@@ -83,7 +83,7 @@ public abstract class SpawnerComponent : Node2D {
 		spawnNode.Name = name;
 		AddChild (spawnNode);
 		spawnNode.Position = position;
-		(spawnNode as IPiece).SetZAxis ();
+		(spawnNode as IPiece).SetZIndex ();
 	}
 
 	[Master]

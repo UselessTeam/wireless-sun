@@ -1,9 +1,13 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Assets/Tiles/Isometric/world_base.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Map/Tile.cs" type="Script" id=2]
 
-[node name="Tile" type="Node2D"]
+[sub_resource type="ConvexPolygonShape2D" id=1]
+points = PoolVector2Array( 24, 0, 0, 16, -24, 0, 0, -16 )
+
+[node name="Tile" type="CollisionShape2D"]
+shape = SubResource( 1 )
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
