@@ -15,6 +15,7 @@ script = ExtResource( 3 )
 [node name="Audio" type="AudioStreamPlayer2D" parent="."]
 pause_mode = 2
 stream = ExtResource( 6 )
+autoplay = true
 
 [node name="ShadowSpawner" parent="." instance=ExtResource( 7 )]
 position = Vector2( 112, 112 )
@@ -33,8 +34,8 @@ spawnPrefab = ExtResource( 1 )
 
 [node name="ShroomSpawner" parent="." instance=ExtResource( 5 )]
 position = Vector2( 371.593, -187.936 )
-SPAWN_DELAY = 0.2
-MAX_COUNT = 600.0
+SPAWN_DELAY = 4.0
+MAX_COUNT = 9.0
 itemName = "mushroom"
 
 [node name="StonSpawner" parent="." instance=ExtResource( 5 )]

@@ -44,6 +44,9 @@ public class PlayerAttack_Attack : PlayerAttack_Base {
         MyAttackSprite.Connect ("frame_changed", this, nameof (NextRotationStep));
         MyAttackSprite.Play ("circular");
         MyAttackSprite.Show ();
+
+        // Play Attack's SFX
+        GetNode<AudioStreamPlayer2D> ("SFX").Play (0);
     }
     public void NextRotationStep () {
         rotationStep += 1;
