@@ -3,8 +3,6 @@
 [ext_resource path="res://Scripts/BuildingElements/HideWhenBehind.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Sprites/tree.png" type="Texture" id=2]
 
-
-
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 19.0555, 27.2377 )
 

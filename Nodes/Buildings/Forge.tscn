@@ -3,7 +3,6 @@
 [ext_resource path="res://Assets/Sprites/buildings.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Interactable/CraftStation.cs" type="Script" id=2]
 
-
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 1 )
 region = Rect2( 32, 32, 32, 32 )

@@ -23,16 +23,31 @@ public class PlayerAttack_Attack : PlayerAttack_Base {
 
         // Put the attack sprite at the right position and show it
         PositionSelf ();
-        if (Rotation % Math.PI / 2 < LimitAngle && (-Rotation) % Math.PI / 2 < LimitAngle) {
-            MyAttackSprite.Play ("straight");
-        } else {
-            Rotation += (float) Math.PI / 4;
-            MyAttackSprite.Play ("diagonal");
-        }
+        MyAttackSprite.Play ("normal");
         MyAttackSprite.Show ();
 
         // Play Attack's SFX
         GetNode<AudioStreamPlayer2D> ("SFX").Play (0);
+    }
+
+    int rotationStep = 0;
+    Vector2[] rotationDirections = new Vector2[] { new Vector2 (1, 0), new Vector2 (1, 1).Normalized (), new Vector2 (0, 1), new Vector2 (-1, 1).Normalized () };
+    public void LaunchCircularAttack (AttackResource attackData) {
+        this.attackData = attackData;
+
+        // Enable the attack's collisionBox
+        Scale = new Vector2 (attackData.Range, attackData.Range);
+        GetNode<CollisionShape2D> ("Hitbox/CollisionShape2D").Disabled = false;
+
+        // Change the position of the attack at every frame, and pake i
+        PositionSelf (rotationDirections[0]);
+        MyAttackSprite.Connect ("frame_changed", this, nameof (NextRotationStep));
+        MyAttackSprite.Play ("circular");
+        MyAttackSprite.Show ();
+    }
+    public void NextRotationStep () {
+        rotationStep += 1;
+        PositionSelf (rotationDirections[rotationStep % 4] * ((rotationStep >= 4) ? -1 : 1));
     }
 
     //
@@ -40,6 +55,10 @@ public class PlayerAttack_Attack : PlayerAttack_Base {
     // The player is then allowed to start a new attack
     public void _OnAttackFinished () {
         HideAndDisable ();
+        if (rotationStep > 0) {
+            rotationStep = 0;
+            MyAttackSprite.Disconnect ("frame_changed", this, nameof (NextRotationStep));
+        }
     }
 
 }

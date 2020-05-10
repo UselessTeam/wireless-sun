@@ -15,7 +15,6 @@ script = ExtResource( 3 )
 [node name="Audio" type="AudioStreamPlayer2D" parent="."]
 pause_mode = 2
 stream = ExtResource( 6 )
-autoplay = true
 
 [node name="ShadowSpawner" parent="." instance=ExtResource( 7 )]
 position = Vector2( 112, 112 )

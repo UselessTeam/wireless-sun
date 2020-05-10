@@ -26,6 +26,8 @@ font_data = ExtResource( 5 )
 script = ExtResource( 2 )
 
 [node name="ShowOnGameplay" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -92,8 +94,6 @@ margin_bottom = 21.0
 text = "Inventory (F)"
 
 [node name="Inventory" parent="." instance=ExtResource( 1 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
 theme = SubResource( 1 )
 
 [node name="Crafting" type="VBoxContainer" parent="."]

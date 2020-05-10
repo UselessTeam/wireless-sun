@@ -131,7 +131,7 @@ public class PlayerControl : ControlComponent {
 			if (weaponData.Action == ActionType.MultiAttack) {
 				LaunchAttack (weaponData, _action);
 				repeatAction = _action;
-			} else if (weaponData.Action == ActionType.ChargeAttack) {
+			} else if (weaponData.Action == ActionType.ChargeAttack || weaponData.Action == ActionType.CircularAttack) {
 				myAttack.ChargeAttack (weaponData.AttackData);
 				IsCharging = true;
 			} else if (weaponData.Action == ActionType.Block) {
@@ -166,7 +166,7 @@ public class PlayerControl : ControlComponent {
 			var weaponData = GameRoot.inventory.equipement.GetAction (_action == ActionList.left_action);
 			if (weaponData.Action == ActionType.MultiAttack) {
 				repeatAction = ActionList.none;
-			} else if (weaponData.Action == ActionType.ChargeAttack && IsCharging) {
+			} else if ((weaponData.Action == ActionType.ChargeAttack || weaponData.Action == ActionType.CircularAttack) && IsCharging) {
 				LaunchAttack (weaponData, _action, (chargedTime >= CHARGE_TIME) ? CHARGE_TEMPLATE : null);
 				IsCharging = false;
 			} else if (weaponData.Action == ActionType.Block)
@@ -174,11 +174,13 @@ public class PlayerControl : ControlComponent {
 		}
 	}
 
-	public void LaunchAttack (WeaponResource weaponData, ActionList action, AttackTemplate template = null) {
+	public void LaunchAttack (WeaponResource weaponData, ActionList action, AttackTemplate chargeTemplate = null) { // Giving a charge template or not indicates wether the attack is succesfully charged
 		if (weaponData.Action == ActionType.Block)
-			myBlock.LaunchBlock (weaponData.AttackData * template);
+			myBlock.LaunchBlock (weaponData.AttackData * chargeTemplate);
+		else if (weaponData.Action == ActionType.CircularAttack && chargeTemplate != null)
+			myAttack.LaunchCircularAttack (weaponData.AttackData * chargeTemplate);
 		else
-			myAttack.LaunchAttack (weaponData.AttackData * template);
+			myAttack.LaunchAttack (weaponData.AttackData * chargeTemplate);
 		currentlyPerformed = weaponData; // Disable all future actions, call _AttackFinished to reenable actions
 		if (IsMaster) InitCooldown (action, weaponData.Cooldown);
 	}
@@ -240,7 +242,7 @@ public class PlayerControl : ControlComponent {
 	}
 
 	InteractionComponent currentInteraction;
-	Sprite interactionSprite { get { return GetNode<Sprite> ("InteractionSprite"); } }
+	CanvasItem interactionSprite { get { return GetNode<CanvasItem> ("InteractionSprite"); } }
 
 	public void _InteractEntered (InteractionComponent interaction) {
 		currentInteraction = interaction;

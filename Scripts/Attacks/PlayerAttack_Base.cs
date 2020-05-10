@@ -13,9 +13,14 @@ public abstract class PlayerAttack_Base : AttackComponent {
     public override void _Process (float delta) { base._Process (delta); }
 
     public void PositionSelf () {
-        Vector2 direction = MyUserMovement.FacingDirection;
+        PositionSelf (MyUserMovement.FacingDirection);
+    }
+    public void PositionSelf (Vector2 direction) {
         Position = base_distance_to_player * attackData.Range * direction;
         Rotation = direction.Angle ();
+    }
+    public void PositionSelfNoRotation (Vector2 direction) {
+        Position = base_distance_to_player * attackData.Range * direction;
     }
 
     public void HideAndDisable () {

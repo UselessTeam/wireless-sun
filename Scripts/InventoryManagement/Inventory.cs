@@ -74,8 +74,10 @@ public class Inventory : Node2D {
 	public void AddSlot (byte index, ItemSlot slot) {
 		if (!inventory[index].item.IsNull ())
 			GD.PrintErr ("Trying to AddSlot on an occupied inventory slot");
-		else
+		else {
 			inventory[index].slot = slot;
+			EmitSignal (nameof (inventory_change));
+		}
 	}
 
 	//

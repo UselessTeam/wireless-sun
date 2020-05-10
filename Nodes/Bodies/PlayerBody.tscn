@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Scripts/Control/PlayerControl.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Components/FieldOfView.cs" type="Script" id=2]
@@ -9,7 +9,7 @@
 [ext_resource path="res://Scripts/Pieces/KinematicPiece.cs" type="Script" id=7]
 [ext_resource path="res://Scripts/InventoryManagement/Picker.cs" type="Script" id=8]
 [ext_resource path="res://Nodes/Components/Health.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Assets/Sprites/interact.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Fonts/Montserrat-ExtraBold.ttf" type="DynamicFontData" id=10]
 [ext_resource path="res://Assets/Sprites/Paulyn's experiments/Sprite_exhibit_B.png" type="Texture" id=11]
 [ext_resource path="res://Assets/Sprites/TempArt/shield.png" type="Texture" id=12]
 [ext_resource path="res://Assets/Sprites/GUI/lifebar_fill.png" type="Texture" id=13]
@@ -19,56 +19,44 @@
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 6 )
-region = Rect2( 0, 24, 24, 24 )
+region = Rect2( 0, 0, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 6 )
-region = Rect2( 24, 24, 24, 24 )
+region = Rect2( 24, 0, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 6 )
-region = Rect2( 48, 24, 24, 24 )
+region = Rect2( 48, 0, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 6 )
-region = Rect2( 72, 24, 24, 24 )
+region = Rect2( 72, 0, 24, 24 )
 
-[sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 6 )
-region = Rect2( 0, 0, 24, 24 )
-
-[sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 6 )
-region = Rect2( 24, 0, 24, 24 )
-
-[sub_resource type="AtlasTexture" id=7]
-atlas = ExtResource( 6 )
-region = Rect2( 48, 0, 24, 24 )
-
-[sub_resource type="AtlasTexture" id=8]
+[sub_resource type="AtlasTexture" id=20]
 atlas = ExtResource( 6 )
 region = Rect2( 72, 0, 24, 24 )
 
-[sub_resource type="SpriteFrames" id=9]
+[sub_resource type="SpriteFrames" id=13]
 animations = [ {
 "frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
 "loop": true,
-"name": "diagonal",
+"name": "normal",
 "speed": 20.0
 }, {
-"frames": [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
+"frames": [ SubResource( 20 ), SubResource( 20 ), SubResource( 20 ), SubResource( 20 ), SubResource( 20 ), SubResource( 20 ), SubResource( 20 ), SubResource( 20 ) ],
 "loop": true,
-"name": "straight",
+"name": "circular",
 "speed": 20.0
 } ]
 
-[sub_resource type="CircleShape2D" id=10]
+[sub_resource type="CircleShape2D" id=14]
 
-[sub_resource type="CapsuleShape2D" id=11]
+[sub_resource type="CapsuleShape2D" id=15]
 radius = 5.53744
 height = 11.996
 
-[sub_resource type="SpriteFrames" id=12]
+[sub_resource type="SpriteFrames" id=16]
 animations = [ {
 "frames": [ ExtResource( 12 ) ],
 "loop": true,
@@ -76,10 +64,13 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="CircleShape2D" id=13]
+[sub_resource type="DynamicFont" id=17]
+font_data = ExtResource( 10 )
+
+[sub_resource type="CircleShape2D" id=18]
 radius = 14.5517
 
-[sub_resource type="CircleShape2D" id=14]
+[sub_resource type="CircleShape2D" id=19]
 radius = 116.08
 
 [node name="PlayerBody" type="KinematicBody2D"]
@@ -100,6 +91,7 @@ visible = false
 position = Vector2( -0.583977, -6.71574 )
 
 [node name="Control" type="Node2D" parent="."]
+z_index = 2
 script = ExtResource( 1 )
 FLICKER_TIME = 1.5
 
@@ -108,8 +100,9 @@ script = ExtResource( 5 )
 
 [node name="Sprite" type="AnimatedSprite" parent="Control/Attack"]
 visible = false
-frames = SubResource( 9 )
-animation = "straight"
+position = Vector2( -0.927853, -1.73973 )
+frames = SubResource( 13 )
+animation = "circular"
 
 [node name="SFX" type="AudioStreamPlayer2D" parent="Control/Attack"]
 stream = ExtResource( 3 )
@@ -121,7 +114,7 @@ collision_layer = 0
 collision_mask = 20
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Control/Attack/Hitbox"]
-shape = SubResource( 10 )
+shape = SubResource( 14 )
 disabled = true
 
 [node name="Block" type="Node2D" parent="Control"]
@@ -138,20 +131,34 @@ collision_mask = 20
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Control/Block/Hitbox"]
 position = Vector2( -0.368046, -3.12843 )
-shape = SubResource( 11 )
+shape = SubResource( 15 )
 disabled = true
 
 [node name="Sprite" type="AnimatedSprite" parent="Control/Block"]
 visible = false
 position = Vector2( -0.221025, -3.24634 )
 scale = Vector2( 0.562912, 0.892047 )
-frames = SubResource( 12 )
+frames = SubResource( 16 )
 flip_h = true
 
-[node name="InteractionSprite" type="Sprite" parent="Control"]
+[node name="InteractionSprite" type="PanelContainer" parent="Control"]
 visible = false
-position = Vector2( -0.643921, -17.1029 )
-texture = ExtResource( 10 )
+margin_left = -7.54884
+margin_top = -30.2758
+margin_right = 17.4512
+margin_bottom = 4.7242
+rect_scale = Vector2( 0.500615, 0.522448 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Control/InteractionSprite"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 18.0
+margin_bottom = 28.0
+custom_fonts/font = SubResource( 17 )
+text = "E"
 
 [node name="ChargeBar" type="TextureProgress" parent="Control"]
 visible = false
@@ -183,7 +190,7 @@ script = ExtResource( 2 )
 
 [node name="FOVCollision" type="CollisionShape2D" parent="Picker/FieldOfView"]
 position = Vector2( -0.875961, -4.96382 )
-shape = SubResource( 13 )
+shape = SubResource( 18 )
 
 [node name="NoSpawnZone" type="Area2D" parent="."]
 visible = false
@@ -191,7 +198,7 @@ collision_layer = 1024
 collision_mask = 0
 
 [node name="Collision" type="CollisionShape2D" parent="NoSpawnZone"]
-shape = SubResource( 14 )
+shape = SubResource( 19 )
 
 [node name="Health" parent="." instance=ExtResource( 9 )]
 position = Vector2( -11.2256, 8.83324 )

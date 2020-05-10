@@ -42,22 +42,22 @@ texture = ExtResource( 1 )
 color = Color( 1, 0.988235, 0.341176, 1 )
 energy = 1.24
 
-[node name="PanelContainer" type="PanelContainer" parent="Hover"]
+[node name="LabelContainer" type="PanelContainer" parent="Hover"]
 margin_left = -28.4902
 margin_top = 9.6225
-margin_right = -14.4902
-margin_bottom = 23.6225
+margin_right = 91.5098
+margin_bottom = 34.6225
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Hover/PanelContainer"]
+[node name="Label" type="Label" parent="Hover/LabelContainer"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 51.0
+margin_right = 113.0
 margin_bottom = 18.0
 custom_fonts/font = SubResource( 2 )
-text = "ItemName"
+text = "Item Description Here"
 __meta__ = {
 "_edit_use_anchors_": false
 }
