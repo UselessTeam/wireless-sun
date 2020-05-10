@@ -22,7 +22,6 @@ config/icon="res://Assets/Sprites/Paulyn's experiments/Tree_exhibit_B.png"
 [autoload]
 
 Global="*res://Nodes/Background/Global.tscn"
-SmartTiles="*res://Nodes/Map/SmartTiles.tscn"
 Network="*res://Nodes/Background/Network.tscn"
 Inventory="*res://Nodes/Background/Inventory.tscn"
 GUI="*res://Nodes/GUI/GUI.tscn"
@@ -33,7 +32,7 @@ window/size/width=1920
 window/size/height=1080
 window/size/fullscreen=true
 window/per_pixel_transparency/allowed=true
-window/stretch/mode="2d"
+window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 
 [importer_defaults]

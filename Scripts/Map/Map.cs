@@ -2,102 +2,132 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Godot;
-using MetaTile;
 
 public class Map : Node2D {
 
-	[Export]
-	private OpenSimplexNoise noise; // = new OpenSimplexNoise();
+    public static Map Global;
 
-	private SmartWorldTiles tiles;
+    [Export]
+    private OpenSimplexNoise noise; // = new OpenSimplexNoise();
 
-	public override void _Ready () {
-		tiles = (SmartWorldTiles) GetNode ("/root/SmartTiles/World");
-		generateAsyncStart = new ParameterizedThreadStart (GenerateAsyncObject);
-	}
+    public override void _Ready () {
+        Global = this;
+        generateAsyncStart = new ParameterizedThreadStart (GenerateAsyncObject);
+    }
 
-	private int? cachedX = null;
-	private int? cachedY = null;
+    private Dictionary < (int, int), Chunk > chunks = new Dictionary < (int, int), Chunk > ();
 
-	private const int DISTANCE = 1;
-	private const int BUFFER = 1;
+    private PackedScene baseChunk = (PackedScene) ResourceLoader.Load ("res://Nodes/Map/Chunk.tscn");
 
-	private int Distance (int x1, int y1, int x2, int y2) {
-		return Math.Abs (x1 - x2) + Math.Abs (y1 - y2);
-	}
-	public override void _Process (float delta) {
-		Vector2 playerPosition = new Vector2 (21, 4); // TODO: Get the player's actual position, so chunks can be generated around him when necessary
-		int X = (int) (playerPosition.x / Chunk.PIXEL_SIZE);
-		int Y = (int) (playerPosition.y / Chunk.PIXEL_SIZE);
-		if (X != cachedX || Y != cachedY) {
-			foreach ((int, int) key in chunks.Keys) {
-				if (Distance (X, Y, key.Item1, key.Item2) > DISTANCE + BUFFER) {
-					chunks[key].QueueFree ();
-					chunks.Remove (key);
-				}
-			}
-			for (int x = X - DISTANCE; x <= X + DISTANCE; x++) {
-				for (int y = Y - DISTANCE; y <= Y + DISTANCE; y++) {
-					if (!chunks.ContainsKey ((x, y))) {
-						chunks[(x, y)] = GenerateAsync (x, y); // TODO: Put unloaded chunks somewhere else so they don't accidently get called
-					}
-				}
-			}
-			cachedX = X;
-			cachedY = Y;
-		}
-	}
+    // # Automatically generate Map around player
 
-	private Dictionary < (int, int), Chunk > chunks = new Dictionary < (int, int), Chunk > ();
+    private int? cachedU = null;
+    private int? cachedV = null;
 
-	private PackedScene baseChunk = (PackedScene) ResourceLoader.Load ("res://Nodes/Map/Chunk.tscn");
+    private const int DISTANCE = 1;
+    private const int BUFFER = 1;
 
-	private void GenerateAsyncObject (object chunk) {
-		Generate ((Chunk) chunk);
-	}
+    private int Distance (int u1, int v1, int u2, int v2) {
+        return Math.Abs (u1 - u2) + Math.Abs (v1 - v2);
+    }
+    public override void _Process (float delta) {
+        Vector2 playerPosition = new Vector2 (0, 0); // TODO: Get the player's actual position, so chunks can be generated around him when necessary
+        var coord = Tile.TransposePosition (playerPosition);
+        int U = Mathf.FloorToInt (coord.x / Chunk.SIZE);
+        int V = Mathf.FloorToInt (coord.y / Chunk.SIZE);
+        if (U != cachedU || V != cachedV) {
+            foreach ((int, int) key in chunks.Keys) {
+                if (Distance (U, V, key.Item1, key.Item2) > DISTANCE + BUFFER) {
+                    chunks[key].QueueFree ();
+                    chunks.Remove (key);
+                }
+            }
+            for (int u = U - DISTANCE; u <= U + DISTANCE; u++) {
+                for (int v = V - DISTANCE; v <= V + DISTANCE; v++) {
+                    if (!chunks.ContainsKey ((u, v))) {
+                        chunks[(u, v)] = GenerateAsync (u, v); // TODO: Put unloaded chunks somewhere else so they don't accidently get called
+                    }
+                }
+            }
+            cachedU = U;
+            cachedV = V;
+        }
+    }
 
-	private ParameterizedThreadStart generateAsyncStart; // = new ParameterizedThreadStart(GenerateAsyncObject);
+    private void GenerateAsyncObject (object chunk) {
+        Generate ((Chunk) chunk);
+    }
 
-	public Chunk GenerateAsync (int X, int Y) {
-		System.Threading.Thread generateAsyncThread = new System.Threading.Thread (generateAsyncStart);
-		Chunk chunk = (Chunk) baseChunk.Instance ();
-		chunk.Setup (tiles, X, Y);
-		generateAsyncThread.Start (chunk);
-		return chunk;
-	}
+    private ParameterizedThreadStart generateAsyncStart; // = new ParameterizedThreadStart(GenerateAsyncObject);
 
-	public Chunk Generate (Chunk chunk) {
-		for (int x = 0; x < Chunk.SIZE + 1; x++) {
-			for (int y = 0; y < Chunk.SIZE + 1; y++) {
-				chunk.SetBiom (x, y, GetBiom (x + chunk.x * Chunk.SIZE, y + chunk.y * Chunk.SIZE));
-			}
-		}
-		CallDeferred ("add_child", chunk);
-		return chunk;
-	}
+    public Chunk GenerateAsync (int U, int V) {
+        System.Threading.Thread generateAsyncThread = new System.Threading.Thread (generateAsyncStart);
+        Chunk chunk = Chunk.Instance ();
+        chunk.Setup (this, U, V);
+        generateAsyncThread.Start (chunk);
+        return chunk;
+    }
 
-	// public void Generate (int X, int Y) {
-	//     Chunk chunk = (Chunk) baseChunk.Instance ();
-	//     chunk.Setup (tiles, X, Y);
-	//     Generate (chunk);
-	// }
+    public Chunk Generate (Chunk chunk) {
+        CallDeferred ("add_child", chunk);
+        return chunk;
+    }
 
-	// public PointType GetBiomAtPosition (float x, float y) {
-	//     return GetBiom ((int) (x / Chunk.RESOLUTION), (int) (y / Chunk.RESOLUTION));
-	// }
-	public PointType GetBiom (int x, int y) {
-		float main_value = noise.GetNoise2d (x, y);
-		float secondary_value = noise.GetNoise2d (1200 - x, y - 1200);
-		if (main_value + 0.5 * Math.Abs (secondary_value) < -0.15) {
-			return PointType.Sea;
-		}
-		if (main_value + Math.Abs (secondary_value) < 0.15) {
-			return PointType.Sand;
-		}
-		if (secondary_value < 0.05) {
-			return PointType.Grass;
-		} else {
-			return PointType.Stone;
-		}
-	}
+    // # Usefull public functions
+
+    public struct Flavor {
+        public float altitude;
+        public float heavyness;
+        public float muddyness;
+        public float vegetation;
+    }
+
+    public Flavor GetCoordFlavor (float u, float v) {
+        Flavor flavor = new Flavor ();
+        flavor.altitude = noise.GetNoise2d (u, v) + 0.7f - 0.001f * (u * u + v * v);
+        flavor.heavyness = noise.GetNoise2d (0.8f * u + 780f, 0.8f * v + 1000f) + 0.3f * flavor.altitude;
+        flavor.muddyness = noise.GetNoise2d (u + 600f, v - 2000f) + 0.3f * flavor.heavyness;
+        flavor.vegetation = 0.5f * flavor.muddyness + noise.GetNoise2d (1200f - u, v - 1200f);
+        return flavor;
+    }
+
+    public Flavor GetPositionFlavor (Vector2 position) {
+        Vector2 coords = Tile.TransposePosition(position);
+        return GetCoordFlavor(coords.x, coords.y);
+    }
+
+    public (TileType, int) GetTileType (int u, int v) {
+        Flavor flavor = GetCoordFlavor (u, v);
+        if (flavor.altitude <= 0f) {
+            return (TileType.SEA, 0);
+        }
+        if (flavor.altitude + flavor.heavyness < 0.2f) {
+            return (TileType.SAND, 0);
+        }
+        if (flavor.muddyness < 0f) {
+            if (flavor.heavyness < 0f) {
+                return (TileType.SAND, 0);
+            } else {
+                return (TileType.STONE, 0);
+            }
+        } else {
+            if (flavor.vegetation > -0.1f) {
+                return (TileType.GRASS, 0);
+            } else {
+                return (TileType.DIRT, 0);
+            }
+
+        }
+    }
+
+    public List<Vector2> GetSpawnerPositions (int u, int v) {
+        List<Vector2> positions = new List<Vector2> ();
+        int spawnersCount = 8;
+        for (int c = 0; c < spawnersCount; c++) {
+            int sU = (int) (1024 * (2 + noise.GetNoise2d (128*u - 7, 1024*v + 111*c)) % Chunk.SIZE);
+            int sV = (int) (1024 * (2 + noise.GetNoise2d (128*u + 7, 1024*v - 111*c)) % Chunk.SIZE);
+            positions.Add (new Vector2 (sU, sV));
+        }
+        return positions;
+    }
 }
