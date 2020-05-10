@@ -33,30 +33,30 @@ region = Rect2( 48, 0, 24, 24 )
 atlas = ExtResource( 6 )
 region = Rect2( 72, 0, 24, 24 )
 
-[sub_resource type="AtlasTexture" id=20]
+[sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 6 )
 region = Rect2( 72, 0, 24, 24 )
 
-[sub_resource type="SpriteFrames" id=13]
+[sub_resource type="SpriteFrames" id=6]
 animations = [ {
 "frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
 "loop": true,
 "name": "normal",
 "speed": 20.0
 }, {
-"frames": [ SubResource( 20 ), SubResource( 20 ), SubResource( 20 ), SubResource( 20 ), SubResource( 20 ), SubResource( 20 ), SubResource( 20 ), SubResource( 20 ) ],
+"frames": [ SubResource( 5 ), SubResource( 5 ), SubResource( 5 ), SubResource( 5 ), SubResource( 5 ), SubResource( 5 ), SubResource( 5 ), SubResource( 5 ) ],
 "loop": true,
 "name": "circular",
 "speed": 20.0
 } ]
 
-[sub_resource type="CircleShape2D" id=14]
+[sub_resource type="CircleShape2D" id=7]
 
-[sub_resource type="CapsuleShape2D" id=15]
+[sub_resource type="CapsuleShape2D" id=8]
 radius = 5.53744
 height = 11.996
 
-[sub_resource type="SpriteFrames" id=16]
+[sub_resource type="SpriteFrames" id=9]
 animations = [ {
 "frames": [ ExtResource( 12 ) ],
 "loop": true,
@@ -64,13 +64,13 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="DynamicFont" id=17]
+[sub_resource type="DynamicFont" id=10]
 font_data = ExtResource( 10 )
 
-[sub_resource type="CircleShape2D" id=18]
+[sub_resource type="CircleShape2D" id=11]
 radius = 14.5517
 
-[sub_resource type="CircleShape2D" id=19]
+[sub_resource type="CircleShape2D" id=12]
 radius = 116.08
 
 [node name="PlayerBody" type="KinematicBody2D"]
@@ -96,12 +96,12 @@ script = ExtResource( 1 )
 FLICKER_TIME = 1.5
 
 [node name="Attack" type="Node2D" parent="Control"]
+position = Vector2( 0, -2 )
 script = ExtResource( 5 )
 
 [node name="Sprite" type="AnimatedSprite" parent="Control/Attack"]
 visible = false
-position = Vector2( -0.927853, -1.73973 )
-frames = SubResource( 13 )
+frames = SubResource( 6 )
 animation = "circular"
 
 [node name="SFX" type="AudioStreamPlayer2D" parent="Control/Attack"]
@@ -114,7 +114,7 @@ collision_layer = 0
 collision_mask = 20
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Control/Attack/Hitbox"]
-shape = SubResource( 14 )
+shape = SubResource( 7 )
 disabled = true
 
 [node name="Block" type="Node2D" parent="Control"]
@@ -131,14 +131,14 @@ collision_mask = 20
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Control/Block/Hitbox"]
 position = Vector2( -0.368046, -3.12843 )
-shape = SubResource( 15 )
+shape = SubResource( 8 )
 disabled = true
 
 [node name="Sprite" type="AnimatedSprite" parent="Control/Block"]
 visible = false
 position = Vector2( -0.221025, -3.24634 )
 scale = Vector2( 0.562912, 0.892047 )
-frames = SubResource( 16 )
+frames = SubResource( 9 )
 flip_h = true
 
 [node name="InteractionSprite" type="PanelContainer" parent="Control"]
@@ -157,7 +157,7 @@ margin_left = 7.0
 margin_top = 7.0
 margin_right = 18.0
 margin_bottom = 28.0
-custom_fonts/font = SubResource( 17 )
+custom_fonts/font = SubResource( 10 )
 text = "E"
 
 [node name="ChargeBar" type="TextureProgress" parent="Control"]
@@ -190,7 +190,7 @@ script = ExtResource( 2 )
 
 [node name="FOVCollision" type="CollisionShape2D" parent="Picker/FieldOfView"]
 position = Vector2( -0.875961, -4.96382 )
-shape = SubResource( 18 )
+shape = SubResource( 11 )
 
 [node name="NoSpawnZone" type="Area2D" parent="."]
 visible = false
@@ -198,7 +198,7 @@ collision_layer = 1024
 collision_mask = 0
 
 [node name="Collision" type="CollisionShape2D" parent="NoSpawnZone"]
-shape = SubResource( 19 )
+shape = SubResource( 12 )
 
 [node name="Health" parent="." instance=ExtResource( 9 )]
 position = Vector2( -11.2256, 8.83324 )
