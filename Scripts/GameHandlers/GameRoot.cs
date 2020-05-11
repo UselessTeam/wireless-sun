@@ -77,6 +77,7 @@ public static class Save {
     }
 
     static string SavePath (string saveName) {
+        GD.Print ("Save Path is: " + OS.GetUserDataDir ());
         return saveLocation + "/" + saveName + ".save";
     }
 

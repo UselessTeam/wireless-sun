@@ -8,6 +8,7 @@ public class Chunk : Node2D {
         return (Chunk) template.Instance ();
     }
 
+    private bool generated = false;
     public const int SIZE = 32;
     public const int CHUNK_HALF_WIDTH = Tile.HALF_WIDTH * SIZE;
     public const int CHUNK_HALF_HEIGHT = Tile.HALF_HEIGHT * SIZE;
@@ -22,27 +23,30 @@ public class Chunk : Node2D {
         this.map = map;
         this.U = u;
         this.V = v;
-        MakeSpawners ();
     }
 
-    private bool modified = true;
+    public void Generate () {
+        if (!generated) {
+            MakeSpawners ();
+            MakeTiles ();
+        }
+        generated = true;
+    }
 
-    public override void _Draw () {
-        if (modified) {
-            modified = false;
-            if (map == null) {
-                GD.PrintErr ("Chunk has not been setup");
-            }
-            this.Position = new Vector2 ((U - V) * CHUNK_HALF_WIDTH, (U + V) * CHUNK_HALF_HEIGHT);
-            this.ZIndex = (U + V) * SIZE;
-            for (int v = 0; v < SIZE; v++) {
-                for (int u = 0; u < SIZE; u++) {
-                    var (t, w) = (TileType.NONE, 0);
-                    if (map != null) {
-                        (t, w) = map.GetTileType (u + U * SIZE, v + V * SIZE);
-                    }
-                    AddChild (Tile.Instance (u, v, w, t));
+    public override void _Ready () {
+        Generate ();
+    }
+
+    private void MakeTiles () {
+        this.Position = new Vector2 ((U - V) * CHUNK_HALF_WIDTH, (U + V) * CHUNK_HALF_HEIGHT);
+        this.ZIndex = (U + V) * SIZE;
+        for (int v = 0; v < SIZE; v++) {
+            for (int u = 0; u < SIZE; u++) {
+                var (t, w) = (TileType.NONE, 0);
+                if (map != null) {
+                    (t, w) = map.GetTileType (u + U * SIZE, v + V * SIZE);
                 }
+                AddChild (Tile.Instance (u, v, w, t));
             }
         }
     }
@@ -74,8 +78,8 @@ public class Chunk : Node2D {
         // Generates candidates of what can be spawn, and for each gives the most suttable position and a score
         int i = 0;
         foreach (var position in positions) {
-            int u = (int)position.x;
-            int v = (int)position.y;
+            int u = (int) position.x;
+            int v = (int) position.y;
             Map.Flavor flavor = map.GetCoordFlavor (u + U * SIZE, v + V * SIZE);
             foreach (var pair in FORMULAS) {
                 var (bas, alt, hea, mud, veg) = pair.Value;
@@ -100,7 +104,7 @@ public class Chunk : Node2D {
             string currentSpawned = null;
             foreach (var candidate in candidates) {
                 var (k, value) = candidate.Value;
-                if(used[k] || value <= currentMax) {
+                if (used[k] || value <= currentMax) {
                     continue;
                 }
                 currentMax = value;
@@ -111,25 +115,26 @@ public class Chunk : Node2D {
             }
             int spawnedK = candidates[currentSpawned].Item1;
             used[spawnedK] = true;
-            Spawn(currentSpawned, positions[spawnedK], currentMax);
+            Spawn (currentSpawned, positions[spawnedK], currentMax);
         }
     }
 
-    private static Dictionary <string, PackedScene> PACKED_SPAWNERS = new Dictionary <string, PackedScene> {
+    private static Dictionary<string, PackedScene> PACKED_SPAWNERS = new Dictionary<string, PackedScene> {
         ["tree"] = (PackedScene) ResourceLoader.Load ("res://Nodes/Bodies/Tree.tscn"),
         ["shadowball"] = (PackedScene) ResourceLoader.Load ("res://Nodes/Bodies/ShadowBallBody.tscn"),
     };
 
-    private void Spawn(string what, Vector2 position, float score) {
+    private void Spawn (string what, Vector2 position, float score) {
         SpawnerComponent spawner;
         PackedScene packedScene;
         float radius = 120 + 100 * score;
-        if(PACKED_SPAWNERS.TryGetValue(what, out packedScene)) {
-            spawner = PrefabSpawner.Instance(packedScene, radius: radius);
+        if (PACKED_SPAWNERS.TryGetValue (what, out packedScene)) {
+            spawner = PrefabSpawner.Instance (packedScene, radius : radius);
         } else {
-            spawner = ItemSpawner.Instance(what, radius: radius);
+            spawner = ItemSpawner.Instance (what, radius : radius);
         }
-        AddChild(spawner);
-        spawner.Position = Tile.TransposeCoord(position.x, position.y) ;
+        spawner.Name = "Spawner_" + what;
+        AddChild (spawner);
+        spawner.Position = Tile.TransposeCoord (position.x, position.y);
     }
 }

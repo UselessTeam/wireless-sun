@@ -13,6 +13,7 @@ public class Map : Node2D {
     public override void _Ready () {
         Global = this;
         generateAsyncStart = new ParameterizedThreadStart (GenerateAsyncObject);
+        _Process (0);
     }
 
     private Dictionary < (int, int), Chunk > chunks = new Dictionary < (int, int), Chunk > ();
@@ -45,7 +46,8 @@ public class Map : Node2D {
             for (int u = U - DISTANCE; u <= U + DISTANCE; u++) {
                 for (int v = V - DISTANCE; v <= V + DISTANCE; v++) {
                     if (!chunks.ContainsKey ((u, v))) {
-                        chunks[(u, v)] = GenerateAsync (u, v); // TODO: Put unloaded chunks somewhere else so they don't accidently get called
+                        GD.Print ("Generating Chunk " + u + " " + v);
+                        chunks[(u, v)] = Generate (u, v); // TODO: Put unloaded chunks somewhere else so they don't accidently get called
                     }
                 }
             }
@@ -55,7 +57,7 @@ public class Map : Node2D {
     }
 
     private void GenerateAsyncObject (object chunk) {
-        Generate ((Chunk) chunk);
+        GenerateDeffered ((Chunk) chunk);
     }
 
     private ParameterizedThreadStart generateAsyncStart; // = new ParameterizedThreadStart(GenerateAsyncObject);
@@ -64,12 +66,22 @@ public class Map : Node2D {
         System.Threading.Thread generateAsyncThread = new System.Threading.Thread (generateAsyncStart);
         Chunk chunk = Chunk.Instance ();
         chunk.Setup (this, U, V);
+        chunk.Name = "Chunk_" + U + "_" + V;
         generateAsyncThread.Start (chunk);
         return chunk;
     }
-
-    public Chunk Generate (Chunk chunk) {
+    public Chunk GenerateDeffered (Chunk chunk) {
+        chunk.Generate ();
         CallDeferred ("add_child", chunk);
+        return chunk;
+    }
+
+    public Chunk Generate (int U, int V) {
+        Chunk chunk = Chunk.Instance ();
+        chunk.Setup (this, U, V);
+        chunk.Name = "Chunk_" + U + "_" + V;
+        chunk.Generate ();
+        AddChild (chunk);
         return chunk;
     }
 
@@ -92,8 +104,8 @@ public class Map : Node2D {
     }
 
     public Flavor GetPositionFlavor (Vector2 position) {
-        Vector2 coords = Tile.TransposePosition(position);
-        return GetCoordFlavor(coords.x, coords.y);
+        Vector2 coords = Tile.TransposePosition (position);
+        return GetCoordFlavor (coords.x, coords.y);
     }
 
     public (TileType, int) GetTileType (int u, int v) {
@@ -124,8 +136,8 @@ public class Map : Node2D {
         List<Vector2> positions = new List<Vector2> ();
         int spawnersCount = 8;
         for (int c = 0; c < spawnersCount; c++) {
-            int sU = (int) (1024 * (2 + noise.GetNoise2d (128*u - 7, 1024*v + 111*c)) % Chunk.SIZE);
-            int sV = (int) (1024 * (2 + noise.GetNoise2d (128*u + 7, 1024*v - 111*c)) % Chunk.SIZE);
+            int sU = (int) (1024 * (2 + noise.GetNoise2d (128 * u - 7, 1024 * v + 111 * c)) % Chunk.SIZE);
+            int sV = (int) (1024 * (2 + noise.GetNoise2d (128 * u + 7, 1024 * v - 111 * c)) % Chunk.SIZE);
             positions.Add (new Vector2 (sU, sV));
         }
         return positions;
