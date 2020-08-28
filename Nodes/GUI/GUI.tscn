@@ -5,12 +5,12 @@
 [ext_resource path="res://Nodes/GUI/Inventory/Craft.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/GUI/Inventory/CraftListGUI.cs" type="Script" id=4]
 [ext_resource path="res://Assets/Fonts/Montserrat-ExtraBold.ttf" type="DynamicFontData" id=5]
-[ext_resource path="res://Assets/Sprites/TempArt/katarzyna-kawiecka-quest-seeker-icon-inventory.jpg" type="Texture" id=6]
+[ext_resource path="res://Nodes/GUI/MenuIcon.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Nodes/GUI/GuiItem/EquipementItem.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Nodes/GUI/PauseMenu.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scripts/GUI/Inventory/Equipement/WeaponHotbar.cs" type="Script" id=9]
-[ext_resource path="res://Scripts/GUI/ShowHide.cs" type="Script" id=10]
-[ext_resource path="res://Scripts/GUI/GameplayElements/InventoryIcon.cs" type="Script" id=11]
+[ext_resource path="res://Assets/Sprites/TempArt/special.png" type="Texture" id=10]
+[ext_resource path="res://Nodes/GUI/SkillTree/SkillTreePanel.tscn" type="PackedScene" id=11]
 
 [sub_resource type="Theme" id=1]
 
@@ -62,39 +62,32 @@ margin_left = 52.0
 margin_right = 100.0
 margin_bottom = 48.0
 
-[node name="InventoryIcon" type="Button" parent="ShowOnGameplay"]
-margin_left = 1808.71
-margin_top = 32.3024
-margin_right = 1878.71
-margin_bottom = 102.302
-icon = ExtResource( 6 )
-clip_text = true
-expand_icon = true
-script = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="PanelContainer" type="PanelContainer" parent="ShowOnGameplay/InventoryIcon"]
-visible = false
-margin_left = -13.1722
-margin_top = 74.8424
-margin_right = 80.8278
-margin_bottom = 102.842
-script = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="ShowOnGameplay/InventoryIcon/PanelContainer"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 87.0
-margin_bottom = 21.0
+[node name="InventoryIcon" parent="ShowOnGameplay" instance=ExtResource( 6 )]
+margin_left = 1807.74
+margin_right = 1877.74
 text = "Inventory (F)"
+iconLabel = "Inventory (F)"
+menuPointer = 1
+
+[node name="SkillTreeIcon" parent="ShowOnGameplay" instance=ExtResource( 6 )]
+margin_left = 1808.16
+margin_top = 143.471
+margin_right = 1878.16
+margin_bottom = 213.47
+text = "Skill Tree ()"
+icon = ExtResource( 10 )
+iconLabel = "Skill Tree ()"
+menuPointer = 2
 
 [node name="Inventory" parent="." instance=ExtResource( 1 )]
+margin_left = -136.874
+margin_top = 4.88837
+margin_right = -136.874
+margin_bottom = 4.88837
 theme = SubResource( 1 )
+
+[node name="SkillTreePanel" parent="." instance=ExtResource( 11 )]
+visible = false
 
 [node name="Crafting" type="VBoxContainer" parent="."]
 margin_left = 14.3197
@@ -167,5 +160,3 @@ __meta__ = {
 
 [node name="PauseMenu" parent="." instance=ExtResource( 8 )]
 visible = false
-[connection signal="mouse_entered" from="ShowOnGameplay/InventoryIcon" to="ShowOnGameplay/InventoryIcon/PanelContainer" method="_Show"]
-[connection signal="mouse_exited" from="ShowOnGameplay/InventoryIcon" to="ShowOnGameplay/InventoryIcon/PanelContainer" method="_Hide"]

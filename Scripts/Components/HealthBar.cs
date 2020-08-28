@@ -9,12 +9,13 @@ public class HealthBar : TextureProgress {
     // Called when the node enters the scene tree for the first time.
     HealthComponent MyHealth { get { return GetParent ().GetParent<HealthComponent> (); } }
     public override void _Ready () {
-        MaxValue = MyHealth.MAX_HP;
-        Value = MyHealth.MAX_HP;
         MyHealth.Connect (nameof (HealthComponent.HpChanged), this, "OnHpChanged");
     }
 
-    void OnHpChanged (float _HP) { Value = _HP; }
+    void OnHpChanged (float _HP) {
+        MaxValue = MyHealth.MaxHp;
+        Value = _HP;
+    }
     //  // Called every frame. 'delta' is the elapsed time since the previous frame.
     //  public override void _Process(float delta)
     //  {

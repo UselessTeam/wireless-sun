@@ -4,10 +4,12 @@ using Godot;
 public class GUI : Node {
     public InventoryGUI inventory;
     public CraftListGUI crafting;
+    public SkillTreePanel skillTreePanel;
     public PauseMenu pauseMenu;
     public enum Window {
         Nothing,
         Inventory,
+        SkillTree,
         Pause
     }
     public Window current;
@@ -19,6 +21,8 @@ public class GUI : Node {
         crafting.Hide ();
         pauseMenu = GetNode<PauseMenu> ("PauseMenu");
         pauseMenu.Hide ();
+        skillTreePanel = GetNode<SkillTreePanel> ("SkillTreePanel");
+        skillTreePanel.Hide ();
         GetNode<Control> ("ShowOnGameplay").Hide ();
 
         GameRoot.Instance.Connect (nameof (GameRoot.GameplayStarted), this, nameof (GameplayStart));
@@ -33,6 +37,9 @@ public class GUI : Node {
         }
         if (window == Window.Pause) {
             return inventory;
+        }
+        if (window == Window.SkillTree) {
+            return skillTreePanel;
         }
         return null;
     }

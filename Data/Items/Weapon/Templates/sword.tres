@@ -8,5 +8,5 @@ damage = 1.2
 knockback = 1.2
 range = 1.0
 cooldown = 1.0
-type = 2
+type = 1
 effect = 0

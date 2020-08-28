@@ -2,7 +2,6 @@
 
 [ext_resource path="res://Scripts/GUI/Inventory/CraftGUI.cs" type="Script" id=1]
 
-
 [node name="Craft" type="PanelContainer"]
 margin_right = 282.0
 margin_bottom = 76.0

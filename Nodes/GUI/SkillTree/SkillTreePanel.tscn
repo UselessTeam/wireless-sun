@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Nodes/GUI/SkillTree/TreeRoot.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/GUI/SkillTree/SkillTreePanel.cs" type="Script" id=2]
+
+[node name="SkillTreePanel" type="ColorRect"]
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+rect_clip_content = true
+color = Color( 0.447059, 0.356863, 0.243137, 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TreeRoot" parent="." instance=ExtResource( 1 )]

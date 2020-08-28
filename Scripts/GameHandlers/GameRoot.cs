@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 
 public class GameRoot : Node {
     public static Inventory inventory;
+
     private static GameRoot instance;
     public static GameRoot Instance { get { return instance; } }
 

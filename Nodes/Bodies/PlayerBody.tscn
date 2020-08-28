@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Scripts/Control/PlayerControl.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Components/FieldOfView.cs" type="Script" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://Scripts/Attacks/PlayerAttack_Block.cs" type="Script" id=14]
 [ext_resource path="res://Scripts/Components/ChargeBar.cs" type="Script" id=15]
 [ext_resource path="res://Nodes/Components/Movement.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Nodes/Components/PlayerStats.tscn" type="PackedScene" id=17]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 6 )
@@ -94,6 +95,8 @@ position = Vector2( -0.583977, -6.71574 )
 z_index = 2
 script = ExtResource( 1 )
 FLICKER_TIME = 1.5
+
+[node name="Stats" parent="Control" instance=ExtResource( 17 )]
 
 [node name="Attack" type="Node2D" parent="Control"]
 position = Vector2( 0, -2 )

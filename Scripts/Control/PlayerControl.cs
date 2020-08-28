@@ -87,7 +87,7 @@ public class PlayerControl : ControlComponent {
                     return;
                 }
             }
-            if (_event is InputEventMouseMotion eventMouseMotion) {
+            if (_event is InputEventMouseMotion) {
                 MyMovement.FacingDirection = GetGlobalMousePosition () - MyMovement.GlobalPosition;
             }
         }

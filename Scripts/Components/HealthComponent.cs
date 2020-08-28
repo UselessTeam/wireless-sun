@@ -3,7 +3,7 @@ using Godot;
 
 public class HealthComponent : Node2D {
     // Class that manages HP, HP recovery, Death, ect ...
-    [Export][Puppet] public float MAX_HP = 100;
+    [Export][Puppet] float _MaxHp = 100;
     [Export][Puppet] public readonly float FLICKER_TIME = 0.2f;
     [Export] public ArmorResource armor = null;
 
@@ -15,7 +15,7 @@ public class HealthComponent : Node2D {
     [Signal] public delegate void Died ();
 
     public override void _Ready () {
-        _HP = MAX_HP;
+        _HP = _MaxHp;
         Connect (nameof (Died), MyUser, nameof (ControlComponent._OnDied));
         if (MyUser == null)
             GD.PrintErr ("Error in Node \"" + GetParent<Node2D> ().Name + "\" : Health component requires a Control component");
@@ -23,12 +23,25 @@ public class HealthComponent : Node2D {
 
     public ControlComponent MyUser { get { return GetNodeOrNull<ControlComponent> ("../Control"); } }
 
+    public float MaxHp {
+        get { return _MaxHp; }
+        set {
+            if (value > _MaxHp)
+                HP += value - MaxHp;
+            else if (HP > value)
+                HP = value;
+            if (MyUser.IsTrueMaster)
+                Rset (nameof (_MaxHp), _MaxHp);
+            EmitSignal (nameof (HpChanged), _HP);
+        }
+    }
+
     public float HP {
         get { return _HP; }
         set {
             _HP = value;
-            if (_HP > MAX_HP)
-                _HP = MAX_HP;
+            if (_HP > _MaxHp)
+                _HP = _MaxHp;
             EmitSignal (nameof (HpChanged), _HP);
             if (MyUser.IsTrueMaster)
                 Rset (nameof (_HP), _HP);

@@ -11,7 +11,7 @@ public class SaveMenu : Control {
     public Control ChooseNewName { get { return GetNode<Control> ("ChooseNewName"); } }
     public Control OpenedSave { get { return GetNode<Control> ("OpenedSave"); } }
 
-    public string newName;
+    public string newName = "";
     public string currentSave;
 
     int initialChildCount = 0;
@@ -32,8 +32,12 @@ public class SaveMenu : Control {
             var loadButton = (LoadButton) loadButtonPackedScene.Instance ();
             loadButton.Name = save;
             loadButton.Text = save;
-            MainSaveMenu.AddChild (loadButton);
-            loadButton.Connect (nameof (LoadButton.LoadPressed), this, nameof (_OnLoadPressed));
+            if (GetNodeOrNull (save) != null)
+                GD.Print ("Save already exists :", save);
+            else {
+                MainSaveMenu.AddChild (loadButton);
+                loadButton.Connect (nameof (LoadButton.LoadPressed), this, nameof (_OnLoadPressed));
+            }
         }
     }
 
