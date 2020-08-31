@@ -24,6 +24,7 @@ config/icon="res://Assets/Sprites/Paulyn's experiments/Tree_exhibit_B.png"
 Global="*res://Nodes/Background/Global.tscn"
 Network="*res://Nodes/Background/Network.tscn"
 Inventory="*res://Nodes/Background/Inventory.tscn"
+PlayerStats="*res://Nodes/Components/PlayerStats.tscn"
 GUI="*res://Nodes/GUI/GUI.tscn"
 
 [display]

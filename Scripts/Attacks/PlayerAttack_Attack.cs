@@ -2,9 +2,9 @@ using System;
 using Godot;
 
 public class PlayerAttack_Attack : PlayerAttack_Base {
-
     public override void _Ready () {
         base._Ready ();
+        XpStatOnTouch = "combat";
         MyAttackSprite.Connect ("animation_finished", this, nameof (_OnAttackFinished));
     }
 

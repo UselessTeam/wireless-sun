@@ -1,9 +1,9 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scripts/Control/ShadowBallControl.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Pieces/KinematicPiece.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/Attacks/AttackComponent.cs" type="Script" id=3]
-[ext_resource path="res://Assets/Sprites/mob_shadowball.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Sprites/Mole.png" type="Texture" id=4]
 [ext_resource path="res://Scripts/Components/FieldOfView.cs" type="Script" id=5]
 [ext_resource path="res://Nodes/Components/Health.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Nodes/Components/Movement.tscn" type="PackedScene" id=7]
@@ -14,27 +14,36 @@ radius = 9.02684
 [sub_resource type="CircleShape2D" id=2]
 radius = 134.004
 
-[sub_resource type="AtlasTexture" id=3]
-atlas = ExtResource( 4 )
-region = Rect2( 0, 0, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=4]
-atlas = ExtResource( 4 )
-region = Rect2( 32, 0, 32, 32 )
-
 [sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 4 )
-region = Rect2( 64, 0, 32, 32 )
+region = Rect2( 0, 0, 35, 45 )
 
 [sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 4 )
-region = Rect2( 96, 0, 32, 32 )
+region = Rect2( 0, 0, 35, 45 )
 
-[sub_resource type="SpriteFrames" id=7]
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 4 )
+region = Rect2( 35, 0, 35, 45 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 4 )
+region = Rect2( 70, 0, 35, 45 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 4 )
+region = Rect2( 105, 0, 35, 45 )
+
+[sub_resource type="SpriteFrames" id=4]
 animations = [ {
-"frames": [ SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ) ],
+"frames": [ SubResource( 5 ) ],
 "loop": true,
-"name": "default",
+"name": "idle",
+"speed": 2.0
+}, {
+"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
+"loop": true,
+"name": "run",
 "speed": 5.0
 } ]
 
@@ -75,14 +84,14 @@ position = Vector2( 1.10415, -7.177 )
 shape = SubResource( 2 )
 
 [node name="Display" type="AnimatedSprite" parent="."]
-position = Vector2( 0.184025, -12.1457 )
-frames = SubResource( 7 )
-frame = 3
+position = Vector2( -133.846, -33.0281 )
+frames = SubResource( 4 )
+animation = "idle"
 playing = true
+offset = Vector2( 134.03, 20.8824 )
 
 [node name="Collision" type="CollisionPolygon2D" parent="."]
 position = Vector2( 0.736099, -13.986 )
 polygon = PoolVector2Array( -4.43527, 12.784, 3.22487, 12.784, 4.03802, 4.26392, -5.62297, 4.26392 )
 
 [node name="Health" parent="." instance=ExtResource( 6 )]
-MAX_HP = 200.0

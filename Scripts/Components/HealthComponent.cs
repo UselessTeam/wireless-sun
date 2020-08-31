@@ -16,6 +16,7 @@ public class HealthComponent : Node2D {
 
     public override void _Ready () {
         _HP = _MaxHp;
+        EmitSignal (nameof (HpChanged), _HP);
         Connect (nameof (Died), MyUser, nameof (ControlComponent._OnDied));
         if (MyUser == null)
             GD.PrintErr ("Error in Node \"" + GetParent<Node2D> ().Name + "\" : Health component requires a Control component");

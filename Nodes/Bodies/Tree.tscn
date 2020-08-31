@@ -56,5 +56,4 @@ itemName = "stick"
 
 [node name="Health" parent="." instance=ExtResource( 4 )]
 position = Vector2( -9.70602, 6.7942 )
-MAX_HP = 300.0
 armor = ExtResource( 8 )

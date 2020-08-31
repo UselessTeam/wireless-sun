@@ -10,6 +10,7 @@ public class HealthBar : TextureProgress {
     HealthComponent MyHealth { get { return GetParent ().GetParent<HealthComponent> (); } }
     public override void _Ready () {
         MyHealth.Connect (nameof (HealthComponent.HpChanged), this, "OnHpChanged");
+
     }
 
     void OnHpChanged (float _HP) {

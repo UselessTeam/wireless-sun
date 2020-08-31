@@ -2,6 +2,10 @@ using System;
 using Godot;
 
 public class PlayerAttack_Block : PlayerAttack_Base {
+    public override void _Ready () {
+        base._Ready ();
+        XpStatOnTouch = "block";
+    }
 
     public void LaunchBlock (AttackResource attackData) {
         this.attackData = attackData;

@@ -6,6 +6,8 @@ public abstract class ControlComponent : Node2D {
         AddToGroup ("SaveNodes");
     }
 
+    [Export] public float XpMultiplier = 1;
+
     public bool CanMove { get { return MyMovement.CanMove; } }
     public bool IsMaster { get { return !Network.IsConnectionStarted || IsNetworkMaster (); } }
     public bool IsTrueMaster { get { return Network.IsConnectionStarted && IsNetworkMaster (); } }
