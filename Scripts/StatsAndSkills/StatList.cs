@@ -7,18 +7,23 @@ namespace Stats {
 
 	public class Stat : Node {
 		public string name;
-		public Array<string> subStats;
+		public string fatherStat;
 
-		public float xpForLevel1 = 10;
+		public float xpForLevel1 = 10; //XP required to reach level 1
 		public float xpScalling = 1.3f; //XP required is multiplied every level
 
-		public int level = 0;
-		public float currentXp = 0;
+		public int level = 0; // current level
+		public float currentXp = 0; // current accumulated XP (is reset to 0 every level)
 
-		public float xpForNextLevel { get { return xpForLevel1 * Godot.Mathf.Pow (xpScalling, level); } }
+		public int fatherLevelRequired = 1; // Is stat/skill is unlocked when the father reaches this level
 
-		public Func<Stat, float> value = (stat) => {
+		public int xpForNextLevel { get { return Convert.ToInt32 (xpForLevel1 * Godot.Mathf.Pow (xpScalling, level)); } } //total Xp needed to rech next level
+
+		public Func<Stat, float> value = (stat) => { //The useful value of this skill
 			return (float) stat.level;
+		};
+		public Func<Stat, string> description = (stat) => { //Desciption to be displayed on the skill tree
+			return "No description yet ...";
 		};
 
 		[Signal] public delegate void LevelUp (string statName);

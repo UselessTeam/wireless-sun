@@ -27,18 +27,8 @@ margin_right = 647.596
 margin_bottom = 391.869
 statName = "root"
 
-[node name="TextureRect" parent="TreeRoot/SkillNode" index="0"]
-margin_right = 71.0
-
 [node name="Name" parent="TreeRoot/SkillNode" index="1"]
-margin_right = 71.0
 text = "Adventurer"
-
-[node name="Level" parent="TreeRoot/SkillNode" index="2"]
-margin_right = 71.0
-
-[node name="Xp" parent="TreeRoot/SkillNode" index="3"]
-margin_right = 71.0
 
 [node name="SkillNode2" parent="TreeRoot" instance=ExtResource( 4 )]
 margin_left = 367.441
@@ -47,18 +37,8 @@ margin_right = 397.441
 margin_bottom = 197.019
 statName = "combat"
 
-[node name="TextureRect" parent="TreeRoot/SkillNode2" index="0"]
-margin_right = 57.0
-
 [node name="Name" parent="TreeRoot/SkillNode2" index="1"]
-margin_right = 57.0
 text = "Combat"
-
-[node name="Level" parent="TreeRoot/SkillNode2" index="2"]
-margin_right = 57.0
-
-[node name="Xp" parent="TreeRoot/SkillNode2" index="3"]
-margin_right = 57.0
 
 [node name="SkillNode3" parent="TreeRoot" instance=ExtResource( 4 )]
 margin_left = 756.224
@@ -84,10 +64,266 @@ margin_right = 126.0
 margin_right = 126.0
 text = "Weapon Proficiency"
 
-[node name="Level" parent="TreeRoot/SkillNode4" index="2"]
+[node name="Description" parent="TreeRoot/SkillNode4" index="2"]
 margin_right = 126.0
 
-[node name="Xp" parent="TreeRoot/SkillNode4" index="3"]
+[node name="Level" parent="TreeRoot/SkillNode4" index="3"]
+margin_right = 126.0
+
+[node name="Xp" parent="TreeRoot/SkillNode4" index="4"]
+margin_right = 126.0
+
+[node name="SkillNode5" parent="TreeRoot" instance=ExtResource( 4 )]
+margin_left = 427.67
+margin_top = 644.395
+margin_right = 553.67
+margin_bottom = 714.395
+statName = "sword"
+
+[node name="TextureRect" parent="TreeRoot/SkillNode5" index="0"]
+margin_right = 126.0
+
+[node name="Name" parent="TreeRoot/SkillNode5" index="1"]
+margin_right = 126.0
+text = "Sword"
+
+[node name="Description" parent="TreeRoot/SkillNode5" index="2"]
+margin_right = 126.0
+
+[node name="Level" parent="TreeRoot/SkillNode5" index="3"]
+margin_right = 126.0
+
+[node name="Xp" parent="TreeRoot/SkillNode5" index="4"]
+margin_right = 126.0
+
+[node name="SkillNode6" parent="TreeRoot" instance=ExtResource( 4 )]
+margin_left = 577.548
+margin_top = 701.25
+margin_right = 703.548
+margin_bottom = 771.25
+statName = "axe"
+
+[node name="TextureRect" parent="TreeRoot/SkillNode6" index="0"]
+margin_right = 126.0
+
+[node name="Name" parent="TreeRoot/SkillNode6" index="1"]
+margin_right = 126.0
+text = "Axe"
+
+[node name="Description" parent="TreeRoot/SkillNode6" index="2"]
+margin_right = 126.0
+
+[node name="Level" parent="TreeRoot/SkillNode6" index="3"]
+margin_right = 126.0
+
+[node name="Xp" parent="TreeRoot/SkillNode6" index="4"]
+margin_right = 126.0
+
+[node name="SkillNode7" parent="TreeRoot" instance=ExtResource( 4 )]
+margin_left = 743.356
+margin_top = 651.508
+margin_right = 869.356
+margin_bottom = 721.508
+statName = "bare_hand"
+
+[node name="TextureRect" parent="TreeRoot/SkillNode7" index="0"]
+margin_right = 126.0
+
+[node name="Name" parent="TreeRoot/SkillNode7" index="1"]
+margin_right = 126.0
+text = "Bare Hands"
+
+[node name="Description" parent="TreeRoot/SkillNode7" index="2"]
+margin_right = 126.0
+
+[node name="Level" parent="TreeRoot/SkillNode7" index="3"]
+margin_right = 126.0
+
+[node name="Xp" parent="TreeRoot/SkillNode7" index="4"]
+margin_right = 126.0
+
+[node name="SkillNode8" parent="TreeRoot" instance=ExtResource( 4 )]
+margin_left = 849.465
+margin_top = 549.479
+margin_right = 975.465
+margin_bottom = 619.479
+statName = "pickaxe"
+
+[node name="TextureRect" parent="TreeRoot/SkillNode8" index="0"]
+margin_right = 126.0
+
+[node name="Name" parent="TreeRoot/SkillNode8" index="1"]
+margin_right = 126.0
+text = "Pickaxe"
+
+[node name="Description" parent="TreeRoot/SkillNode8" index="2"]
+margin_right = 126.0
+
+[node name="Level" parent="TreeRoot/SkillNode8" index="3"]
+margin_right = 126.0
+
+[node name="Xp" parent="TreeRoot/SkillNode8" index="4"]
+margin_right = 126.0
+
+[node name="SkillNode12" parent="TreeRoot" instance=ExtResource( 4 )]
+margin_left = 378.938
+margin_top = 535.795
+margin_right = 504.938
+margin_bottom = 605.795
+statName = "shield"
+
+[node name="TextureRect" parent="TreeRoot/SkillNode12" index="0"]
+margin_right = 126.0
+
+[node name="Name" parent="TreeRoot/SkillNode12" index="1"]
+margin_right = 126.0
+text = "Shield"
+
+[node name="Description" parent="TreeRoot/SkillNode12" index="2"]
+margin_right = 126.0
+
+[node name="Level" parent="TreeRoot/SkillNode12" index="3"]
+margin_right = 126.0
+
+[node name="Xp" parent="TreeRoot/SkillNode12" index="4"]
+margin_right = 126.0
+
+[node name="SkillNode9" parent="TreeRoot" instance=ExtResource( 4 )]
+margin_left = 925.87
+margin_top = 146.361
+margin_right = 1051.87
+margin_bottom = 216.361
+statName = "health"
+
+[node name="TextureRect" parent="TreeRoot/SkillNode9" index="0"]
+margin_right = 126.0
+
+[node name="Name" parent="TreeRoot/SkillNode9" index="1"]
+margin_right = 126.0
+text = "Health"
+
+[node name="Description" parent="TreeRoot/SkillNode9" index="2"]
+margin_right = 126.0
+
+[node name="Level" parent="TreeRoot/SkillNode9" index="3"]
+margin_right = 126.0
+
+[node name="Xp" parent="TreeRoot/SkillNode9" index="4"]
+margin_right = 126.0
+
+[node name="SkillNode10" parent="TreeRoot" instance=ExtResource( 4 )]
+margin_left = 802.109
+margin_top = 27.3599
+margin_right = 928.109
+margin_bottom = 97.3599
+statName = "speed"
+
+[node name="TextureRect" parent="TreeRoot/SkillNode10" index="0"]
+margin_right = 126.0
+
+[node name="Name" parent="TreeRoot/SkillNode10" index="1"]
+margin_right = 126.0
+text = "Speed"
+
+[node name="Description" parent="TreeRoot/SkillNode10" index="2"]
+margin_right = 126.0
+
+[node name="Level" parent="TreeRoot/SkillNode10" index="3"]
+margin_right = 126.0
+
+[node name="Xp" parent="TreeRoot/SkillNode10" index="4"]
+margin_right = 126.0
+
+[node name="SkillNode11" parent="TreeRoot" instance=ExtResource( 4 )]
+margin_left = 660.895
+margin_top = 40.0533
+margin_right = 786.895
+margin_bottom = 110.053
+statName = "regen"
+
+[node name="TextureRect" parent="TreeRoot/SkillNode11" index="0"]
+margin_right = 126.0
+
+[node name="Name" parent="TreeRoot/SkillNode11" index="1"]
+margin_right = 126.0
+text = "Regeneration"
+
+[node name="Description" parent="TreeRoot/SkillNode11" index="2"]
+margin_right = 126.0
+
+[node name="Level" parent="TreeRoot/SkillNode11" index="3"]
+margin_right = 126.0
+
+[node name="Xp" parent="TreeRoot/SkillNode11" index="4"]
+margin_right = 126.0
+
+[node name="SkillNode15" parent="TreeRoot" instance=ExtResource( 4 )]
+margin_left = 192.699
+margin_top = 197.912
+margin_right = 318.699
+margin_bottom = 267.912
+statName = "attack"
+
+[node name="TextureRect" parent="TreeRoot/SkillNode15" index="0"]
+margin_right = 126.0
+
+[node name="Name" parent="TreeRoot/SkillNode15" index="1"]
+margin_right = 126.0
+text = "Attack"
+
+[node name="Description" parent="TreeRoot/SkillNode15" index="2"]
+margin_right = 126.0
+
+[node name="Level" parent="TreeRoot/SkillNode15" index="3"]
+margin_right = 126.0
+
+[node name="Xp" parent="TreeRoot/SkillNode15" index="4"]
+margin_right = 126.0
+
+[node name="SkillNode14" parent="TreeRoot" instance=ExtResource( 4 )]
+margin_left = 383.973
+margin_top = 64.5913
+margin_right = 509.973
+margin_bottom = 134.591
+statName = "block"
+
+[node name="TextureRect" parent="TreeRoot/SkillNode14" index="0"]
+margin_right = 126.0
+
+[node name="Name" parent="TreeRoot/SkillNode14" index="1"]
+margin_right = 126.0
+text = "Block"
+
+[node name="Description" parent="TreeRoot/SkillNode14" index="2"]
+margin_right = 126.0
+
+[node name="Level" parent="TreeRoot/SkillNode14" index="3"]
+margin_right = 126.0
+
+[node name="Xp" parent="TreeRoot/SkillNode14" index="4"]
+margin_right = 126.0
+
+[node name="SkillNode13" parent="TreeRoot" instance=ExtResource( 4 )]
+margin_left = 242.758
+margin_top = 77.2847
+margin_right = 368.758
+margin_bottom = 147.285
+statName = "crit"
+
+[node name="TextureRect" parent="TreeRoot/SkillNode13" index="0"]
+margin_right = 126.0
+
+[node name="Name" parent="TreeRoot/SkillNode13" index="1"]
+margin_right = 126.0
+text = "Critical"
+
+[node name="Description" parent="TreeRoot/SkillNode13" index="2"]
+margin_right = 126.0
+
+[node name="Level" parent="TreeRoot/SkillNode13" index="3"]
+margin_right = 126.0
+
+[node name="Xp" parent="TreeRoot/SkillNode13" index="4"]
 margin_right = 126.0
 
 [editable path="TreeRoot/SkillNode"]
@@ -97,3 +333,25 @@ margin_right = 126.0
 [editable path="TreeRoot/SkillNode3"]
 
 [editable path="TreeRoot/SkillNode4"]
+
+[editable path="TreeRoot/SkillNode5"]
+
+[editable path="TreeRoot/SkillNode6"]
+
+[editable path="TreeRoot/SkillNode7"]
+
+[editable path="TreeRoot/SkillNode8"]
+
+[editable path="TreeRoot/SkillNode12"]
+
+[editable path="TreeRoot/SkillNode9"]
+
+[editable path="TreeRoot/SkillNode10"]
+
+[editable path="TreeRoot/SkillNode11"]
+
+[editable path="TreeRoot/SkillNode15"]
+
+[editable path="TreeRoot/SkillNode14"]
+
+[editable path="TreeRoot/SkillNode13"]
