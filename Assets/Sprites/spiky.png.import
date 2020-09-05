@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Hedgehog.png-a54eb0882ac2a9000b565db6a2b71f14.stex"
+path="res://.import/spiky.png-47e7d90741d9d12834dfc717af66f461.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Hedgehog.png"
-dest_files=[ "res://.import/Hedgehog.png-a54eb0882ac2a9000b565db6a2b71f14.stex" ]
+source_file="res://Assets/Sprites/spiky.png"
+dest_files=[ "res://.import/spiky.png-47e7d90741d9d12834dfc717af66f461.stex" ]
 
 [params]
 

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Hedgehog (1).png-da0b4f25b29d570b0db8e79d6087c092.stex"
+path="res://.import/boy_bare.png-eca2f3d7a34dbfe0b59d94b1e5797d0f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Hedgehog (1).png"
-dest_files=[ "res://.import/Hedgehog (1).png-da0b4f25b29d570b0db8e79d6087c092.stex" ]
+source_file="res://Assets/Sprites/boy_bare.png"
+dest_files=[ "res://.import/boy_bare.png-eca2f3d7a34dbfe0b59d94b1e5797d0f.stex" ]
 
 [params]
 
