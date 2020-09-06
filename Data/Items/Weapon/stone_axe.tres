@@ -10,7 +10,7 @@ script = ExtResource( 3 )
 baseDamage = 80.0
 baseKnockback = 50.0
 baseRange = 1.0
-baseCooldown = 1.0
+baseCooldown = 0.5
 types = 0
 effects = 0
 

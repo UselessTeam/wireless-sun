@@ -96,11 +96,28 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Title" type="PanelContainer" parent="Crafting"]
+margin_right = 228.0
+margin_bottom = 45.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Crafting/Title"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 221.0
+margin_bottom = 38.0
+text = "Crafting recipes
+Double click on an item to craft it"
+
 [node name="Craft" parent="Crafting" instance=ExtResource( 3 )]
-margin_right = 40.0
-margin_bottom = 14.0
+margin_top = 49.0
+margin_right = 228.0
+margin_bottom = 63.0
 
 [node name="SkillTreePanel" parent="." instance=ExtResource( 11 )]
+visible = false
 
 [node name="DeathScreen" type="Control" parent="."]
 visible = false
@@ -159,5 +176,3 @@ __meta__ = {
 
 [node name="PauseMenu" parent="." instance=ExtResource( 8 )]
 visible = false
-
-[editable path="SkillTreePanel"]
