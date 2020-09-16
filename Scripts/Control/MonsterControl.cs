@@ -1,36 +1,16 @@
 using System;
 using Godot;
 
-public enum DiagonalDirection {
-    front_left,
-    front_right,
-    back_left,
-    back_right
-}
-
 public class MonsterControl : ControlComponent {
     [Export] public float FLICKER_TIME = 3;
 
-    private DiagonalDirection currentDirection;
-    public DiagonalDirection CurrentDirection {
-        get { return currentDirection; }
-        set {
-            if (value != currentDirection) {
-                currentDirection = value;
-                SetAnimation ();
-            }
-        }
+    public ControlComponent MyControl {
+        get { return MyPiece.GetNode<ControlComponent> ("Control"); }
     }
 
-    private string currentState = "idle";
-    public string CurrentState {
-        get { return currentState; }
-        set {
-            if (value != currentState) {
-                currentState = value;
-                SetAnimation ();
-            }
-        }
+    public override void _Ready () {
+        base._Ready ();
+        // Connect (nameof (UpdateAnimation), this, nameof (SetAnimation));
     }
 
     public FieldOfView MyFOV {
@@ -39,16 +19,6 @@ public class MonsterControl : ControlComponent {
 
     public bool CanSeePlayer {
         get { return MyFOV.IsPlayerDetected (); }
-    }
-
-    public AnimatedSprite MySprite {
-        get { return MyPiece.GetNode<AnimatedSprite> ("Display"); }
-    }
-
-    protected void SetAnimation () {
-        string suffix = ((int) currentDirection < 2) ? "front" : "back";
-        MySprite.Play (currentState + "_" + suffix);
-        MySprite.FlipH = (int) currentDirection % 2 == 0;
     }
 
     public new Godot.Collections.Dictionary<string, object> MakeSave () {

@@ -19,154 +19,154 @@
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 11 )
-region = Rect2( 0, 240, 80, 80 )
+region = Rect2( 80, 80, 80, 80 )
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 11 )
-region = Rect2( 80, 160, 80, 80 )
+region = Rect2( 160, 80, 80, 80 )
 
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 11 )
-region = Rect2( 160, 160, 80, 80 )
+region = Rect2( 240, 80, 80, 80 )
 
 [sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 11 )
-region = Rect2( 240, 160, 80, 80 )
+region = Rect2( 320, 80, 80, 80 )
 
 [sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 11 )
-region = Rect2( 320, 160, 80, 80 )
+region = Rect2( 0, 0, 80, 80 )
 
 [sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 11 )
-region = Rect2( 80, 240, 80, 80 )
+region = Rect2( 0, 320, 80, 80 )
 
 [sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 11 )
-region = Rect2( 160, 240, 80, 80 )
+region = Rect2( 80, 0, 80, 80 )
 
 [sub_resource type="AtlasTexture" id=8]
 atlas = ExtResource( 11 )
-region = Rect2( 240, 240, 80, 80 )
+region = Rect2( 160, 0, 80, 80 )
 
 [sub_resource type="AtlasTexture" id=9]
 atlas = ExtResource( 11 )
-region = Rect2( 320, 240, 80, 80 )
+region = Rect2( 240, 0, 80, 80 )
 
 [sub_resource type="AtlasTexture" id=10]
 atlas = ExtResource( 11 )
-region = Rect2( 0, 160, 80, 80 )
+region = Rect2( 320, 0, 80, 80 )
 
 [sub_resource type="AtlasTexture" id=11]
 atlas = ExtResource( 11 )
-region = Rect2( 80, 320, 80, 80 )
+region = Rect2( 0, 80, 80, 80 )
 
 [sub_resource type="AtlasTexture" id=12]
 atlas = ExtResource( 11 )
-region = Rect2( 160, 320, 80, 80 )
+region = Rect2( 0, 240, 80, 80 )
 
 [sub_resource type="AtlasTexture" id=13]
 atlas = ExtResource( 11 )
-region = Rect2( 240, 320, 80, 80 )
+region = Rect2( 80, 320, 80, 80 )
 
 [sub_resource type="AtlasTexture" id=14]
 atlas = ExtResource( 11 )
-region = Rect2( 320, 320, 80, 80 )
+region = Rect2( 160, 320, 80, 80 )
 
 [sub_resource type="AtlasTexture" id=15]
 atlas = ExtResource( 11 )
-region = Rect2( 0, 320, 80, 80 )
+region = Rect2( 240, 320, 80, 80 )
 
 [sub_resource type="AtlasTexture" id=16]
 atlas = ExtResource( 11 )
-region = Rect2( 80, 0, 80, 80 )
+region = Rect2( 320, 320, 80, 80 )
 
 [sub_resource type="AtlasTexture" id=17]
 atlas = ExtResource( 11 )
-region = Rect2( 160, 0, 80, 80 )
+region = Rect2( 0, 160, 80, 80 )
 
 [sub_resource type="AtlasTexture" id=18]
 atlas = ExtResource( 11 )
-region = Rect2( 240, 0, 80, 80 )
+region = Rect2( 80, 160, 80, 80 )
 
 [sub_resource type="AtlasTexture" id=19]
 atlas = ExtResource( 11 )
-region = Rect2( 320, 0, 80, 80 )
+region = Rect2( 160, 160, 80, 80 )
 
 [sub_resource type="AtlasTexture" id=20]
 atlas = ExtResource( 11 )
-region = Rect2( 0, 0, 80, 80 )
+region = Rect2( 240, 160, 80, 80 )
 
 [sub_resource type="AtlasTexture" id=21]
 atlas = ExtResource( 11 )
-region = Rect2( 0, 80, 80, 80 )
+region = Rect2( 320, 160, 80, 80 )
 
 [sub_resource type="AtlasTexture" id=22]
 atlas = ExtResource( 11 )
-region = Rect2( 80, 80, 80, 80 )
+region = Rect2( 80, 240, 80, 80 )
 
 [sub_resource type="AtlasTexture" id=23]
 atlas = ExtResource( 11 )
-region = Rect2( 160, 80, 80, 80 )
+region = Rect2( 160, 240, 80, 80 )
 
 [sub_resource type="AtlasTexture" id=24]
 atlas = ExtResource( 11 )
-region = Rect2( 240, 80, 80, 80 )
+region = Rect2( 240, 240, 80, 80 )
 
 [sub_resource type="AtlasTexture" id=25]
 atlas = ExtResource( 11 )
-region = Rect2( 320, 80, 80, 80 )
+region = Rect2( 320, 240, 80, 80 )
 
 [sub_resource type="SpriteFrames" id=26]
 animations = [ {
-"frames": [ SubResource( 1 ) ],
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
 "loop": true,
-"name": "idle_back_diagonal",
+"name": "run_front_left",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ],
-"loop": true,
-"name": "run_sideways",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
-"loop": true,
-"name": "run_back_diagonal",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 10 ) ],
-"loop": true,
-"name": "idle_sideways",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ) ],
-"loop": true,
-"name": "run_back",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 15 ) ],
-"loop": true,
-"name": "idle_back",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ) ],
-"loop": true,
-"name": "run_front",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 20 ) ],
+"frames": [ SubResource( 5 ) ],
 "loop": true,
 "name": "idle_front",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 21 ) ],
+"frames": [ SubResource( 6 ) ],
 "loop": true,
-"name": "idle_front_diagonal",
+"name": "idle_back",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ) ],
+"loop": true,
+"name": "run_front",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 11 ) ],
+"loop": true,
+"name": "idle_front_left",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 12 ) ],
+"loop": true,
+"name": "idle_back_left",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ) ],
+"loop": true,
+"name": "run_back",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 17 ) ],
+"loop": true,
+"name": "idle_left",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 18 ), SubResource( 19 ), SubResource( 20 ), SubResource( 21 ) ],
+"loop": true,
+"name": "run_left",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 22 ), SubResource( 23 ), SubResource( 24 ), SubResource( 25 ) ],
 "loop": true,
-"name": "run_front_diagonal",
+"name": "run_back_left",
 "speed": 5.0
 } ]
 
@@ -233,12 +233,14 @@ collision_mask = 5
 script = ExtResource( 7 )
 
 [node name="Movement" parent="." instance=ExtResource( 16 )]
+HAS_8_DIRECTION = true
 
 [node name="Display" type="AnimatedSprite" parent="."]
 position = Vector2( -0.36805, -14.9927 )
 scale = Vector2( 0.75, 0.75 )
 frames = SubResource( 26 )
-animation = "idle_front"
+animation = "run_left"
+frame = 3
 playing = true
 
 [node name="PixelArtDisplay" parent="." instance=ExtResource( 4 )]

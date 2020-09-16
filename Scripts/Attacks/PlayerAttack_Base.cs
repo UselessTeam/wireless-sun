@@ -16,12 +16,14 @@ public abstract class PlayerAttack_Base : AttackComponent {
     public override void _Process (float delta) { base._Process (delta); }
 
     public void PositionSelf () {
-        PositionSelf (MyUserMovement.FacingDirection);
+        PositionSelf ((GetGlobalMousePosition () - MyUser.MyMovement.GlobalPosition).Normalized ());
     }
+
     public void PositionSelf (Vector2 direction) {
         PositionSelfNoRotation (direction);
         Rotation = direction.Angle ();
     }
+
     public void PositionSelfNoRotation (Vector2 direction) {
         Position = basePosition + base_distance_to_player * attackData.Range * direction;
     }

@@ -1,15 +1,21 @@
 using System;
+using DirectionHelper;
 using Godot;
 
 public class MovementComponent : Node2D {
     [Export] public float IMPACT_FACTOR = 800;
     [Export] public float WALK_SPEED = 100;
+    [Export] public bool HAS_8_DIRECTION = false;
     public static Vector2 IsometricMultiplier = new Vector2 (1.5f, 1);
 
     public bool IsMaster { get { return !Network.IsConnectionStarted || IsNetworkMaster (); } }
     public bool IsTrueMaster { get { return Network.IsConnectionStarted && IsNetworkMaster (); } }
 
     public KinematicPiece MyBody;
+    public Node2D MyPiece { get { return GetParent<Node2D> (); } }
+    public ControlComponent MyControl {
+        get { return MyPiece.GetNode<ControlComponent> ("Control"); }
+    }
 
     KinematicCollision2D collInfo = null;
     [Signal] public delegate void BodyCollision (KinematicCollision2D collInfo);
@@ -19,16 +25,18 @@ public class MovementComponent : Node2D {
     private float impactTime = 0;
     private Vector2 impactDirection;
 
-    [Puppet] private Vector2 facingDirection = new Vector2 (1, 0);
-    [Master]
-    public Vector2 FacingDirection {
-        get { return facingDirection; }
+    [Puppet] private Direction currentDirection;
+    [Master] public Direction CurrentDirection {
+        get { return currentDirection; }
         set {
-            if (facingDirection == Vector2.Zero)
-                return;
-            facingDirection = value.Normalized ();
-            if (Network.IsConnectionStarted)
-                RsetUnreliable ("facingDirection", facingDirection);
+            if (value != currentDirection) {
+                currentDirection = value;
+                GD.Print ("Direction: ", value.ToString ());
+                // MyControl.EmitSignal (nameof (ControlComponent.UpdateAnimation));
+                MyControl.SetAnimation (value);
+                if (Network.IsConnectionStarted)
+                    Rset ("currentDirection", value);
+            }
         }
     }
 
@@ -39,6 +47,8 @@ public class MovementComponent : Node2D {
             nextMovement = value;
             if (IsTrueMaster)
                 RsetUnreliable ("nextMovement", nextMovement);
+            if (value != Vector2.Zero)
+                CurrentDirection = (HAS_8_DIRECTION) ? DirectionHelper.DirMethods.ToDirection8 (value) : DirectionHelper.DirMethods.ToDirection4 (value);
         }
     }
 
