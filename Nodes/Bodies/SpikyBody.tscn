@@ -9,130 +9,130 @@
 [ext_resource path="res://Nodes/Components/Health.tscn" type="PackedScene" id=8]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 9.02684
+radius = 134.004
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 134.004
+radius = 12.8192
 
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 4 )
-region = Rect2( 0, 0, 40, 40 )
+region = Rect2( 0, 40, 40, 40 )
 
 [sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 4 )
-region = Rect2( 40, 0, 40, 40 )
+region = Rect2( 0, 40, 40, 40 )
 
 [sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 4 )
-region = Rect2( 80, 0, 40, 40 )
+region = Rect2( 40, 40, 40, 40 )
 
 [sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 4 )
-region = Rect2( 120, 0, 40, 40 )
+region = Rect2( 80, 40, 40, 40 )
 
 [sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 4 )
-region = Rect2( 40, 120, 40, 40 )
+region = Rect2( 120, 40, 40, 40 )
 
 [sub_resource type="AtlasTexture" id=8]
 atlas = ExtResource( 4 )
-region = Rect2( 80, 120, 40, 40 )
+region = Rect2( 0, 0, 35, 45 )
 
 [sub_resource type="AtlasTexture" id=9]
 atlas = ExtResource( 4 )
-region = Rect2( 120, 120, 40, 40 )
+region = Rect2( 0, 0, 40, 40 )
 
 [sub_resource type="AtlasTexture" id=10]
 atlas = ExtResource( 4 )
-region = Rect2( 80, 120, 40, 40 )
+region = Rect2( 40, 0, 40, 40 )
 
 [sub_resource type="AtlasTexture" id=11]
 atlas = ExtResource( 4 )
-region = Rect2( 40, 120, 40, 40 )
+region = Rect2( 80, 0, 40, 40 )
 
 [sub_resource type="AtlasTexture" id=12]
 atlas = ExtResource( 4 )
-region = Rect2( 0, 120, 40, 40 )
+region = Rect2( 120, 0, 40, 40 )
 
 [sub_resource type="AtlasTexture" id=13]
 atlas = ExtResource( 4 )
-region = Rect2( 40, 80, 40, 40 )
+region = Rect2( 40, 120, 40, 40 )
 
 [sub_resource type="AtlasTexture" id=14]
 atlas = ExtResource( 4 )
-region = Rect2( 80, 80, 40, 40 )
+region = Rect2( 80, 120, 40, 40 )
 
 [sub_resource type="AtlasTexture" id=15]
 atlas = ExtResource( 4 )
-region = Rect2( 120, 80, 40, 40 )
+region = Rect2( 120, 120, 40, 40 )
 
 [sub_resource type="AtlasTexture" id=16]
 atlas = ExtResource( 4 )
-region = Rect2( 80, 80, 40, 40 )
+region = Rect2( 80, 120, 40, 40 )
 
 [sub_resource type="AtlasTexture" id=17]
 atlas = ExtResource( 4 )
-region = Rect2( 40, 80, 40, 40 )
+region = Rect2( 40, 120, 40, 40 )
 
 [sub_resource type="AtlasTexture" id=18]
 atlas = ExtResource( 4 )
-region = Rect2( 0, 80, 40, 40 )
+region = Rect2( 0, 120, 40, 40 )
 
 [sub_resource type="AtlasTexture" id=19]
 atlas = ExtResource( 4 )
-region = Rect2( 0, 0, 35, 45 )
+region = Rect2( 40, 80, 40, 40 )
 
 [sub_resource type="AtlasTexture" id=20]
 atlas = ExtResource( 4 )
-region = Rect2( 0, 40, 40, 40 )
+region = Rect2( 80, 80, 40, 40 )
 
 [sub_resource type="AtlasTexture" id=21]
 atlas = ExtResource( 4 )
-region = Rect2( 0, 40, 40, 40 )
+region = Rect2( 120, 80, 40, 40 )
 
 [sub_resource type="AtlasTexture" id=22]
 atlas = ExtResource( 4 )
-region = Rect2( 40, 40, 40, 40 )
+region = Rect2( 80, 80, 40, 40 )
 
 [sub_resource type="AtlasTexture" id=23]
 atlas = ExtResource( 4 )
-region = Rect2( 80, 40, 40, 40 )
+region = Rect2( 40, 80, 40, 40 )
 
 [sub_resource type="AtlasTexture" id=24]
 atlas = ExtResource( 4 )
-region = Rect2( 120, 40, 40, 40 )
+region = Rect2( 0, 80, 40, 40 )
 
 [sub_resource type="SpriteFrames" id=25]
 animations = [ {
-"frames": [ SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ) ],
-"loop": true,
-"name": "run_front_left",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ) ],
-"loop": true,
-"name": "attack_back_left",
-"speed": 10.0
-}, {
-"frames": [ SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ) ],
-"loop": true,
-"name": "attack_front_left",
-"speed": 10.0
-}, {
-"frames": [ SubResource( 19 ) ],
-"loop": true,
-"name": "idle_front_left",
-"speed": 2.0
-}, {
-"frames": [ SubResource( 20 ) ],
+"frames": [ SubResource( 3 ) ],
 "loop": true,
 "name": "idle_back_left",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ) ],
+"frames": [ SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ) ],
 "loop": true,
 "name": "run_back_left",
 "speed": 5.0
+}, {
+"frames": [ SubResource( 8 ) ],
+"loop": true,
+"name": "idle_front_left",
+"speed": 2.0
+}, {
+"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ) ],
+"loop": true,
+"name": "run_front_left",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ) ],
+"loop": true,
+"name": "attack_back_left",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 19 ), SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ) ],
+"loop": true,
+"name": "attack_front_left",
+"speed": 10.0
 } ]
 
 [node name="SpikyBody" type="KinematicBody2D"]
@@ -148,18 +148,8 @@ WALK_SPEED = 40.0
 
 [node name="Control" type="Node2D" parent="."]
 script = ExtResource( 5 )
+XpMultiplier = 3.0
 FLICKER_TIME = 0.2
-
-[node name="Attack" type="Node2D" parent="Control"]
-script = ExtResource( 3 )
-
-[node name="Hitbox" type="Area2D" parent="Control/Attack"]
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/Attack/Hitbox"]
-position = Vector2( -0.863712, -7.17138 )
-shape = SubResource( 1 )
 
 [node name="FieldOfView" type="Area2D" parent="Control"]
 position = Vector2( -1, 0 )
@@ -169,18 +159,27 @@ script = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Control/FieldOfView"]
 position = Vector2( 1.10415, -7.177 )
+shape = SubResource( 1 )
+
+[node name="Attack" type="Node2D" parent="Control"]
+script = ExtResource( 3 )
+
+[node name="Hitbox" type="Area2D" parent="Control/Attack"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/Attack/Hitbox"]
+position = Vector2( 1.70652, -10.3842 )
 shape = SubResource( 2 )
 
 [node name="Display" type="AnimatedSprite" parent="."]
-position = Vector2( -86.3681, 574.417 )
 frames = SubResource( 25 )
-animation = "attack_back_left"
-frame = 3
+animation = "idle_front_left"
 playing = true
-offset = Vector2( 86.184, -582.146 )
 
 [node name="Collision" type="CollisionPolygon2D" parent="."]
-position = Vector2( 1.28817, -11.0416 )
-polygon = PoolVector2Array( -4.43527, 12.784, 3.22487, 12.784, 4.03802, 4.26392, -5.62297, 4.26392 )
+position = Vector2( 5.00521, 9.03441 )
+polygon = PoolVector2Array( 0.288292, 1.02755, 8.77009, -7.32574, 1.05936, -10.6671, -7.16541, -3.47037 )
 
 [node name="Health" parent="." instance=ExtResource( 8 )]
+position = Vector2( -7.74749, 15.5318 )

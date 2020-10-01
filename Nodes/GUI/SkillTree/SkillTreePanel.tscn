@@ -81,20 +81,20 @@ margin_bottom = 714.395
 statName = "sword"
 
 [node name="TextureRect" parent="TreeRoot/SkillNode5" index="0"]
-margin_right = 126.0
+margin_right = 125.0
 
 [node name="Name" parent="TreeRoot/SkillNode5" index="1"]
-margin_right = 126.0
+margin_right = 125.0
 text = "Sword"
 
 [node name="Description" parent="TreeRoot/SkillNode5" index="2"]
-margin_right = 126.0
+margin_right = 125.0
 
 [node name="Level" parent="TreeRoot/SkillNode5" index="3"]
-margin_right = 126.0
+margin_right = 125.0
 
 [node name="Xp" parent="TreeRoot/SkillNode5" index="4"]
-margin_right = 126.0
+margin_right = 125.0
 
 [node name="SkillNode6" parent="TreeRoot" instance=ExtResource( 4 )]
 margin_left = 577.548
@@ -262,14 +262,14 @@ margin_left = 192.699
 margin_top = 197.912
 margin_right = 318.699
 margin_bottom = 267.912
-statName = "attack"
+statName = "damage"
 
 [node name="TextureRect" parent="TreeRoot/SkillNode15" index="0"]
 margin_right = 126.0
 
 [node name="Name" parent="TreeRoot/SkillNode15" index="1"]
 margin_right = 126.0
-text = "Attack"
+text = "Damage"
 
 [node name="Description" parent="TreeRoot/SkillNode15" index="2"]
 margin_right = 126.0
@@ -285,14 +285,14 @@ margin_left = 383.973
 margin_top = 64.5913
 margin_right = 509.973
 margin_bottom = 134.591
-statName = "block"
+statName = "atk_speed"
 
 [node name="TextureRect" parent="TreeRoot/SkillNode14" index="0"]
 margin_right = 126.0
 
 [node name="Name" parent="TreeRoot/SkillNode14" index="1"]
 margin_right = 126.0
-text = "Block"
+text = "Attack Speed"
 
 [node name="Description" parent="TreeRoot/SkillNode14" index="2"]
 margin_right = 126.0

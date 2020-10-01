@@ -4,8 +4,6 @@
 [ext_resource path="res://Nodes/GUI/GuiItem/ItemSpriteHolder.tscn" type="PackedScene" id=2]
 
 [node name="HoverableItem" type="Control"]
-margin_right = 24.0
-margin_bottom = 24.0
 rect_min_size = Vector2( 48, 48 )
 script = ExtResource( 1 )
 __meta__ = {

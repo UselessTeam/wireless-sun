@@ -33,9 +33,9 @@ namespace DirectionHelper {
         }
         public static Direction ToDirection4 (Vector2 v) { //SENSITIVE CODE! RUN EVERY FRAME
             short num;
-            if (v.x < 0) //LEFT
+            if (v.x < 0) //RIGHT
                 num = 0;
-            else //RIGHT
+            else //LEFT
                 num = 3;
             if (v.y < 0) //BACK
                 num += 1;

@@ -8,11 +8,6 @@ public class MonsterControl : ControlComponent {
         get { return MyPiece.GetNode<ControlComponent> ("Control"); }
     }
 
-    public override void _Ready () {
-        base._Ready ();
-        // Connect (nameof (UpdateAnimation), this, nameof (SetAnimation));
-    }
-
     public FieldOfView MyFOV {
         get { return GetNode<FieldOfView> ("FieldOfView"); }
     }

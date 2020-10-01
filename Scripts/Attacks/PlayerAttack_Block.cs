@@ -2,31 +2,31 @@ using System;
 using Godot;
 
 public class PlayerAttack_Block : PlayerAttack_Base {
-    public override void _Ready () {
-        base._Ready ();
-        XpStatOnTouch = "block";
-    }
+	public override void _Ready () {
+		base._Ready ();
 
-    public void LaunchBlock (AttackResource attackData) {
-        this.attackData = attackData;
-        // Enable the attack's collisionBox
-        Scale = new Vector2 (attackData.Range, attackData.Range);
-        GetNode<CollisionShape2D> ("Hitbox/CollisionShape2D").Disabled = false;
+	}
 
-        // Put the attack sprite at the right position and show it
-        PositionSelf ();
-        MyAttackSprite.Show ();
+	public void LaunchBlock (AttackResource attackData) {
+		this.attackData = attackData;
+		// Enable the attack's collisionBox
+		Scale = new Vector2 (attackData.Range, attackData.Range);
+		GetNode<CollisionShape2D> ("Hitbox/CollisionShape2D").Disabled = false;
 
-        // Play Attack's SFX
-        GetNode<AudioStreamPlayer2D> ("SFX").Play (0);
-    }
+		// Put the attack sprite at the right position and show it
+		PositionSelf ();
+		MyAttackSprite.Show ();
 
-    public override void _Input (InputEvent _event) {
-        if (_event is InputEventMouseMotion)
-            PositionSelf ();
-    }
+		// Play Attack's SFX
+		GetNode<AudioStreamPlayer2D> ("SFX").Play (0);
+	}
 
-    public void StopBlock () {
-        HideAndDisable ();
-    }
+	public override void _Input (InputEvent _event) {
+		if (_event is InputEventMouseMotion)
+			PositionSelf ();
+	}
+
+	public void StopBlock () {
+		HideAndDisable ();
+	}
 }

@@ -6,7 +6,7 @@ using Godot;
 public class PlayerControl : ControlComponent {
 	[Export] public float FLICKER_TIME = 3;
 	[Export] public float ROLL_TIME = 0.15f;
-	[Export] public float BUFFER_TIME = 0.4f;
+	[Export] public float BUFFER_TIME = 0.2f;
 	[Export] public float CHARGE_TIME = 1;
 	[Export] public float CHARGE_SPEED_MULTIPLIER = 0.5f;
 	public AttackTemplate CHARGE_TEMPLATE = new AttackTemplate (3, 1.5f, 2, 1.5f);
@@ -41,10 +41,15 @@ public class PlayerControl : ControlComponent {
 	public PlayerAttack_Attack myAttack;
 	public PlayerAttack_Block myBlock;
 
+	Stats.PlayerStats MyStats;
+
 	public override void _Ready () {
 		myAttack = GetNode<PlayerAttack_Attack> ("Attack");
 		myBlock = GetNode<PlayerAttack_Block> ("Block");
+		myAttack.MyPlayer = this;
+		myBlock.MyPlayer = this;
 		MyMovement.Connect (nameof (MovementComponent.EndImpact), this, nameof (StartNextAction));
+		if (IsMaster) MyStats = GameRoot.playerStats;
 		base._Ready ();
 	}
 
@@ -173,19 +178,20 @@ public class PlayerControl : ControlComponent {
 	}
 
 	public void LaunchAttack (WeaponResource weaponData, ActionList action, AttackTemplate chargeTemplate = null) { // Giving a charge template or not indicates wether the attack is succesfully charged
+		var attackData_wStat = ApplyStatToAttack (weaponData.AttackData);
 		if (weaponData.Action == ActionType.Block)
-			myBlock.LaunchBlock (weaponData.AttackData * chargeTemplate);
+			myBlock.LaunchBlock (attackData_wStat * chargeTemplate);
 		else if (weaponData.Action == ActionType.CircularAttack && chargeTemplate != null)
-			myAttack.LaunchCircularAttack (weaponData.AttackData * chargeTemplate);
+			myAttack.LaunchCircularAttack (attackData_wStat * chargeTemplate);
 		else
-			myAttack.LaunchAttack (weaponData.AttackData * chargeTemplate);
+			myAttack.LaunchAttack (attackData_wStat * chargeTemplate);
 		currentlyPerformed = weaponData; // Disable all future actions, call _AttackFinished to reenable actions
 		if (IsMaster) InitCooldown (action, weaponData.Cooldown);
 	}
 
 	public void _AttackFinished () {
 		currentlyPerformed = null;
-		StartNextAction ();
+		StartNextAction (); // If there is an action in the buffer, it will be lauched
 	}
 
 	public override void _Process (float delta) {
@@ -199,9 +205,9 @@ public class PlayerControl : ControlComponent {
 					inputMovement *= BLOCK_SPEED_MULTIPLIER;
 				MyMovement.NextMovement = inputMovement;
 				inputMovement = new Vector2 (0, 0);
-				CurrentState = "run";
+				CurrentState = StateList["run"];
 			} else {
-				CurrentState = "idle";
+				CurrentState = StateList["idle"];
 			}
 			if (Input.IsActionPressed ("interact") && currentInteraction != null)
 				currentInteraction.Interact ();
@@ -240,6 +246,16 @@ public class PlayerControl : ControlComponent {
 		} else {
 			base._OnDied ();
 		}
+	}
+
+	public void GatherXP (AttackResource attackData, float damage, Node2D attackedPiece) { // Called on a succesfull attack
+		MyStats.GetStat ("damage").GainXp (damage * damage / 100f * attackedPiece.GetNode<ControlComponent> ("Control").XpMultiplier);
+		MyStats.GetStat ("atk_speed").GainXp (attackedPiece.GetNode<ControlComponent> ("Control").XpMultiplier);
+	}
+
+	private AttackResource ApplyStatToAttack (AttackResource attackData) {
+
+		return attackData * new AttackTemplate (MyStats.GetStat ("damage").Value, 1, 1, 1f / MyStats.GetStat ("atk_speed").Value);
 	}
 
 	InteractionComponent currentInteraction;

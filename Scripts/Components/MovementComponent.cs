@@ -25,14 +25,12 @@ public class MovementComponent : Node2D {
     private float impactTime = 0;
     private Vector2 impactDirection;
 
-    [Puppet] private Direction currentDirection;
+    [Puppet] private Direction currentDirection = Direction.front_left;
     [Master] public Direction CurrentDirection {
         get { return currentDirection; }
         set {
             if (value != currentDirection) {
                 currentDirection = value;
-                GD.Print ("Direction: ", value.ToString ());
-                // MyControl.EmitSignal (nameof (ControlComponent.UpdateAnimation));
                 MyControl.SetAnimation (value);
                 if (Network.IsConnectionStarted)
                     Rset ("currentDirection", value);

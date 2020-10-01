@@ -24,6 +24,13 @@ public class AttackResource : Resource {
         baseCooldown = cooldown;
     }
 
+    public AttackResource Copy () {
+        var returnVal = new AttackResource (this.Damage, this.Knockback, this.Range, this.Cooldown);
+        returnVal.types = this.Types;
+        returnVal.effects = this.Effects;
+        return returnVal;
+    }
+
     public void ApplyTemplate (AttackTemplate template) {
         if (template == null)
             return;
@@ -47,11 +54,4 @@ public class AttackResource : Resource {
         return returnVal;
     }
 
-    // public AttackResource (float damage, float range, float cooldown, AttackType type, AttackEffect effect) {
-    //     this.Damage = damage;
-    //     this.Range = range;
-    //     this.Cooldown = cooldown;
-    //     this.Types = type;
-    //     this.Effects = effect;
-    // }
 }

@@ -19,14 +19,24 @@ namespace Stats {
 
 		public int xpForNextLevel { get { return Convert.ToInt32 (xpForLevel1 * Godot.Mathf.Pow (xpScalling, level)); } } //total Xp needed to rech next level
 
-		public Func<Stat, float> value = (stat) => { //The useful value of this skill
+		public float Value { get { return value (this); } }
+		public string Description { get { return description (this); } }
+
+		private Func<Stat, float> value = (stat) => { //The useful value of this skill
 			return (float) stat.level;
 		};
-		public Func<Stat, string> description = (stat) => { //Desciption to be displayed on the skill tree
+		private Func<Stat, string> description = (stat) => { //Desciption to be displayed on the skill tree
 			return "No description yet ...";
 		};
 
 		[Signal] public delegate void LevelUp (string statName);
+
+		public Stat (string name, string fatherStat, Func<Stat, float> value, Func<Stat, string> description) {
+			this.name = name;
+			this.fatherStat = fatherStat;
+			this.value = value;
+			this.description = description;
+		}
 
 		public void GainXp (float xp) {
 			currentXp += xp;

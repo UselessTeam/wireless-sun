@@ -6,7 +6,6 @@
 [node name="CraftableItem" type="Control"]
 anchor_right = 0.025
 anchor_bottom = 0.044
-margin_bottom = 0.479996
 rect_min_size = Vector2( 48, 48 )
 script = ExtResource( 2 )
 __meta__ = {

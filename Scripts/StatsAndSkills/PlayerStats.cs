@@ -24,85 +24,83 @@ namespace Stats {
 		}
 
 		public static Dictionary<string, Stat> MakeStatList () {
-			Dictionary<string, Stat> rootStat = new Dictionary<string, Stat> {
-				["root"] = new Stat {
-					name = "root", fatherStat = "", level = 1,
-						value = (stat) => { return stat.level; },
-						description = (stat) => { return "No description yet ..."; }, //TODO
-				},
-				["body"] = new Stat {
-					name = "body", fatherStat = "root",
-						value = (stat) => { return stat.level; },
-						description = (stat) => { return "No description yet ..."; }, //TODO
+			Dictionary<string, Stat> statList = new Dictionary<string, Stat> {
+				["root"] = new Stat (
+					"root", "",
+					(stat) => { return stat.level; },
+					(stat) => { return "No description yet ..."; } //TODO
+				) { level = 1 },
+				["body"] = new Stat (
+					"body", "root",
+					(stat) => { return stat.level; },
+					(stat) => { return "Boos XP gain for all body stats"; } //TODO
 
-				},
-				["combat"] = new Stat {
-					name = "combat", fatherStat = "root",
-						value = (stat) => { return stat.level; },
-						description = (stat) => { return "No description yet ..."; }, //TODO
-				},
-				["weapon"] = new Stat {
-					name = "weapon", fatherStat = "root",
-						value = (stat) => { return stat.level; },
-						description = (stat) => { return "No description yet ..."; }, //TODO
-				},
-				["health"] = new Stat {
-					name = "health", fatherStat = "body",
-						value = (stat) => { return stat.level; },
-						description = (stat) => { return "+" + stat.value + "HP"; }, //TODO
-				},
-				["regen"] = new Stat {
-					name = "regen", fatherStat = "body",
-						value = (stat) => { return stat.level; },
-						description = (stat) => { return "Health regen +" + stat.value + "%"; }, //TODO
-				},
-				["speed"] = new Stat {
-					name = "speed", fatherStat = "body",
-						value = (stat) => { return stat.level; },
-						description = (stat) => { return "Walking speed +" + stat.value + "%"; }, //TODO
-				},
-				["attack"] = new Stat {
-					name = "attack", fatherStat = "combat",
-						value = (stat) => { return stat.level; },
-						description = (stat) => { return "Damage +" + stat.value + "%"; }, //TODO
-				},
-				["block"] = new Stat {
-					name = "block", fatherStat = "combat",
-						value = (stat) => { return stat.level; },
-						description = (stat) => { return "No description yet ..."; }, //TODO
-				},
-				["crit"] = new Stat {
-					name = "crit", fatherStat = "combat",
-						value = (stat) => { return stat.level; },
-						description = (stat) => { return "Critical chance +" + stat.value + "%"; }, //TODO
-				},
-				["axe"] = new Stat {
-					name = "axe", fatherStat = "weapon",
-						value = (stat) => { return stat.level * 5; },
-						description = (stat) => { return "Charge attack damage +" + stat.value; }, //TODO
-				},
-				["bare_hand"] = new Stat {
-					name = "bare_hand", fatherStat = "weapon",
-						value = (stat) => { return stat.level; },
-						description = (stat) => { return "No description yet ..." ;}, //TODO
-				},
-				["pickaxe"] = new Stat {
-					name = "pickaxe", fatherStat = "weapon",
-						value = (stat) => { return stat.level; },
-						description = (stat) => { return "Attack speed +" + stat.value; }, //TODO
-				},
-				["sword"] = new Stat {
-					name = "sword", fatherStat = "weapon",
-						value = (stat) => { return stat.level; },
-						description = (stat) => { return "Attack range +" + stat.value + "%"; }, //TODO
-				},
-				["shield"] = new Stat {
-					name = "shield", fatherStat = "shield",
-						value = (stat) => { return stat.level; },
-						description = (stat) => { return "Shield size +" + stat.value + "%"; }, //TODO
-				},
+				),
+				["combat"] = new Stat ("combat", "root",
+					(stat) => { return stat.level; },
+					(stat) => { return "Boost XP gain for all combat stats"; } //TODO
+				),
+				["weapon"] = new Stat (
+					"weapon", "root",
+					(stat) => { return stat.level; },
+					(stat) => { return "Boost XP gain for all weapons"; } //TODO
+				),
+				["health"] = new Stat (
+					"health", "body",
+					(stat) => { return stat.level; },
+					(stat) => { return "+" + stat.Value + "HP"; } //TODO
+				),
+				["regen"] = new Stat (
+					"regen", "body",
+					(stat) => { return 1 + stat.level / 100f; },
+					(stat) => { return "Health regen +" + stat.Value + "%"; } //TODO
+				),
+				["speed"] = new Stat (
+					"speed", "body",
+					(stat) => { return 1 + stat.level / 100f; },
+					(stat) => { return "Walking speed +" + stat.Value + "%"; } //TODO
+				),
+				["damage"] = new Stat (
+					"damage", "combat", (stat) => { return 1 + stat.level / 100f; },
+					(stat) => { return "Damage +" + stat.Value + "%"; } //TODO
+				),
+				["atk_speed"] = new Stat (
+					"atk_speed", "combat",
+					(stat) => { return 1 + stat.level / 100f; },
+					(stat) => { return "Attack speed +" + stat.Value + "%"; } //TODO
+				),
+				["crit"] = new Stat (
+					"crit", "combat",
+					(stat) => { return 1 + stat.level / 100f; },
+					(stat) => { return "[TODO] Critical chance +" + stat.Value + "%"; } //TODO
+				),
+				["axe"] = new Stat (
+					"axe", "weapon",
+					(stat) => { return stat.level * 5; },
+					(stat) => { return "Charge attack damage +" + stat.Value; } //TODO
+				),
+				["bare_hand"] = new Stat (
+					"bare_hand", "weapon",
+					(stat) => { return stat.level; },
+					(stat) => { return "No description yet ..."; } //TODO
+				),
+				["pickaxe"] = new Stat (
+					"pickaxe", "weapon",
+					(stat) => { return 1 + stat.level / 100f; },
+					(stat) => { return "Attack speed +" + stat.Value; } //TODO
+				),
+				["sword"] = new Stat (
+					"sword", "weapon",
+					(stat) => { return 1 + stat.level / 100f; },
+					(stat) => { return "Attack range +" + stat.Value + "%"; } //TODO
+				),
+				["shield"] = new Stat (
+					"shield", "weapon",
+					(stat) => { return 1 + stat.level / 100f; },
+					(stat) => { return "Shield size +" + stat.Value + "%"; } //TODO
+				),
 			};
-			return rootStat;
+			return statList;
 		}
 
 		public Godot.Collections.Dictionary<string, object> MakeSave () {

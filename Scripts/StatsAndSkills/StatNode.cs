@@ -17,8 +17,8 @@ public class StatNode : Container {
 
 	public void UpdateLabels () {
 		GetNode<Label> ("Level").Text = "Level : " + MyStat.level;
-		GetNode<Label> ("Xp").Text = "XP : " + MyStat.currentXp + " / " + MyStat.xpForNextLevel;
-		GetNode<Label> ("Description").Text = MyStat.description (MyStat);
+		GetNode<Label> ("Xp").Text = "XP : " + (int) MyStat.currentXp + " / " + MyStat.xpForNextLevel;
+		GetNode<Label> ("Description").Text = MyStat.Description;
 	}
 
 }

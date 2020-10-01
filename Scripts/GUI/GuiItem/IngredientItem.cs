@@ -3,6 +3,7 @@ using Godot;
 
 public abstract class IngredientItem : HoverableItem {
 	public override void _Ready () {
+		base._Ready ();
 		GameRoot.inventory.Connect (nameof (Inventory.inventory_change), this, nameof (CheckIngredient));
 	}
 
